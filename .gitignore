@@ -1,0 +1,12 @@
+# General
+.*
+!/.gitignore
+
+# PHP
+site/vendor/
+site/cache
+composer.lock
+
+
+# Node
+node_modules/
