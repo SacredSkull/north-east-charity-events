@@ -72,6 +72,10 @@ Vagrant.configure(2) do |config|
     sudo service nginx stop
     sudo rm /etc/nginx/sites-available/default
     sudo ln -s /vagrant/nginx.conf /etc/nginx/sites-available/default
+    sudo rm /var/log/hhvm/error.log
+    sudo ln -s /vagrant/site/logs/php.error.log /var/log/hhvm/error.log
+    cd /vagrant/site && composer install
     sudo service nginx start
+    sudo service hhvm restart
   SHELL
 end

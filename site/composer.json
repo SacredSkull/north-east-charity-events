@@ -1,2 +1,9 @@
 {
+    "require": {
+        "slim/slim": "^3.0",
+        "twig/twig": "~1.0",
+        "monolog/monolog": "^1.17",
+        "propel/propel": "~2.0@dev",
+        "slim/twig-view": "^2.0"
+    }
 }

@@ -4,7 +4,7 @@ This project makes use of several libraries/frameworks:
 PHP:
 - Slim, framework
 - Propel, ORM (optional)
-- Logger, logging
+- Monolog, logging
 - Twig, template
 
 Javascript:
@@ -25,19 +25,28 @@ Some of these folders do not currently exist in the current repository state.
 ```
 /
   Site/
+
     cache/              // Twig temporary files
+
     generated-*/        // Propel stuff
+
     include/            // Resources for a client
       css/                // Contains CSS which is compiled from LESS/SASS or is just raw CSS.
-      less OR sass/       // Contains LESS or SASS - whichever is chosen.
+      img/                // Images
       js/                 // Contains js/jquery
-    /logs               // Log files
-    /routes             // "Controller" files - contains the code to handle a specific route e.g., 
+      less OR sass/       // Contains LESS or SASS - whichever is chosen.
+
+    logs/               // Log files
+
+    routes/             // "Controller" files - contains the code to handle a specific route e.g.,
                             event.php controls /event/3 and user.php controls /user/gary.
-    /templates          // "View" files
+
+    templates/          // "View" files
+
     composer.json       // Handles PHP dependencies.
     gulpfile.js         // Gulp runs tasks, like updating PHP libraries
     index.php           // Main file
+
   Vagrantfile         // Virtual machine file
   nginx.conf          // Copied to virtual machine
   start.bat           // Starts server
