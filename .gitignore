@@ -1,14 +1,2 @@
 # General
-.*
-!/.gitignore
-site/logs/
-
-# PHP
-.idea/
-site/vendor/
-site/cache/
-composer.lock
-composer.phar
-
-# Node
-node_modules/
+.vagrant
