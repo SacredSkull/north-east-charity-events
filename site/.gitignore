@@ -2,6 +2,7 @@
 
 
 # PHP
+generated-conf/
 .idea/
 vendor/
 cache/

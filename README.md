@@ -22,9 +22,11 @@ To start the virtual server, either run **start.bat** or using a terminal, chang
 ### Shutting down
 To properly shutdown the server, either run **stop.bat**. Running this instead of just quitting will launch it far faster, next time! Using a terminal, change directory to this one and run *vagrant suspend* or *vagrant halt* - but suspending will bring it back up again much faster.
 
+### Updating
+If a new change includes modifications to the database configuration or the project's dependencies, they will need to be applied. Running **upgrade.bat** will do this. Currently looking into a way to fully automate this process!
 
 ### Troubleshooting
-If the server doesn't work for some reason, try using the **reset.bat**. This forces the slower full boot for the machine, and therefore will take a bit longer.
+If the server doesn't work for some reason, try using the **reset.bat**. This forces the slower full boot for the machine, and therefore will take a bit longer. Upgrades are automatically applied, in case that was the issue.
 
 ## Folder outline
 ```
@@ -55,9 +57,19 @@ If the server doesn't work for some reason, try using the **reset.bat**. This fo
   Vagrantfile         // Virtual machine file
   nginx.conf          // Copied to virtual machine
   start.bat           // Starts server
-  stop.bat            // Stops and suspends server
+  stop.bat            // Stops and suspends server (saving memory to file)
+  reset.bat           // Stops server, starts from fresh
+  upgrade.bat         // Forces configuration and dependency updates
+  upgrade.sh          // Script that is passed to the server to perform updates
 ```
 
-### Too long, didn't read
+## Too long, didn't read
+
+### Steps
 You're probably going to exist mostly in the *site/templates/* and *site/include/less* folders.
+Start with *start.bat*, end with *stop.bat*.
+You may be told to occasionally run *upgrade.bat*.
+If you have trouble, run *reset.bat*.
+
+### Stuff you need to know
 Read up on some [Twig](http://twig.sensiolabs.org/doc/templates.html), [Pure](http://purecss.io) and optionally, some [LESS](http://lesscss.org) too.
