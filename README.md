@@ -65,11 +65,12 @@ If the server doesn't work for some reason, try using the **reset.bat**. This fo
 
 ## Too long, didn't read
 
-### Steps
+### How to use
 You're probably going to exist mostly in the *site/templates/* and *site/include/less* folders.
-Start with *start.bat*, end with *stop.bat*.
-You may be told to occasionally run *upgrade.bat*.
-If you have trouble, run *reset.bat*.
+- Start with *start.bat*, end with *stop.bat*.
+- To view the site you go to http://localhost:8080  (for testing)
+- You may be told to occasionally run *upgrade.bat*.
+- If you have trouble, run *reset.bat*.
 
 ### Stuff you need to know
 Read up on some [Twig](http://twig.sensiolabs.org/doc/templates.html), [Pure](http://purecss.io) and optionally, some [LESS](http://lesscss.org) too.
