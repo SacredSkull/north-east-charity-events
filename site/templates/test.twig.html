@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{template_name}} Template</title>
+</head>
+<body>
+<ul id="navigation">
+    {% for item in navigation %}
+    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+</ul>
+
+<h1>{{template_name}} Template</h1>
+<p>{{ variable_name }}</p>
+</body>
+</html>

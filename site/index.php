@@ -51,8 +51,8 @@ $container['logger'] = function ($c) {
 
 // Register component on container
 $container['view'] = function ($c) {
-    $view = new \Slim\Views\Twig($c->get('renderer')['template_path'], [
-        'cache' => $c->get('renderer')['cache']
+    $view = new \Slim\Views\Twig($c->get('settings')['renderer']['template_path'], [
+        'cache' => DEBUG ? null : $c->get('settings')['renderer']['cache']
     ]);
     $view->addExtension(new \Slim\Views\TwigExtension(
         $c['router'],
@@ -66,6 +66,32 @@ $app->get('/', function (Request $request, Response $response) {
     $logger = $this->get("logger");
     $logger->addInfo("Logging works like this...");
     return $response;
+});
+
+$app->get('/{template}', function(Request $request, Response $response){
+    $template = $request->getAttribute("template");
+
+    $example = array(
+        array(
+            'href' => "/",
+            'caption' => 'Example 1'
+        ),
+        array(
+            'href' => "/",
+            'caption' => 'Example 2'
+        ),
+        array(
+            'href' => "/",
+            'caption' => 'Example 3'
+        )
+    );
+
+    return $this->get("view")->render($response, "$template.twig.html", [
+        // 'name' => $arg['name']]
+        'template_name' => $template,
+        'navigation' => $example,
+        'variable_name' => "Twig variable example"
+    ]);
 });
 
 $app->run();
