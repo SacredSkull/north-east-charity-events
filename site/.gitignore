@@ -3,6 +3,10 @@
 
 # PHP
 generated-conf/
+generated-sql/
+generated-migrations/
+NorthEastEvents/Base/
+NorthEastEvents/Map/
 .idea/
 vendor/
 cache/

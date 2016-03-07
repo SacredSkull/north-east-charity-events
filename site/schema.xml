@@ -21,76 +21,70 @@
 <database name="default" defaultIdMethod="native"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="NorthEast"
+          namespace="NorthEastEvents"
         >
-    <!-- Within the <database> tag, Propel expects one <table> tag for each table -->
-
-
-    <!--
-        Each table element should have a `name` attribute. It will be used for naming the sql table.
-
-        The `phpName` is the name that Propel will use for the generated PHP class. By default, Propel uses a
-        CamelCase version of the table name as its phpName - that means that you could omit the `phpName` attribute
-        on our `book` table.
-    -->
-    <table name="book" phpName="Book">
-        <!--
-            Each column has a `name` (the one used by the database), and an optional `phpName` attribute. Once again,
-            the Propel default behavior is to use a CamelCase version of the name as `phpName` when not specified.
-
-            Each column also requires a `type`. The XML schema is database agnostic, so the column types and attributes
-            are probably not exactly the same as the one you use in your own database. But Propel knows how to map the
-            schema types with SQL types for many database vendors. Existing Propel column types are:
-            `boolean`, `tinyint`, `smallint`, `integer`, `bigint`, `double`, `float`, `real`, `decimal`, `char`,
-            `varchar`, `longvarchar`, `date`, `time`, `timestamp`, `blob`, `clob`, `object`, and `array`.
-
-            Some column types use a size (like `varchar` and `int`), some have unlimited size (`longvarchar`, `clob`,
-            `blob`).
-
-            Check the (schema reference)[http://propelorm.org/reference/schema.html] for more details
-            on each column type.
-
-            As for the other column attributes, `required`, `primaryKey`, and `autoIncrement`, they mean exactly
-            what their names imply.
-        -->
+    <table name="user" phpName="User">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="title" type="varchar" size="255" required="true"/>
-        <column name="isbn" type="varchar" size="24" required="true" phpName="ISBN"/>
-        <column name="publisher_id" type="integer" required="true"/>
-        <column name="author_id" type="integer" required="true"/>
+        <column name="username" type="varchar" size="20" required="true"/>
+        <column name="first_name" type="varchar" size="20"/>
+        <column name="last_name" type="varchar" size="20"/>
+        <column name="avatar_url" type="varchar" size="128" default="/include/img/avatars/default.png"/>
+        <column name="permission" type="enum" valueSet="normal, staff" required="true" primaryKey="true" />
+    </table>
 
-        <!--
-            A foreign key represents a relationship. Just like a table or a column, a relationship has a `phpName`.
-            By default, Propel uses the `phpName` of the foreign table as the `phpName` of the relation.
+    <table name="event" phpName="Event">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="picture_url" type="varchar" size="128" default="/include/img/events/default.png" />
+        <column name="description" type="longvarchar"/>
+        <column name="descriptionHTML" type="longvarchar"/>
+        <column name="tickets" type="integer" default="0" />
+    </table>
 
-            The `refPhpName` defines the name of the relation as seen from the foreign table.
-        -->
-        <foreign-key foreignTable="publisher" phpName="Publisher" refPhpName="Book">
-            <reference local="publisher_id" foreign="id"/>
+    <table name="event_users" phpName="EventUsers" isCrossRef="true">
+        <column name="eventID" type="integer" required="true" primaryKey="true"/>
+        <column name="userID" type="integer" required="true" primaryKey="true" />
+        <foreign-key foreignTable="event" onDelete="CASCADE">
+            <reference local="eventID" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="author">
-            <reference local="author_id" foreign="id"/>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
         </foreign-key>
     </table>
 
-    <table name="author" phpName="Author">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="first_name" type="varchar" size="128" required="true"/>
-        <column name="last_name" type="varchar" size="128" required="true"/>
+    <table name="event_rating" phpName="EventRating">
+        <column name="eventID" type="integer" required="true" primaryKey="true" />
+        <column name="userID" type="integer" required="true" primaryKey="true" />
+        <column name="rating" type="enum" valueSet="0, 1, 2, 3, 4, 5" default="0" />
     </table>
 
-    <table name="publisher" phpName="Publisher">
+    <table name="thread" phpName="Event">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="name" type="varchar" size="128" required="true"/>
+        <column name="title" type="varchar" size="50" required="true"/>
     </table>
 
-    <!--
-        When you're done with editing, open a terminal and run
-            `$ cd /vagrant/site`
-            `$ vendor/bin/propel build`
-        to generate the model classes.
+    <table name="event_thread" phpName="EventThread" isCrossRef="true">
+        <column name="eventID" type="integer" required="true" primaryKey="true"/>
+        <column name="threadID" type="integer" required="true" primaryKey="true"/>
+    </table>
 
-        You should now be able to perform basic crud operations with your models. To learn how to use these models
-        please look into our documentation: http://propelorm.org/documentation/03-basic-crud.html
-    -->
+    <table name="comment" phpName="Comment">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="userID" type="integer" required="true" primaryKey="true"/>
+        <column name="body" type="longvarchar"/>
+        <column name="bodyHTML" type="longvarchar"/>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
+        </foreign-key>
+    </table>
+
+    <table name="thread_comment" phpName="ThreadComment" isCrossRef="true">
+        <column name="threadID" type="integer" required="true" primaryKey="true"/>
+        <column name="commentID" type="integer" required="true" primaryKey="true"/>
+        <foreign-key foreignTable="thread" onDelete="CASCADE">
+            <reference local="threadID" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="comment" onDelete="CASCADE">
+            <reference local="commentID" foreign="id"/>
+        </foreign-key>
+    </table>
 </database>

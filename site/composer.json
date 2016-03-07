@@ -4,6 +4,17 @@
         "twig/twig": "~1.0",
         "monolog/monolog": "^1.17",
         "propel/propel": "~2.0@dev",
-        "slim/twig-view": "^2.0"
+        "slim/twig-view": "^2.0",
+        "fzaninotto/faker": "^1.5",
+        "phpunit/phpunit": "^5.2"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "NorthEastEventsTests\\": "tests/"
+        },
+        "psr-4": {
+            "NorthEastEvents\\": "NorthEastEvents/"
+        }
     }
 }

@@ -70,8 +70,11 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    PATH=$PATH:/vagrant/site/vendor/bin/
     echo "export PATH=$PATH:/vagrant/site/vendor/bin/" >> ~/.bashrc
+    PATH=$PATH:/vagrant/site/vendor/bin/
+    cd /vagrant/site && php /vagrant/site/vendor/bin/propel model:build
+    cd /vagrant/site && php /vagrant/site/vendor/bin/propel sql:build
+    cd /vagrant/site && php /vagrant/site/vendor/bin/propel sql:insert
     sudo service nginx stop
     sudo rm /etc/nginx/sites-available/default
     sudo ln -s /vagrant/nginx.conf /etc/nginx/sites-available/default
