@@ -31,9 +31,9 @@
  <target name="clean"
          unless="clean.done"
          description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/api"/>
-  <delete dir="${basedir}/build/coverage"/>
-  <delete dir="${basedir}/build/logs"/>
+  <delete dir="${basedir}/../build/api"/>
+  <delete dir="${basedir}/../build/coverage"/>
+  <delete dir="${basedir}/../build/logs"/>
   <property name="clean.done" value="true"/>
  </target>
 
@@ -41,9 +41,9 @@
          unless="prepare.done"
          depends="clean"
          description="Prepare for build">
-  <mkdir dir="${basedir}/build/api"/>
-  <mkdir dir="${basedir}/build/coverage"/>
-  <mkdir dir="${basedir}/build/logs"/>
+  <mkdir dir="${basedir}/../build/api"/>
+  <mkdir dir="${basedir}/../build/coverage"/>
+  <mkdir dir="${basedir}/../build/logs"/>
   <property name="prepare.done" value="true"/>
  </target>
 
@@ -77,9 +77,9 @@
          unless="phpmd.done"
          description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="${phpmd}" taskname="phpmd">
-   <arg path="${basedir}/site" />
+   <arg path="${basedir}" />
    <arg value="text" />
-   <arg path="${basedir}/build/site/phpmd.xml" />
+   <arg path="${basedir}/phpmd.xml" />
   </exec>
 
   <property name="phpmd.done" value="true"/>
@@ -90,11 +90,11 @@
          depends="prepare"
          description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
   <exec executable="${phpmd}" taskname="phpmd">
-   <arg path="${basedir}/site" />
+   <arg path="${basedir}/" />
    <arg value="xml" />
-   <arg path="${basedir}/build/site/phpmd.xml" />
+   <arg path="${basedir}/phpmd.xml" />
    <arg value="--reportfile" />
-   <arg path="${basedir}/build/logs/pmd.xml" />
+   <arg path="${basedir}/../build/logs/pmd.xml" />
   </exec>
 
   <property name="phpmd.done" value="true"/>
@@ -106,7 +106,7 @@
          description="Run unit tests with PHPUnit">
   <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
    <arg value="--configuration"/>
-   <arg path="${basedir}/build/phpunit.xml"/>
+   <arg path="${basedir}/phpunit.xml"/>
   </exec>
 
   <property name="phpunit.done" value="true"/>
@@ -118,7 +118,7 @@
          description="Run unit tests with PHPUnit (without generating code coverage reports)">
   <exec executable="${phpunit}" failonerror="true" taskname="phpunit">
    <arg value="--configuration"/>
-   <arg path="${basedir}/build/phpunit.xml"/>
+   <arg path="${basedir}/phpunit.xml"/>
    <arg value="--no-coverage"/>
   </exec>
 
