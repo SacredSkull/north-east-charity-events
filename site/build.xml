@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="name-of-project" default="full-build">
+<project name="North East Events" default="full-build">
  <!-- By default, we assume all tools to be on the $PATH -->
- <property name="phpmd"   value="phpmd"/>
- <property name="phpunit" value="phpunit"/>
+ <property name="phpmd"   value="/home/sacredskull/.config/composer/vendor/bin/phpmd"/>
+ <property name="phpunit" value="/home/sacredskull/.config/composer/vendor/bin/phpunit"/>
 
  <target name="full-build"
          depends="prepare,static-analysis,phpunit,-check-failure"
@@ -80,6 +80,10 @@
    <arg path="${basedir}" />
    <arg value="text" />
    <arg path="${basedir}/phpmd.xml" />
+   <arg value="--exclude" />
+   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,conf/,generated-conf/,generated-migrations/" />
+   <arg value="--suffixes" />
+   <arg path=".php" />
   </exec>
 
   <property name="phpmd.done" value="true"/>
@@ -90,9 +94,13 @@
          depends="prepare"
          description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
   <exec executable="${phpmd}" taskname="phpmd">
-   <arg path="${basedir}/" />
+   <arg path="." />
    <arg value="xml" />
    <arg path="${basedir}/phpmd.xml" />
+   <arg value="--exclude" />
+   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,conf/,generated-conf/,generated-migrations/" />
+   <arg value="--suffixes" />
+   <arg path=".php" />
    <arg value="--reportfile" />
    <arg path="${basedir}/../build/logs/pmd.xml" />
   </exec>

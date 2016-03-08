@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php"
+<phpunit bootstrap="vendor/autoload.php"
          backupGlobals="false"
          backupStaticAttributes="false"
          strict="true"
          verbose="true">
 
   <testsuites>
-    <testsuite name="ProjectName">
-      <directory suffix="Test.php">site/tests/</directory>
+    <testsuite name="NorthEastEvents">
+      <directory suffix="Test.php">tests/</directory>
     </testsuite>
   </testsuites>
 
@@ -20,11 +20,11 @@
 
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">site/</directory>
+      <directory suffix=".php">tests/</directory>
       <exclude>
-        <directory>site/vendor/</directory>
-        <directory>site/NorthEastEvents/Base/</directory>
-        <directory>site/NorthEastEvents/Map/</directory>
+        <directory>vendor/</directory>
+        <directory>NorthEastEvents/Base/</directory>
+        <directory>NorthEastEvents/Map/</directory>
       </exclude>
     </whitelist>
   </filter>
