@@ -19,12 +19,12 @@
   </logging>
 
   <filter>
-    <whitelist addUncoveredFilesFromWhitelist="true">
+    <whitelist processUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">.</directory>
       <exclude>
-        <directory>vendor/</directory>
-        <directory>NorthEastEvents/Base/</directory>
-        <directory>NorthEastEvents/Map/</directory>
+        <directory suffix=".php">vendor/</directory>
+        <directory suffix=".php">NorthEastEvents/Base/</directory>
+        <directory suffix=".php">NorthEastEvents/Map/</directory>
       </exclude>
     </whitelist>
   </filter>
