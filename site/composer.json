@@ -6,7 +6,7 @@
         "propel/propel": "~2.0@dev",
         "slim/twig-view": "^2.0",
         "fzaninotto/faker": "^1.5",
-        "phpunit/phpunit": "^5.2"
+        "phpunit/phpunit": "5.2.10"
     },
 
     "autoload": {

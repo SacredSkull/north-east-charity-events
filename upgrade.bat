@@ -5,3 +5,4 @@ If Not Exist "putty.exe" (
 )
 
 putty.exe -ssh vagrant@localhost -P 2222 -pw vagrant -m upgrade.sh
+pause

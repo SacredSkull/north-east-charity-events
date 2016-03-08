@@ -17,6 +17,6 @@ use NorthEastEvents\Base\User as BaseUser;
 class User extends BaseUser
 {
     public static function isAdmin(User $user){
-        return $user->hasPermission("Staff");
+        return \NorthEastEvents\Map\UserTableMap::COL_PERMISSION_STAFF == $user->getPermission();
     }
 }

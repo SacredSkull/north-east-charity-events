@@ -1,23 +1,20 @@
 <?php
 
-
+//require '../vendor/autoload.php';
 use \NorthEastEvents\User;
 
-require 'vendor/autoload.php';
-
-class UserTest extends PHPUnit_Extensions_PhptTestCase {
+class UserTest extends PHPUnit_Framework_TestCase {
     public function testStaffPermissions()
     {
         $user = new User();
-        $user->setPermission("Staff");
-        assertTrue(User::isAdmin($user));
+        $user->setPermission(\NorthEastEvents\Map\UserTableMap::COL_PERMISSION_STAFF);
+        $this->assertTrue(User::isAdmin($user));
     }
 
-    public function testUserPermissions()
-    {
+    public function testUserPermissions() {
         $user = new User();
-        $user->setPermission("User");
-        assertFalse(User::isAdmin($user));
+        $user->setPermission(\NorthEastEvents\Map\UserTableMap::COL_PERMISSION_NORMAL);
+        $this->assertFalse(User::isAdmin($user));
     }
 
 }
