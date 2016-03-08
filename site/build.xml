@@ -58,12 +58,12 @@
     <modified />
    </fileset>
 
-  <fileset dir="${basedir}/site/routes">
+  <fileset dir="${basedir}/routes">
     <include name="**/*.php" />
     <modified />
    </fileset>
 
-   <fileset dir="${basedir}/site/tests">
+   <fileset dir="${basedir}/tests">
     <include name="**/*.php" />
     <modified />
    </fileset>
