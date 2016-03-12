@@ -1,6 +1,7 @@
 <?php
 
-define('DEBUG', true);
+if(!defined('DEBUG'))
+    define('DEBUG', true);
 
 date_default_timezone_set("Europe/London");
 
