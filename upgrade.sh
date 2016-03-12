@@ -1,5 +1,5 @@
 #!/bin/sh
-cd /vagrant/site
+cd /vagrant/src
 
 composer install
 

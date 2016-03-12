@@ -2,6 +2,6 @@
 sudo service nginx restart
 sudo service hhvm restart&
 
-cd /vagrant/site/cache
+cd /vagrant/src/cache
 
 sudo rm -rf *

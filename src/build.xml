@@ -63,7 +63,7 @@
     <modified />
    </fileset>
 
-   <fileset dir="${basedir}/tests">
+   <fileset dir="${basedir}/../tests">
     <include name="**/*.php" />
     <modified />
    </fileset>
@@ -81,7 +81,7 @@
    <arg value="text" />
    <arg path="${basedir}/phpmd.xml" />
    <arg value="--exclude" />
-   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,conf/,generated-conf/,generated-migrations/" />
+   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,config/," />
    <arg value="--suffixes" />
    <arg path=".php" />
   </exec>
@@ -98,7 +98,7 @@
    <arg value="xml" />
    <arg path="${basedir}/phpmd.xml" />
    <arg value="--exclude" />
-   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,conf/,generated-conf/,generated-migrations/" />
+   <arg path="vendor/,NorthEastEvents/Base,NorthEastEvents/Map/,cache/,config/," />
    <arg value="--suffixes" />
    <arg path=".php" />
    <arg value="--reportfile" />
