@@ -1,5 +1,6 @@
 DROP DATABASE IF EXISTS north_east_charity;
 DROP USER IF EXISTS 'northeast'@'%';
+DROP USER IF EXISTS 'root'@'%';
 CREATE DATABASE north_east_charity;
 CREATE USER 'northeast'@'%' IDENTIFIED BY 'charity';
 CREATE USER 'root'@'%' IDENTIFIED BY 'vagrant';

@@ -70,19 +70,19 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
-    PATH=$PATH:/vagrant/src/vendor/bin/
-    cd /vagrant/src/config/propel && php /vagrant/src/vendor/bin/propel model:build
-    cd /vagrant/src/config/propel && php /vagrant/src/vendor/bin/propel sql:build
-    cd /vagrant/src/config/propel && php /vagrant/src/vendor/bin/propel sql:insert
     sudo service nginx stop
     sudo rm /etc/nginx/sites-available/default
     sudo ln -s /vagrant/nginx.conf /etc/nginx/sites-available/default
     sudo rm /var/log/hhvm/error.log
     sudo ln -s /vagrant/src/logs/php.error.log /var/log/hhvm/error.log
-    cd /vagrant/site && composer install
+    cd /vagrant/src && composer install
+	sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
+	echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
+    PATH=$PATH:/vagrant/src/vendor/bin/
+    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel model:build
+    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:build
+    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:insert
     sudo service nginx start
     sudo service hhvm restart
-    sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
   SHELL
 end
