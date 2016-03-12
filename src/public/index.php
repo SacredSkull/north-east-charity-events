@@ -3,7 +3,7 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require "../config/bootstrap.php";
+require __DIR__ . "/../config/bootstrap.php";
 
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write("Hello");

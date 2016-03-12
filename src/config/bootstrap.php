@@ -4,13 +4,13 @@ define('DEBUG', true);
 
 date_default_timezone_set("Europe/London");
 
-if(!file_exists("../vendor")){
+if(!file_exists(__DIR__ . "/../vendor")){
     echo "<p>The composer folder is missing! The website cannot run without its dependencies - try running <i>'vagrant provision'</i>, or manually attempt a fix with <i>'composer install'</i></p><br><br>.";
 }
 
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-$settings = require '../config/slim/slim.php';
+$settings = require __DIR__ . '/../config/slim/slim.php';
 $app = new \Slim\App($settings);
 
 // Get container
