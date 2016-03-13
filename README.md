@@ -82,7 +82,11 @@ You're probably going to exist mostly in the *src/templates/\** and *src/include
 - To view the site you go to http://localhost:8080  (for testing)
 - You may be told to occasionally run *upgrade.bat*.
 - If you have trouble, run *reset.bat*.
-- After you commit, Jenkins will load your new changes and give them a spin to see if they work - results on Slack!
+- After you commit, <del>Jenkins</del> Phil will load your new changes and give them a spin to see if they work - results on Slack!
 
-### Stuff you need to know
-Read up on some [Twig](http://twig.sensiolabs.org/doc/templates.html), [Pure](http://purecss.io) and optionally, some [LESS](http://lesscss.org) too.
+## Stuff you need to know
+### Frontend
+Read up on some [Twig](http://twig.sensiolabs.org/doc/templates.html), [Bootstrap](http://getbootstrap.com/) and optionally, some [LESS](http://lesscss.org) too. Javascript is also optional, if you're completely new, I'd recommend diving straight into [jQuery](http://jquery.com/)
+
+### Backend
+Some PHP
