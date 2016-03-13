@@ -29,7 +29,7 @@
         <column name="first_name" type="varchar" size="20"/>
         <column name="last_name" type="varchar" size="20"/>
         <column name="avatar_url" type="varchar" size="128" default="/include/img/avatars/default.png"/>
-        <column name="permission" type="enum" valueSet="normal, staff" required="true" primaryKey="true" />
+        <column name="permission" type="enum" valueSet="normal, staff" default="normal" primaryKey="true" />
     </table>
 
     <table name="event" phpName="Event">

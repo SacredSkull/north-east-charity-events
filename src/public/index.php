@@ -12,6 +12,16 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->get('/data', function (Request $request, Response $response) {
+    for($i = 1; $i < 1000; $i++){
+        $user = new \NorthEastEvents\User();
+        $user->setUsername("PHIL" . $i);
+        $user->save();
+    }
+    $response->getBody()->write("Hello");
+    return $response;
+});
+
 $app->get('/{template}', function(Request $request, Response $response){
     $template = $request->getAttribute("template");
 

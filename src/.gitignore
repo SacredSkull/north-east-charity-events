@@ -1,5 +1,5 @@
 # General
-
+logs/*
 
 # PHP
 generated-conf/

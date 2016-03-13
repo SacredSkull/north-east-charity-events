@@ -10,6 +10,7 @@ if(!file_exists(__DIR__ . "/../vendor")){
 }
 
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../config/propel/generated-conf/config.php';
 
 $settings = require __DIR__ . '/../config/slim/slim.php';
 $app = new \Slim\App($settings);
