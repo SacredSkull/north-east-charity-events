@@ -67,5 +67,5 @@ $app->group('/api', function() use ($app) {
         }
 
         return $response;
-    });
+    })->setName("User_API_REST");
 });

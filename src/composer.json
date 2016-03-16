@@ -6,7 +6,12 @@
         "propel/propel": "~2.0@dev",
         "slim/twig-view": "^2.0",
         "fzaninotto/faker": "^1.5",
-        "phpunit/phpunit": "5.2.10"
+        "phpunit/phpunit": "5.2.10",
+        "kzykhys/ciconia": "~1.0.0"
+    },
+
+    "require-dev":{
+        "nategood/httpful": "*"
     },
 
     "autoload": {
@@ -14,7 +19,10 @@
             "NorthEastEventsTests\\": "tests/"
         },
         "psr-4": {
-            "NorthEastEvents\\": "NorthEastEvents/"
+            "NorthEastEvents\\": "NorthEastEvents/",
+            "ORM\\": "ORM/"
         }
+
+
     }
 }

@@ -5,6 +5,9 @@ composer install
 
 cd config/propel
 
+# Clear the migrations
+rm generated-migrations/*.php
+
 php /vagrant/src/vendor/propel/propel/bin/propel.php config:convert
 php /vagrant/src/vendor/propel/propel/bin/propel.php model:build
 php /vagrant/src/vendor/propel/propel/bin/propel.php diff

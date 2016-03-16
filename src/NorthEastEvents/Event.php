@@ -16,5 +16,8 @@ use NorthEastEvents\Base\Event as BaseEvent;
  */
 class Event extends BaseEvent
 {
-
+    // Singleton ciconia instance
+    public function preSave($con = null) {
+        //$this->setBodyHTML(CiconiaSingleton::get()->render($this->getBody()));
+    }
 }

@@ -2,7 +2,7 @@
 
 return [
     'settings' => [
-        'displayErrorDetails' => DEBUG,
+        'displayErrorDetails' => \NorthEastEvents\Bootstrap::DEBUG,
         // Renderer settings
         'renderer' => [
             'template_path' => __DIR__ . '/../../templates',
@@ -14,7 +14,7 @@ return [
             'path' => __DIR__ . '/../../logs/app.log',
         ],
         'debug' => [
-            'revealHttpVariables' => DEBUG
+            'revealHttpVariables' => \NorthEastEvents\Bootstrap::DEBUG
         ],
     ],
 ];
