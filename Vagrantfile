@@ -84,6 +84,7 @@ Vagrant.configure(2) do |config|
 	  sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
 	  echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
     PATH=$PATH:/vagrant/src/vendor/bin/
+    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel config:convert
     cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel model:build
     cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:build
     cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:insert
