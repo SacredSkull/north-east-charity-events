@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
     sudo ln -sf /vagrant/logs/error.php.log /var/log/hhvm/error.log
     sudo service nginx start
     sudo service hhvm start
-    cd /vagrant/src && composer update
+    cd /vagrant/src && composer install
 	  sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
 	  echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
     PATH=$PATH:/vagrant/src/vendor/bin/
