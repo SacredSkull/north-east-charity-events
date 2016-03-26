@@ -18,6 +18,7 @@ class Event extends BaseEvent
 {
     // Singleton ciconia instance
     public function preSave($con = null) {
-        //$this->setBodyHTML(CiconiaSingleton::get()->render($this->getBody()));
+        $this->setBodyHTML(Bootstrap::getCiconia()->render($this->getBody()));
+        return true;
     }
 }

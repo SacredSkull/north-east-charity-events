@@ -14,7 +14,6 @@ use NorthEastEvents\Base\UserQuery as BaseUserQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class UserQuery extends BaseUserQuery
-{
+class UserQuery extends BaseUserQuery {
 
 }

@@ -7,7 +7,8 @@
         "slim/twig-view": "^2.0",
         "fzaninotto/faker": "^1.5",
         "phpunit/phpunit": "5.2.10",
-        "kzykhys/ciconia": "~1.0.0"
+        "kzykhys/ciconia": "~1.0.0",
+        "aura/session": "^2.0"
     },
 
     "require-dev":{
@@ -19,8 +20,7 @@
             "NorthEastEventsTests\\": "tests/"
         },
         "psr-4": {
-            "NorthEastEvents\\": "NorthEastEvents/",
-            "ORM\\": "ORM/"
+            "NorthEastEvents\\": "NorthEastEvents/"
         }
 
 

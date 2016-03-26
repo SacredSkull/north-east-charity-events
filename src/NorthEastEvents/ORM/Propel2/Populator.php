@@ -1,6 +1,6 @@
 <?php
 
-namespace ORM\Propel2;
+namespace NorthEastEvents\ORM\Propel2;
 
 
 use Propel\Runtime\Propel;
@@ -56,8 +56,8 @@ class Populator
         if (null === $con) {
             $con = $this->getConnection();
         }
-//        $isInstancePoolingEnabled = \Propel::isInstancePoolingEnabled();
-//        \Propel::disableInstancePooling();
+        $isInstancePoolingEnabled = Propel::isInstancePoolingEnabled();
+        Propel::disableInstancePooling();
         $insertedEntities = array();
         $con->beginTransaction();
         foreach ($this->quantities as $class => $number) {
@@ -66,9 +66,9 @@ class Populator
             }
         }
         $con->commit();
-//        if ($isInstancePoolingEnabled) {
-//            \Propel::enableInstancePooling();
-//        }
+        if ($isInstancePoolingEnabled) {
+            Propel::enableInstancePooling();
+        }
 
         return $insertedEntities;
     }

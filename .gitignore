@@ -2,3 +2,4 @@
 .vagrant
 putty.exe
 .idea/
+build/*

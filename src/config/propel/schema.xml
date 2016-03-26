@@ -19,7 +19,7 @@
     <table name="user" phpName="User">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="username" type="varchar" size="50" required="true"/>
-        <column name="password" type="varchar" size="50" required="true"/>
+        <column name="password" type="varchar" size="255" required="true"/>
         <column name="email" type="varchar" size="100" required="true"/>
         <column name="first_name" type="varchar" size="20"/>
         <column name="last_name" type="varchar" size="20"/>
@@ -38,8 +38,8 @@
     </table>
 
     <table name="event_users" phpName="EventUsers" isCrossRef="true">
-        <column name="eventID" type="integer" required="true" primaryKey="true"/>
-        <column name="userID" type="integer" required="true" primaryKey="true" />
+        <column name="eventID" type="integer" phpName="EventID" required="true" primaryKey="true"/>
+        <column name="userID" type="integer" phpName="UserID" required="true" primaryKey="true" />
         <behavior name="timestampable" />
         <foreign-key foreignTable="event" onDelete="CASCADE">
             <reference local="eventID" foreign="id"/>
@@ -50,8 +50,8 @@
     </table>
 
     <table name="event_rating" phpName="EventRating">
-        <column name="eventID" type="integer" required="true" primaryKey="true" />
-        <column name="userID" type="integer" required="true" primaryKey="true" />
+        <column name="eventID" phpName="EventID" type="integer" required="true" primaryKey="true" />
+        <column name="userID" type="integer" phpName="UserID" required="true" primaryKey="true" />
         <column name="rating" type="enum" valueSet="0, 1, 2, 3, 4, 5" default="0" />
         <behavior name="timestampable" />
     </table>
@@ -59,33 +59,29 @@
     <table name="thread" phpName="Thread">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="title" type="varchar" size="50" required="true"/>
+        <column name="eventID" phpName="EventID" type="integer" required="true"/>
+        <column name="userID" phpName="UserID" type="integer" required="true"/>
+        <foreign-key foreignTable="event" onDelete="CASCADE">
+            <reference local="eventID" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
+        </foreign-key>
         <behavior name="timestampable" />
-    </table>
-
-    <table name="event_thread" phpName="EventThread" isCrossRef="true">
-        <column name="eventID" type="integer" required="true" primaryKey="true"/>
-        <column name="threadID" type="integer" required="true" primaryKey="true"/>
     </table>
 
     <table name="comment" phpName="Comment">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="userID" type="integer" required="true" primaryKey="true"/>
         <column name="body" type="longvarchar"/>
-        <column name="bodyHTML" type="longvarchar"/>
-        <behavior name="timestampable" />
-        <foreign-key foreignTable="user" onDelete="CASCADE">
-            <reference local="userID" foreign="id"/>
-        </foreign-key>
-    </table>
-
-    <table name="thread_comment" phpName="ThreadComment" isCrossRef="true">
-        <column name="threadID" type="integer" required="true" primaryKey="true"/>
-        <column name="commentID" type="integer" required="true" primaryKey="true"/>
+        <column name="bodyHTML" phpName="BodyHTML" type="longvarchar"/>
+        <column name="userID" phpName="UserID" type="integer" required="true"/>
+        <column name="threadID" phpName="ThreadID" type="integer" required="true"/>
         <foreign-key foreignTable="thread" onDelete="CASCADE">
             <reference local="threadID" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="comment" onDelete="CASCADE">
-            <reference local="commentID" foreign="id"/>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
         </foreign-key>
+        <behavior name="timestampable" />
     </table>
 </database>
