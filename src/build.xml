@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="North East Events" default="full-build">
  <!-- By default, we assume all tools to be on the $PATH -->
- <property name="phpmd"   value="/home/sacredskull/.config/composer/vendor/bin/phpmd"/>
- <property name="phpunit" value="/home/sacredskull/.config/composer/vendor/bin/phpunit"/>
+ <property name="phpmd"   value="/home/vagrant/.composer/vendor/bin/phpmd"/>
+ <property name="phpunit" value="/home/vagrant/.composer/vendor/bin/phpunit"/>
 
  <target name="full-build"
          depends="prepare,static-analysis,phpunit,-check-failure"

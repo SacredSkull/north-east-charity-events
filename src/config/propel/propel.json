@@ -4,7 +4,7 @@
             "connections": {
                 "default": {
                     "adapter": "mysql",
-                    "dsn": "mysql:host=localhost;port=3307;dbname=north_east_charity",
+                    "dsn": "mysql:host=localhost;port=3306;dbname=north_east_charity",
                     "user": "northeast",
                     "password": "charity",
                     "settings": {

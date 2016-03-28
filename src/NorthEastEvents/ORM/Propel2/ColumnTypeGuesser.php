@@ -16,7 +16,6 @@ class ColumnTypeGuesser
 
     public function guessFormat(ColumnMap $column)
     {
-        //TODO: Check \Propel\Generator\Model\PropelTypes and ensure that all these have been switch'd.
         $generator = $this->generator;
         if ($column->isTemporal()) {
                 return function () use ($generator) {
