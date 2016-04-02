@@ -11,5 +11,5 @@ REM start putty.exe -ssh vagrant@localhost -P 2222 -pw vagrant
 REM ### DOCKER CONFIG ###
 docker-machine start
 env.bat
-docker-compose up -d
+call docker-compose up -d
 pause
