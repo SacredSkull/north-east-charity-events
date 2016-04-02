@@ -51,7 +51,7 @@ class EntityPopulator
         $peerClass = $class::TABLE_MAP;
         $tableMap = $peerClass::getTableMap();
         $nameGuesser = new \Faker\Guesser\Name($generator);
-        $columnTypeGuesser = new \ORM\Propel2\ColumnTypeGuesser($generator);
+        $columnTypeGuesser = new ColumnTypeGuesser($generator);
         foreach ($tableMap->getColumns() as $columnMap) {
             // skip behavior columns, handled by modifiers
             if ($this->isColumnBehavior($columnMap)) {

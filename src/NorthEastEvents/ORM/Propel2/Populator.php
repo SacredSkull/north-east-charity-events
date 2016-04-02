@@ -28,8 +28,8 @@ class Populator
      */
     public function addEntity($entity, $number, $customColumnFormatters = array(), $customModifiers = array())
     {
-        if (!$entity instanceof \ORM\Propel2\EntityPopulator) {
-            $entity = new \ORM\Propel2\EntityPopulator($entity);
+        if (!$entity instanceof EntityPopulator) {
+            $entity = new EntityPopulator($entity);
         }
         $entity->setColumnFormatters($entity->guessColumnFormatters($this->generator));
         if ($customColumnFormatters) {
