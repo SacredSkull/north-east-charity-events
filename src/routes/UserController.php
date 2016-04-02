@@ -188,6 +188,7 @@ $app->post('/user/logout', '\NorthEastEvents\UserController:LogoutController');
 
 $app->group('/api', function () use ($app) {
     $app->get('/users', '\NorthEastEvents\UserController:APIGetUsers');
+    $app->post('/user/register', '\NorthEastEvents\UserController:CreateUser')->setName("APIUserCreate");
     $app->post('/user/login', '\NorthEastEvents\UserController:APILoginController')->setName("APIUserLogin");
     //TODO: Logout
     $app->post('/user/logout', '\NorthEastEvents\UserController:APILogoutController')->setName("APIUserLogout");

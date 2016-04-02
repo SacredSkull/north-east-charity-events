@@ -4,10 +4,14 @@
     <list default="true" id="82925544-7a82-4449-85ab-84b114c4e8db" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vagrantfile" afterPath="$PROJECT_DIR$/Vagrantfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/ColumnTypeGuesser.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/ColumnTypeGuesser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/build.xml" afterPath="$PROJECT_DIR$/src/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reset.bat" afterPath="$PROJECT_DIR$/reset.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/User.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/User.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/propel/propel.json" afterPath="$PROJECT_DIR$/src/config/propel/propel.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/UserTest.php" afterPath="$PROJECT_DIR$/tests/UserTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/UserController.php" afterPath="$PROJECT_DIR$/src/routes/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/start.bat" afterPath="$PROJECT_DIR$/start.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stop.bat" afterPath="$PROJECT_DIR$/stop.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upgrade.bat" afterPath="$PROJECT_DIR$/upgrade.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upgrade.sh" afterPath="$PROJECT_DIR$/upgrade.sh" />
     </list>
     <ignored path="site.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,55 +37,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/test.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2346">
-              <caret line="140" column="120" selection-start-line="140" selection-start-column="120" selection-end-line="140" selection-end-column="120" />
-              <folding>
-                <element signature="e#7#32#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/composer.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/config/bootstrap.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/public/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
+            <state relative-caret-position="238">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/base.php">
+      <file leaf-file-name="LoginSession.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/LoginSession.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+            <state relative-caret-position="238">
+              <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/BaseController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
               <folding>
-                <element signature="e#7#63#0#PHP" expanded="true" />
+                <element signature="e#35#91#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,9 +72,23 @@
       <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="47" column="31" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="442">
+              <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+              <folding>
+                <element signature="e#35#77#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/UserController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+              <folding>
+                <element signature="e#34#75#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,19 +96,11 @@
       <file leaf-file-name="UserTest.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/users.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="1632">
+              <caret line="98" column="23" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
+              <folding>
+                <element signature="e#164#190#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,20 +121,30 @@
         <option value="$PROJECT_DIR$/src/bootstrap.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Base/Event.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Ciconia.php" />
-        <option value="$PROJECT_DIR$/src/routes/users.php" />
-        <option value="$PROJECT_DIR$/src/public/index.php" />
         <option value="$PROJECT_DIR$/src/config/slim/slim.php" />
-        <option value="$PROJECT_DIR$/src/config/bootstrap.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Event.php" />
         <option value="$PROJECT_DIR$/Vagrantfile" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/User.php" />
         <option value="$PROJECT_DIR$/src/ORM/Propel2/Populator.php" />
         <option value="$PROJECT_DIR$/src/ORM/Propel2/EntityPopulator.php" />
         <option value="$PROJECT_DIR$/src/ORM/Propel2/ColumnTypeGuesser.php" />
         <option value="$PROJECT_DIR$/src/composer.json" />
-        <option value="$PROJECT_DIR$/src/routes/test.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/ColumnTypeGuesser.php" />
+        <option value="$PROJECT_DIR$/src/routes/ThreadController.php" />
+        <option value="$PROJECT_DIR$/src/routes/users.php" />
+        <option value="$PROJECT_DIR$/src/routes/Controller.php" />
+        <option value="$PROJECT_DIR$/src/routes/test.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/Populator.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/EntityPopulator.php" />
+        <option value="$PROJECT_DIR$/src/routes/base.php" />
+        <option value="$PROJECT_DIR$/src/public/index.php" />
+        <option value="$PROJECT_DIR$/src/routes/BaseController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Session.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/LoginSession.php" />
+        <option value="$PROJECT_DIR$/src/config/bootstrap.php" />
+        <option value="$PROJECT_DIR$/src/routes/TestController.php" />
         <option value="$PROJECT_DIR$/tests/UserTest.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/User.php" />
+        <option value="$PROJECT_DIR$/src/routes/UserController.php" />
       </list>
     </option>
   </component>
@@ -164,14 +162,14 @@
           <mapping local-root="$PROJECT_DIR$/src" remote-root="/vagrant/src" />
         </path_mappings>
       </server>
-      <server host="localhost" id="08cef15b-12c9-43ee-8aa2-8c789a135a79" name="localhost" use_path_mappings="true">
+      <server host="localhost" id="9fb59f46-cf30-4b31-8d93-a23be5e486ab" name="localhost" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$/src/public" remote-root="/var/www/src/public" />
         </path_mappings>
       </server>
     </servers>
   </component>
-  <component name="PhpWebServerValidation" deployment_server_id="a8cad70e-3fcf-4239-8a13-1ed2b63ca637" path_to_validation_script="D:\My Documents\GitHub\north-east-charity\src\public" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost:8080/" />
+  <component name="PhpWebServerValidation" deployment_server_id="a8cad70e-3fcf-4239-8a13-1ed2b63ca637" path_to_validation_script="C:\Users\Peter\Documents\north-east-charity-events\src\public" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost:8080/" />
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="Remote PHP 5.6">
     <include_path>
       <path value="." />
@@ -248,7 +246,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -309,7 +306,25 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="north-east-charity-events" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NorthEastEvents" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -357,30 +372,106 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests" />
+    <property name="last_opened_file_path" value="C:/Program Files/Git/cmd/git.exe" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Peter\Documents\north-east-charity-events\src\NorthEastEvents" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.UserTest.testUserAPIAnonymousRead">
-    <configuration default="false" name="test.php" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/site/test.php">
-      <method />
-    </configuration>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080/" />
+          <option name="urlPath" value="/" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="POST" />
+          <option name="urlBase" value="http://localhost:8080/" />
+          <option name="urlPath" value="/" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080/users" />
+          <option name="urlPath" value="/users" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="PHPUnit.UserTest.testUserAPIAuthorisedRead">
     <configuration default="false" name="UserTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="UserTest" file="$PROJECT_DIR$/tests/UserTest.php" scope="Class" />
       <method />
     </configuration>
     <configuration default="false" name="UserTest.testUserAPIAnonymousRead" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="UserTest" file="$PROJECT_DIR$/tests/UserTest.php" method="testUserAPIAnonymousRead" scope="Method" />
+      <method />
+    </configuration>
+    <configuration default="false" name="UserTest.testUserAPIAnonymousRegistration" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserTest" file="$PROJECT_DIR$/tests/UserTest.php" method="testUserAPIAnonymousRegistration" scope="Method" />
+      <method />
+    </configuration>
+    <configuration default="false" name="UserTest.testUserAPILogin" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserTest" file="$PROJECT_DIR$/tests/UserTest.php" method="testUserAPILogin" scope="Method" />
+      <method />
+    </configuration>
+    <configuration default="false" name="UserTest.testUserAPIAuthorisedRead" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserTest" file="$PROJECT_DIR$/tests/UserTest.php" method="testUserAPIAuthorisedRead" scope="Method" />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -426,19 +517,23 @@
     <configuration default="false" name="PHPUnit Debug" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" debug_server_name="vagrant (local)" scope="Directory" path="$PROJECT_DIR$/tests" server_id="7714b192-ca20-4aa2-b630-70f253da00c6" server_name="Vagrant" upload_test_files_before_run="false">
       <method />
     </configuration>
-    <list size="6">
+    <list size="8">
       <item index="0" class="java.lang.String" itemvalue="PHP Web Application.Vagrant" />
       <item index="1" class="java.lang.String" itemvalue="PHPUnit.Tests" />
       <item index="2" class="java.lang.String" itemvalue="PHPUnit by HTTP.PHPUnit Debug" />
-      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.test.php" />
-      <item index="4" class="java.lang.String" itemvalue="PHPUnit.UserTest" />
-      <item index="5" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRead" />
+      <item index="3" class="java.lang.String" itemvalue="PHPUnit.UserTest" />
+      <item index="4" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRead" />
+      <item index="5" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRegistration" />
+      <item index="6" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPILogin" />
+      <item index="7" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAuthorisedRead" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRead" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAuthorisedRead" />
         <item index="1" class="java.lang.String" itemvalue="PHPUnit.UserTest" />
-        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.test.php" />
+        <item index="2" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPILogin" />
+        <item index="3" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRegistration" />
+        <item index="4" class="java.lang.String" itemvalue="PHPUnit.UserTest.testUserAPIAnonymousRead" />
       </list>
     </recent_temporary>
   </component>
@@ -462,43 +557,56 @@
       <workItem from="1459008532496" duration="1569000" />
       <workItem from="1459108370682" duration="2946000" />
       <workItem from="1459124142844" duration="616000" />
+      <workItem from="1459186236320" duration="1220000" />
+      <workItem from="1459272270324" duration="2663000" />
+      <workItem from="1459292462185" duration="14293000" />
+      <workItem from="1459342376292" duration="10992000" />
+      <workItem from="1459380554334" duration="618000" />
+      <workItem from="1459432012651" duration="11707000" />
+      <workItem from="1459472554513" duration="5350000" />
+      <workItem from="1459517230705" duration="2406000" />
+      <workItem from="1459523482205" duration="19000" />
+      <workItem from="1459546399514" duration="154000" />
+      <workItem from="1459546600108" duration="634000" />
+      <workItem from="1459548014331" duration="742000" />
+      <workItem from="1459557956901" duration="1260000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="PHPUnit_Debug - 2016.03.25 at 16h 24m 24s.xml">
-      <configuration name="PHPUnit Debug" configurationId="PhpUnitRemoteRunConfigurationType" />
+    <history-entry file="UserTest - 2016.04.01 at 03h 29m 14s.xml">
+      <configuration name="UserTest" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="Tests - 2016.03.25 at 18h 44m 09s.xml">
-      <configuration name="Tests" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPIAuthorisedRead - 2016.04.01 at 03h 29m 48s.xml">
+      <configuration name="UserTest.testUserAPIAuthorisedRead" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="Tests - 2016.03.25 at 19h 31m 27s.xml">
-      <configuration name="Tests" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPIAuthorisedRead - 2016.04.01 at 03h 30m 41s.xml">
+      <configuration name="UserTest.testUserAPIAuthorisedRead" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="Tests - 2016.03.25 at 20h 07m 17s.xml">
-      <configuration name="Tests" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPIAuthorisedRead - 2016.04.01 at 03h 34m 32s.xml">
+      <configuration name="UserTest.testUserAPIAuthorisedRead" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="Tests - 2016.03.25 at 20h 11m 39s.xml">
-      <configuration name="Tests" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPIAuthorisedRead - 2016.04.01 at 03h 35m 01s.xml">
+      <configuration name="UserTest.testUserAPIAuthorisedRead" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="UserTest_testUserAPIAnonymousRead - 2016.03.25 at 16h 06m 26s.xml">
-      <configuration name="UserTest.testUserAPIAnonymousRead" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPIAuthorisedRead - 2016.04.01 at 03h 37m 49s.xml">
+      <configuration name="UserTest.testUserAPIAuthorisedRead" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="UserTest_testUserAPIAnonymousRead - 2016.03.25 at 16h 13m 29s.xml">
-      <configuration name="UserTest.testUserAPIAnonymousRead" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPILogin - 2016.04.01 at 02h 56m 41s.xml">
+      <configuration name="UserTest.testUserAPILogin" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="UserTest_testUserAPIAnonymousRead - 2016.03.25 at 20h 12m 30s.xml">
-      <configuration name="UserTest.testUserAPIAnonymousRead" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPILogin - 2016.04.01 at 02h 57m 15s.xml">
+      <configuration name="UserTest.testUserAPILogin" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="UserTest_testUserAPIAnonymousRead - 2016.03.25 at 20h 22m 42s.xml">
-      <configuration name="UserTest.testUserAPIAnonymousRead" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPILogin - 2016.04.01 at 02h 57m 45s.xml">
+      <configuration name="UserTest.testUserAPILogin" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="UserTest_testUserAPIAnonymousRead - 2016.03.25 at 20h 40m 51s.xml">
-      <configuration name="UserTest.testUserAPIAnonymousRead" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserTest_testUserAPILogin - 2016.04.01 at 03h 28m 54s.xml">
+      <configuration name="UserTest.testUserAPILogin" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33955000" />
+    <option name="totallyTimeSpent" value="86013000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -510,28 +618,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="7" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828479" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25970873" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328341" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="PHP-CGI Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33870968" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28328982" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29181084" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -550,78 +659,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/public/index.php</url>
-          <line>11</line>
-          <option name="timeStamp" value="9" />
+          <line>8</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Base/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="44" column="50" selection-start-line="44" selection-start-column="50" selection-end-line="44" selection-end-column="50" />
-          <folding>
-            <marker date="1458586741863" expanded="false" signature="44:405" placeholder="..." />
-            <marker date="1458586741863" expanded="true" signature="38693:38726" placeholder="INSERT INTO user... " />
-            <marker date="1458586741863" expanded="true" signature="99520:99605" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nginx.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Base/Comment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="114" column="7" selection-start-line="114" selection-start-column="7" selection-end-line="114" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/EventQuery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Base/EventQuery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Base/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="70" column="7" selection-start-line="70" selection-start-column="7" selection-end-line="71" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/CiconiaSingleton.php" />
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Comment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config/slim/slim.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -789,7 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -804,11 +849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="44" column="7" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
-          <folding>
-            <marker date="1458586741863" expanded="false" signature="44:405" placeholder="..." />
-            <marker date="1458586741863" expanded="true" signature="38693:38726" placeholder="INSERT INTO user... " />
-            <marker date="1458586741863" expanded="true" signature="99520:99605" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -826,100 +866,134 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/phpunit-no-cc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/config/bootstrap.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/EntityPopulator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/Populator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/base.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-          <folding>
-            <element signature="e#7#63#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="47" column="31" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/EventsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ThreadController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/ColumnTypeGuesser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
+        <state relative-caret-position="-810">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/test.php">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/EntityPopulator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2346">
-          <caret line="140" column="120" selection-start-line="140" selection-start-column="120" selection-end-line="140" selection-end-column="120" />
+        <state relative-caret-position="-690">
+          <caret line="102" column="21" selection-start-line="102" selection-start-column="21" selection-end-line="102" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/ORM/Propel2/Populator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/base.php" />
+    <entry file="file://$PROJECT_DIR$/src/routes/events.php" />
+    <entry file="file://$PROJECT_DIR$/src/routes/test.php" />
+    <entry file="file://$PROJECT_DIR$/src/routes/threads.php" />
+    <entry file="file://$PROJECT_DIR$/src/routes/users.php" />
+    <entry file="file://$PROJECT_DIR$/src/config/bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="36" column="74" selection-start-line="36" selection-start-column="74" selection-end-line="36" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/LoginSession.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/phpunit-no-cc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="86" column="49" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
           <folding>
-            <element signature="e#7#32#0#PHP" expanded="true" />
+            <element signature="e#35#91#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
-          <folding />
+        <state relative-caret-position="1632">
+          <caret line="98" column="23" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
+          <folding>
+            <element signature="e#164#190#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/users.php">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
-          <folding />
+        <state relative-caret-position="442">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding>
+            <element signature="e#35#77#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+          <folding>
+            <element signature="e#34#75#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,2 +1,2 @@
 @echo off
-vagrant suspend
+REM vagrant suspend

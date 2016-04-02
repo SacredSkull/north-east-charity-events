@@ -51,8 +51,8 @@ Vagrant.configure(2) do |config|
     #vb.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
 
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-    vb.cpus = "2"
+    vb.memory = "1024"
+    vb.cpus = "1"
     vb.name = "PHP-development"
   end
   #
@@ -69,24 +69,29 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  config.vm.provision "shell", run: "always" do |s|
+    s.inline = "sudo service nginx restart & sudo service hhvm restart &"
+  end
+
+
   config.vm.provision "shell", inline: <<-SHELL
-    sudo service nginx stop
-    sudo service hhvm stop
-    sudo rm /etc/nginx/sites-available/default
-    sudo ln -sf /vagrant/nginx.conf /etc/nginx/sites-available/default
-    sudo ln -sf /vagrant/php.ini /etc/hhvm/php.ini
-    sudo ln -sf /vagrant/hhvm.conf /etc/nginx/hhvm.conf
-    sudo rm /var/log/hhvm/error.log
-    sudo ln -sf /vagrant/logs/error.php.log /var/log/hhvm/error.log
-    sudo service nginx start
-    sudo service hhvm start
-    cd /vagrant/src && composer install
-	  sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
-	  echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
-    PATH=$PATH:/vagrant/src/vendor/bin/
-    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel config:convert
-    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel model:build
-    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:build
-    cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:insert
-  SHELL
-end
+      sudo service nginx stop
+      sudo service hhvm stop
+      sudo rm /etc/nginx/sites-available/default
+      sudo ln -sf /vagrant/nginx.conf /etc/nginx/sites-available/default
+      sudo ln -sf /vagrant/php.ini /etc/hhvm/php.ini
+      sudo ln -sf /vagrant/hhvm.conf /etc/nginx/hhvm.conf
+      sudo rm /var/log/hhvm/error.log
+      sudo ln -sf /vagrant/logs/error.php.log /var/log/hhvm/error.log
+      sudo service nginx start
+      sudo service hhvm start
+      cd /vagrant/src && composer install
+  	  sudo mysql -u root --password=vagrant < /vagrant/setup-database.sql
+  	  echo "export PATH=$PATH:/vagrant/src/vendor/bin/" >> ~/.bashrc
+      PATH=$PATH:/vagrant/src/vendor/bin/
+      cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel config:convert
+      cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel model:build
+      cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:build
+      cd /vagrant/src/config/propel && /vagrant/src/vendor/bin/propel sql:insert
+    SHELL
+  end

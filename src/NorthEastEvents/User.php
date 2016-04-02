@@ -3,7 +3,6 @@
 namespace NorthEastEvents;
 
 use NorthEastEvents\Base\User as BaseUser;
-use NorthEastEvents\Base\UserQuery;
 
 /**
  * Skeleton subclass for representing a row from the 'user' table.
@@ -55,7 +54,7 @@ class User extends BaseUser
                 $this->getId(), $this->getUsername()));
             return false;
         }
-            
+
         $this->setPassword($hashed);
         return true;
     }
