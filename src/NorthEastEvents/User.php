@@ -24,6 +24,8 @@ class User extends BaseUser
     // Login is whatever the anonymous client provided: username or email
     public static function CheckLogin($username, $password){
         $user = UserQuery::create()->findOneByUsername($username);
+        if($username == null || strlen($username) == 0 || $password == null || strlen($password) == 0)
+            return false;
         if($user == null){
             // Let's check their email next
             $user = UserQuery::create()->findOneByEmail($username);
@@ -40,10 +42,15 @@ class User extends BaseUser
     }
 
     public function preSave(\Propel\Runtime\Connection\ConnectionInterface $con = null) {
+        if(UserQuery::create()->findOneByUsername($this->getUsername()) != null)
+            return false;
+        if(UserQuery::create()->findOneByEmail($this->getEmail()) != null)
+            return false;
+
         $hashed = password_hash($this->getPassword(), CRYPT_BLOWFISH);
 
         // In case something is wrong with the hash
-        if(strlen($hashed) == 0){
+        if(strlen($hashed) == 0 && password_verify($this->getPassword(), $hashed)){
             Bootstrap::getLogger()->addCritical(sprintf('Hashing has completely failed for user ID: %i, username: %s',
                 $this->getId(), $this->getUsername()));
             return false;

@@ -31,6 +31,12 @@ namespace NorthEastEvents {
             return static::$_session;
         }
 
+        public static function getLoginSession(){
+            if(static::$_session == null)
+                static::initialise();
+            return static::$_session->getSegment('NorthEastEvents\Login');
+        }
+
         public static function getLogger(){
             return static::getSlim()->getContainer()["logger"];
         }
