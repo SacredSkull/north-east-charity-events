@@ -12,7 +12,8 @@
     },
 
     "require-dev":{
-        "nategood/httpful": "*"
+		"guzzlehttp/guzzle": "~6.0",
+        "codeclimate/php-test-reporter": "^0.3.0"
     },
 
     "autoload": {
