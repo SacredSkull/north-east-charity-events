@@ -7,23 +7,51 @@ services:
     volumes:
       - .:/var/www
       - ./conf/nginx/nginx.docker.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - db
   php:
-    image: bitnami/php-fpm
+    build:
+      context: .
+      dockerfile: ./php.dockerfile
     volumes:
       - .:/var/www
-      - ./src:/app
-      - ./logs/php:/bitnami/php-fpm/logs/
-      - ./conf/php:/bitnami/php-fpm/conf/
+      - ./logs/php:/var/log/php
+      - ./conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "9001:9000"
+      - "9089:9089"
     environment:
-      - PATH=/opt/bitnami/php/sbin:/opt/bitnami/php/bin:/opt/bitnami/common/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/src/vendor/bin:/var/www/src/vendor/propel/propel/bin
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/src/vendor/bin:/var/www/src/vendor/propel/propel/bin
   db:
     image: mariadb
+    volumes:
+      - mysqldatabase:/var/lib/mysql
     ports:
       - "3307:3306"
     environment:
-     - MYSQL_ROOT_PASSWORD=vagrant
-     - MYSQL_DATABASE=north_east_charity
-     - MYSQL_USER=northeast
-     - MYSQL_PASSWORD=charity
+      - MYSQL_ROOT_PASSWORD=vagrant
+      - MYSQL_DATABASE=north_east_charity
+      - MYSQL_USER=northeast
+      - MYSQL_PASSWORD=charity
+      - TERM=xterm
+  ssh-php:
+    depends_on:
+      - php
+    image: jeroenpeeters/docker-ssh
+    ports:
+      - "2222:22"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - CONTAINER=northeastcharityevents_php_1
+      - AUTH_MECHANISM=noAuth
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      - BLACKFIRE_CLIENT_ID=e29d8012-566e-41ed-b5c0-2cb5e121e5f4
+      - BLACKFIRE_CLIENT_TOKEN=f1f0ad61e0d47bc55d79be88f475c078ab6e2db020f20b817f429fedca92b240
+      - BLACKFIRE_SERVER_ID=ec42f582-14cf-4955-b79a-ebbb79930c32
+      - BLACKFIRE_SERVER_TOKEN=eabc7b1f546451e4c222167e8f6dc812e833f60a5c4e35a5067750ea4d4ddb98
+volumes:
+  mysqldatabase:

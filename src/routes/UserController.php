@@ -178,6 +178,7 @@ class UserController extends Controller {
     }
 }
 
+$app = Bootstrap::getSlim();
 // All users
 $app->get('/users', '\NorthEastEvents\UserController:GetUsers');
 

@@ -1,16 +1,15 @@
 <?php
 
-
 namespace NorthEastEvents {
+
+    require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/propel/generated-conf/config.php';
 
     use Monolog\Handler\StreamHandler;
     use Monolog\Logger;
     use Monolog\Processor\UidProcessor;
     use Ciconia\Ciconia;
     use Ciconia\Extension\Gfm;
-
-    require __DIR__ . '/../vendor/autoload.php';
-    require __DIR__ . '/propel/generated-conf/config.php';
 
     class Bootstrap {
         const DEBUG = true;
@@ -59,7 +58,7 @@ namespace NorthEastEvents {
 
             if (!file_exists(__DIR__ . "/../vendor"))
                 echo "<p>The composer folder is missing! The website cannot run without its dependencies - try running".
-                "<i>'vagrant provision'</i>, or manually attempt a fix with <i>'composer install'</i></p><br><br>.";
+                    "<i>'vagrant provision'</i>, or manually attempt a fix with <i>'composer install'</i></p><br><br>.";
 
             self::initSlim();
             self::initSession();
@@ -108,6 +107,5 @@ namespace NorthEastEvents {
 namespace{
 
     use NorthEastEvents\Bootstrap;
-
     $app = Bootstrap::getSlim();
 }

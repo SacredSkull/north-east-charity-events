@@ -46,6 +46,9 @@
         unless="prepare.done"
         depends="clean"
         description="Prepare for build">
+        <exec executable="docker-compose">
+            <arg line=" -f ../docker-compose.yml run --rm -w /var/www php bash upgrade.sh"/>
+        </exec>
         <mkdir dir="${basedir}/../build/api"/>
         <mkdir dir="${basedir}/../build/coverage"/>
         <mkdir dir="${basedir}/../build/logs"/>

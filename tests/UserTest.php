@@ -1,8 +1,7 @@
 <?php
 
-require __DIR__ . '/../src/config/bootstrap.php';
-require __DIR__ . '/../src/routes/Controller.php';
-require __DIR__ . '/../src/routes/UserController.php';
+require_once __DIR__ . '/../src/routes/Controller.php';
+require_once __DIR__ . '/../src/routes/UserController.php';
 
 use \NorthEastEvents\User;
 use \NorthEastEvents\Bootstrap;
@@ -14,7 +13,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     public function setUp(){
         $this->client = new Client([
-            'base_uri' => 'http://localhost',
+            'base_uri' => 'http://web',
             'http_errors' => false
         ]);
         $this->faker = Faker\Factory::create("en_GB");
