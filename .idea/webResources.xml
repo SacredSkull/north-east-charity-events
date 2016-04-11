@@ -5,8 +5,8 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/include" />
-            <path value="file://$PROJECT_DIR$/src/public/include" />
+            <path value="file://$PROJECT_DIR$/src/NorthEastEvents/public" />
+            <path value="file://$PROJECT_DIR$/src/NorthEastEvents/templates" />
           </resourceRoots>
         </entryData>
       </entry>

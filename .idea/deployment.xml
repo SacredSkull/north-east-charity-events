@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Vagrant local">
+  <component name="PublishConfigData" serverName="Docker">
     <serverData>
-      <paths name="Server (Magic)">
+      <paths name="Docker">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="Vagrant local">
+      <paths name="Vagrant">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$/src/public" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="test">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

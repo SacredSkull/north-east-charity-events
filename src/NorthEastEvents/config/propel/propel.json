@@ -1,0 +1,24 @@
+{
+    "propel": {
+        "general": {
+            "project": "North East Charity Events"
+        },
+        "paths": {
+            "schemaDir": "./",
+            "phpDir": "../../../"
+        },
+        "database": {
+            "connections": {
+                "default": {
+                    "adapter": "mysql",
+                    "dsn": "mysql:host=db;port=3306;dbname=north_east_charity",
+                    "user": "northeast",
+                    "password": "charity",
+                    "settings": {
+                        "charset": "utf8"
+                    }
+                }
+            }
+        }
+    }
+}

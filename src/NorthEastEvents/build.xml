@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="North East Events" default="full-build">
+    <!-- By default, we assume all tools to be on the $PATH -->
+
+    <property name="phpmd"   value="docker-compose"/>
+    <property name="phpunit" value="docker-compose"/>
+
+    <property name="phpmdArgs" value="-f ../../docker-compose.yml run --rm -w /var/www/src php phpmd"/>
+    <property name="phpunitArgs" value="-f ../../docker-compose.yml run --rm -w /var/www/src php phpunit"/>
+
+    <target name="full-build"
+        depends="prepare,static-analysis,phpunit,-check-failure"
+        description="Performs static analysis, runs the tests, and generates project documentation"/>
+
+    <target name="full-build-parallel"
+        depends="prepare,static-analysis-parallel,phpunit,-check-failure"
+        description="Performs static analysis (executing the tools in parallel) and runs the tests"/>
+
+    <target name="quick-build"
+        depends="prepare,lint,phpunit-no-coverage"
+        description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
+
+    <target name="static-analysis"
+        depends="lint"
+        description="Performs static analysis" />
+
+    <!-- Adjust the threadCount attribute's value to the number of CPUs -->
+
+    <target name="static-analysis-parallel"
+        description="Performs static analysis (executing the tools in parallel)">
+        <parallel threadCount="4">
+            <antcall target="lint"/>
+        </parallel>
+    </target>
+
+    <target name="clean"
+        unless="clean.done"
+        description="Cleanup build artifacts">
+        <delete dir="${basedir}/../../build/api"/>
+        <delete dir="${basedir}/../../build/coverage"/>
+        <delete dir="${basedir}/../../build/logs"/>
+        <property name="clean.done" value="true"/>
+    </target>
+
+    <target name="prepare"
+        unless="prepare.done"
+        depends="clean"
+        description="Prepare for build">
+        <exec executable="docker-compose">
+            <arg line=" -f ../../docker-compose.yml run --rm -w /var/www php bash upgrade.sh"/>
+        </exec>
+        <mkdir dir="${basedir}/../../build/api"/>
+        <mkdir dir="${basedir}/../../build/coverage"/>
+        <mkdir dir="${basedir}/../../build/logs"/>
+        <property name="prepare.done" value="true"/>
+    </target>
+
+    <target name="lint"
+        unless="lint.done"
+        description="Perform syntax check of sourcecode files">
+        <apply executable="php" taskname="lint">
+            <arg value="-l" />
+            <fileset dir="${basedir}/Models">
+                <include name="*.php" />
+                <modified />
+            </fileset>
+            <fileset dir="${basedir}/Controllers">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+            <fileset dir="${basedir}/config">
+                <include name="bootstrap.php" />
+                <modified />
+            </fileset>
+            <fileset dir="${basedir}/../../tests">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+        <property name="lint.done" value="true"/>
+    </target>
+
+    <target name="phpmd"
+        unless="phpmd.done"
+        description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+        <exec executable="${phpmd}" taskname="phpmd">
+            <arg line="${phpmdArgs}" />
+            <arg path="/var/www/src/NorthEastEvents" />
+            <arg value="text" />
+            <arg path="/var/www/src/NorthEastEvents/phpmd.xml" />
+            <arg value="--exclude" />
+            <arg path="vendor/,Models/Base,Models/Map/,cache/,config/propel,config/slim" />
+            <arg value="--suffixes" />
+            <arg path=".php" />
+        </exec>
+        <property name="phpmd.done" value="true"/>
+    </target>
+
+    <target name="phpmd-ci"
+        unless="phpmd.done"
+        depends="prepare"
+        description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
+        <exec executable="${phpmd}" taskname="phpmd">
+            <arg line="${phpmdArgs}" />
+            <arg path="/var/www/src/NorthEastEvents" />
+            <arg value="xml" />
+            <arg path="/var/www/src/phpmd.xml" />
+            <arg value="--exclude" />
+            <arg path="vendor/,Models/Base,Models/Map/,cache/,config/propel,config/slim" />
+            <arg value="--suffixes" />
+            <arg path=".php" />
+            <arg value="--reportfile" />
+            <arg path="../../build/logs/pmd.xml" />
+        </exec>
+        <property name="phpmd.done" value="true"/>
+    </target>
+
+    <target name="phpunit"
+        unless="phpunit.done"
+        depends="prepare"
+        description="Run unit tests with PHPUnit">
+        <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
+            <arg line="${phpunitArgs}" />
+            <arg value="--configuration"/>
+            <arg value="phpunit.xml"/>
+        </exec>
+        <property name="phpunit.done" value="true"/>
+    </target>
+
+    <target name="phpunit-no-coverage"
+        unless="phpunit.done"
+        depends="prepare"
+        description="Run unit tests with PHPUnit (without generating code coverage reports)">
+        <exec executable="${phpunit}" failonerror="true" taskname="phpunit">
+            <arg value="${phpunitArgs}" />
+            <arg value="--configuration"/>
+            <arg path="phpunit.xml"/>
+            <arg value="--no-coverage"/>
+        </exec>
+        <property name="phpunit.done" value="true"/>
+    </target>
+
+    <target name="-check-failure">
+        <fail message="PHPUnit did not finish successfully">
+            <condition>
+                <not>
+                    <equals arg1="${result.phpunit}" arg2="0"/>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+</project>

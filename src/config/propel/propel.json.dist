@@ -1,8 +1,0 @@
-{
-    "propel": {
-        "paths": {
-            "schemaDir": "./",
-            "phpDir": "../../"
-        }
-    }
-}
