@@ -1,2 +1,3 @@
 @echo off
-REM vagrant suspend
+FOR /f "tokens=*" %%i IN ('docker-machine env') DO %%i
+docker-compose down

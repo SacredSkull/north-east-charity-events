@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-cd /var/www/src
+cd /var/www/src/NorthEastEvents
 
-composer install
+composer config --global github-protocols https
+composer update
 
 cd config/propel
 

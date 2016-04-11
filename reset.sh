@@ -2,6 +2,6 @@
 sudo service nginx restart
 sudo service hhvm restart&
 
-cd /vagrant/src/cache
+cd /var/www/src/NorthEastEvents/cache
 
 sudo rm -rf *

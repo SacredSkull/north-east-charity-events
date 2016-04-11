@@ -3,3 +3,4 @@
 putty.exe
 .idea/
 build/*
+logs/*

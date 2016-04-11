@@ -11,18 +11,18 @@ services:
       - php
       - db
   php:
-    build:
-      context: .
-      dockerfile: ./php.dockerfile
+    container_name: northeastcharityevents_php_1
+    image: sacredskull/php-7-fpm-development
     volumes:
       - .:/var/www
       - ./logs/php:/var/log/php
       - ./conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "9001:9000"
+      - "2020:2020"
       - "9089:9089"
     environment:
-      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/src/vendor/bin:/var/www/src/vendor/propel/propel/bin
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/src/NorthEastEvents/vendor/bin:/var/www/src/NorthEastEvents/vendor/propel/propel/bin
   db:
     image: mariadb
     volumes:
@@ -35,17 +35,17 @@ services:
       - MYSQL_USER=northeast
       - MYSQL_PASSWORD=charity
       - TERM=xterm
-  ssh-php:
-    depends_on:
-      - php
-    image: jeroenpeeters/docker-ssh
-    ports:
-      - "2222:22"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - CONTAINER=northeastcharityevents_php_1
-      - AUTH_MECHANISM=noAuth
+  # ssh:
+  #   build:
+  #     context: .
+  #     dockerfile: ./ssh.dockerfile
+  #   ports:
+  #     - "2222:22"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - CONTAINER=northeastcharityevents_php_1
+  #     - AUTH_MECHANISM=noAuth
   blackfire:
     image: blackfire/blackfire
     environment:
