@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ page_title }} | North East Events</title>
+</head>
+<body>
+<ul id="navigation">
+    {% for event in events %}
+    <li><a href="{{ event.href }}">{{ event.getTitle }}</a>{{ event.getBodyHTML }}</li>
+    {% endfor %}
+</ul>
+
+<h1>{{template_name}} Template</h1>
+<p>{{ variable_name }}</p>
+</body>
+</html>

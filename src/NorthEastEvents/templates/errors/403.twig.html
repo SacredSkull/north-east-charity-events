@@ -1,0 +1,5 @@
+{% extends "/errors/error.twig.html" %}
+        {% block body %}
+        <h1 >{{resource_type}}</h1>
+        <p>{% if current_user %}{{ unauthorised_message }}{% else %}You need to login to modify this {{resource_type}}.{% endif %}</p>
+        {% endblock body %}
