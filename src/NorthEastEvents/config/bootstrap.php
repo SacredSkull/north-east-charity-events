@@ -145,6 +145,13 @@ class Bootstrap {
         };
     }
 
+    // With a heavy heart I include a singleton- the model classes don't really have a
+    // feasible entry point for injecting the container.
+    // Could just add a static property to each class that needs it and update it in this class.
+    public static function getCI(){
+        return static::$ci;
+    }
+
     public static function getLogger(){
         return static::$ci->get("logger");
     }

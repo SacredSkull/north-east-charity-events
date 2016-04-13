@@ -3,9 +3,15 @@
 namespace NorthEastEvents\Controllers;
 
 use Faker\Factory;
+use NorthEastEvents\Models\EventRating;
 use NorthEastEvents\Models\EventRatingQuery;
-use NorthEastEvents\ORM;
+use NorthEastEvents\Models\EventUsers;
+use NorthEastEvents\Models\ORM;
 use NorthEastEvents\Models\Map;
+use NorthEastEvents\Models\User;
+use NorthEastEvents\Models\Event;
+use NorthEastEvents\Models\Comment;
+use NorthEastEvents\Models\Thread;
 use NorthEastEvents\Models\EventQuery;
 use NorthEastEvents\Models\EventUsersQuery;
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -26,7 +32,7 @@ class TestController extends Controller {
 
         $start = microtime(true);
         $populator = new ORM\Propel2\Populator($faker);
-        $populator->addEntity('\NorthEastEvents\User', 50, array(
+        $populator->addEntity(User::class, 50, array(
             'AvatarUrl' => function () use ($faker) {
                 return $faker->imageUrl(180, 180);
             },
@@ -36,7 +42,7 @@ class TestController extends Controller {
                 return $faker->boolean(30) ? Map\UserTableMap::COL_PERMISSION_STAFF : Map\UserTableMap::COL_PERMISSION_NORMAL;
             },
         ));
-        $populator->addEntity('\NorthEastEvents\Event', 15, array(
+        $populator->addEntity(Event::class, 15, array(
             'ImageUrl' => function () use ($faker) {
                 return $faker->imageUrl(180, 180);
             },
@@ -58,34 +64,34 @@ class TestController extends Controller {
         $start = microtime(true);
 
         $populator = new ORM\Propel2\Populator($faker);
-        $populator->addEntity('\NorthEastEvents\EventUsers', 200, array(
+        $populator->addEntity(EventUsers::class, 200, array(
             'UserID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\User']);
+                $id = $faker->randomElement($usersEventsIDs[User::class]);
                 return $id[0];
             },
             'EventID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\Event']);
+                $id = $faker->randomElement($usersEventsIDs[Event::class]);
                 return $id;
             },
             'CreatedAt' => null,
             'UpdatedAt' => null,
         ), array(
-            function($eu) use ($faker, $usersEventsIDs) {
+            function(EventUsers $eu) use ($faker, $usersEventsIDs) {
                 $existing = EventUsersQuery::create()->findOneByArray(['EventID' => $eu->getEventID(), 'UserID' => $eu->getUserID()]);
                 while($existing != null){
-                    $eu->setEventID($faker->randomElement($usersEventsIDs['\NorthEastEvents\Event']));
+                    $eu->setEventID($faker->randomElement($usersEventsIDs[Event::class]));
                     $existing = EventUsersQuery::create()->findOneByArray(['EventID' => $eu->getEventID(), 'UserID' => $eu->getUserID()]);
                 }
             }
         ));
 
-        $populator->addEntity('\NorthEastEvents\EventRating', 75, array(
+        $populator->addEntity(EventRating::class, 75, array(
             'UserID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\User']);
+                $id = $faker->randomElement($usersEventsIDs[User::class]);
                 return $id[0];
             },
             'EventID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\Event']);
+                $id = $faker->randomElement($usersEventsIDs[Event::class]);
                 return $id;
             },
             'Rating' => function () use ($faker, $usersEventsIDs) {
@@ -100,24 +106,24 @@ class TestController extends Controller {
             },
         ), array(
             // Because there are several primary keys, we need to make sure they are unique together
-            function($er) use ($faker, $usersEventsIDs) {
+            function(EventRating $er) use ($faker, $usersEventsIDs) {
                 $existing = EventRatingQuery::create()->findOneByArray(['EventID' => $er->getEventID(), 'UserID' => $er->getUserID()]);
                 while($existing != null){
-                    $er->setEventID($faker->randomElement($usersEventsIDs['\NorthEastEvents\Event']));
+                    $er->setEventID($faker->randomElement($usersEventsIDs[Event::class]));
                     $existing = EventRatingQuery::create()->findOneByArray(['EventID' => $er->getEventID(), 'UserID' => $er->getUserID()]);
                 }
             }
         ));
 
-        $populator->addEntity('\NorthEastEvents\Thread', 15, array(
+        $populator->addEntity(Thread::class, 15, array(
             'Title' => function () use ($faker) {
                 return $faker->catchPhrase;
             },
             'EventID' => function () use ($faker, $usersEventsIDs) {
-                return $faker->randomElement($usersEventsIDs['\NorthEastEvents\Event']);
+                return $faker->randomElement($usersEventsIDs[Event::class]);
             },
             'UserID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\User']);
+                $id = $faker->randomElement($usersEventsIDs[User::class]);
                 return $id[0];
             },
             'CreatedAt' => null,
@@ -126,13 +132,13 @@ class TestController extends Controller {
         $threads = $populator->execute();
         $populator = new ORM\Propel2\Populator($faker);
 
-        $populator->addEntity('\NorthEastEvents\Comment', 50, array(
+        $populator->addEntity(Comment::class, 50, array(
             'UserID' => function () use ($faker, $usersEventsIDs) {
-                $id = $faker->randomElement($usersEventsIDs['\NorthEastEvents\User']);
+                $id = $faker->randomElement($usersEventsIDs[User::class]);
                 return $id[0];
             },
             'ThreadID' => function () use ($faker, $threads) {
-                return $faker->randomElement($threads['\NorthEastEvents\Thread']);
+                return $faker->randomElement($threads[Thread::class]);
             },
             'Body' => function () use ($faker) {
                 return $faker->catchPhrase;

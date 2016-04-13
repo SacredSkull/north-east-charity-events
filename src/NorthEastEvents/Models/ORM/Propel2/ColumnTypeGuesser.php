@@ -1,6 +1,6 @@
 <?php
 
-namespace NorthEastEvents\ORM\Propel2;
+namespace NorthEastEvents\Models\ORM\Propel2;
 
 use \Propel\Generator\Model\PropelTypes;
 use \Propel\Runtime\Map\ColumnMap;

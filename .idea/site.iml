@@ -12,11 +12,9 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/src/NorthEastEvents/composer.phar/" />
           <root url="phar://$MODULE_DIR$/src/NorthEastEvents/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/src/NorthEastEvents/composer.phar/" />
           <root url="phar://$MODULE_DIR$/src/NorthEastEvents/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
         </SOURCES>
       </library>

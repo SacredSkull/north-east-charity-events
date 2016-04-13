@@ -2,7 +2,7 @@
 
 namespace NorthEastEvents\Models;
 
-use NorthEastEvents\Base\EventQuery as BaseEventQuery;
+use NorthEastEvents\Models\Base\EventQuery as BaseEventQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'event' table.

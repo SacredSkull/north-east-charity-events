@@ -4,6 +4,7 @@ namespace NorthEastEvents\Models;
 
 use NorthEastEvents\Models\Base\Event as BaseEvent;
 use Propel\Runtime\Connection\ConnectionInterface;
+use NorthEastEvents\Bootstrap;
 
 /**
  * Skeleton subclass for representing a row from the 'event' table.
@@ -19,7 +20,7 @@ class Event extends BaseEvent
 {
     // Singleton ciconia instance
     public function preSave(ConnectionInterface $con = null) {
-        $this->setBodyHTML(Bootstrap::getCiconia()->render($this->getBody()));
+        $this->setBodyHTML(Bootstrap::getCI()->get("ciconia")->render($this->getBody()));
         return true;
     }
 }
