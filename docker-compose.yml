@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    image: nginx
+    image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
@@ -12,7 +12,7 @@ services:
       - db
   php:
     container_name: northeastcharityevents_php_1
-    image: sacredskull/php-7-fpm-development
+    image: sacredskull/php-7-fpm-development:alpine-debug-blackfire
     volumes:
       - .:/var/www
       - ./logs/php:/var/log/php
@@ -38,7 +38,7 @@ services:
   # ssh:
   #   build:
   #     context: .
-  #     dockerfile: ./ssh.dockerfile
+  #     dockerfile: ./conf/ssh.dockerfile
   #   ports:
   #     - "2222:22"
   #   volumes:

@@ -2,11 +2,12 @@
 <project name="North East Events" default="full-build">
     <!-- By default, we assume all tools to be on the $PATH -->
 
-    <property name="phpmd"   value="docker-compose"/>
-    <property name="phpunit" value="docker-compose"/>
+	<property name="containerName" value="northeastcharityevents_php_1"/>
+    <property name="phpmd"   value="${basedir}/php.sh"/>
+    <property name="phpunit" value="${basedir}/php.sh"/>
 
-    <property name="phpmdArgs" value="-f ../../docker-compose.yml run --rm -w /var/www/src php phpmd"/>
-    <property name="phpunitArgs" value="-f ../../docker-compose.yml run --rm -w /var/www/src php phpunit"/>
+    <property name="phpmdArgs" value="phpmd"/>
+    <property name="phpunitArgs" value="phpunit"/>
 
     <target name="full-build"
         depends="prepare,static-analysis,phpunit,-check-failure"
@@ -46,33 +47,39 @@
         unless="prepare.done"
         depends="clean"
         description="Prepare for build">
-        <exec executable="docker-compose">
-            <arg line=" -f ../../docker-compose.yml run --rm -w /var/www php bash upgrade.sh"/>
-        </exec>
         <mkdir dir="${basedir}/../../build/api"/>
         <mkdir dir="${basedir}/../../build/coverage"/>
         <mkdir dir="${basedir}/../../build/logs"/>
         <property name="prepare.done" value="true"/>
     </target>
+	
+	<target name="dependencies" 
+		unless="dependencies.done"
+		description="Update/install dependencies for project">
+		<exec executable="${basedir}/php.sh">
+            <arg line="/bin/sh /var/www/upgrade.sh"/>
+        </exec>
+		<property name="dependencies.done" value="true"/>
+	</target>
 
     <target name="lint"
         unless="lint.done"
         description="Perform syntax check of sourcecode files">
-        <apply executable="php" taskname="lint">
-            <arg value="-l" />
-            <fileset dir="${basedir}/Models">
+        <apply executable="${basedir}/php.sh" taskname="lint" relative="true">
+            <arg value="php -l" />
+            <fileset dir="Models">
                 <include name="*.php" />
                 <modified />
             </fileset>
-            <fileset dir="${basedir}/Controllers">
+            <fileset dir="Controllers">
                 <include name="**/*.php" />
                 <modified />
             </fileset>
-            <fileset dir="${basedir}/config">
+            <fileset dir="config">
                 <include name="bootstrap.php" />
                 <modified />
             </fileset>
-            <fileset dir="${basedir}/../../tests">
+            <fileset dir="../../tests">
                 <include name="**/*.php" />
                 <modified />
             </fileset>
@@ -87,11 +94,11 @@
             <arg line="${phpmdArgs}" />
             <arg path="/var/www/src/NorthEastEvents" />
             <arg value="text" />
-            <arg path="/var/www/src/NorthEastEvents/phpmd.xml" />
-            <arg value="--exclude" />
-            <arg path="vendor/,Models/Base,Models/Map/,cache/,config/propel,config/slim" />
+            <arg value="/var/www/src/NorthEastEvents/phpmd.xml" />
             <arg value="--suffixes" />
-            <arg path=".php" />
+            <arg value="php" />
+			<arg value="--exclude" />
+            <arg value="vendor/,Models/Base/,Models/Map/,cache/,config/propel/,config/slim/" />
         </exec>
         <property name="phpmd.done" value="true"/>
     </target>
@@ -104,37 +111,34 @@
             <arg line="${phpmdArgs}" />
             <arg path="/var/www/src/NorthEastEvents" />
             <arg value="xml" />
-            <arg path="/var/www/src/phpmd.xml" />
+            <arg value="/var/www/src/NorthEastEvents/phpmd.xml" />
             <arg value="--exclude" />
-            <arg path="vendor/,Models/Base,Models/Map/,cache/,config/propel,config/slim" />
+            <arg value="vendor/,Models/Base/,Models/Map/,cache/,config/propel/,config/slim/" />
             <arg value="--suffixes" />
-            <arg path=".php" />
+            <arg value="php" />
             <arg value="--reportfile" />
-            <arg path="../../build/logs/pmd.xml" />
+            <arg path="/var/www/build/logs/pmd.xml" />
         </exec>
         <property name="phpmd.done" value="true"/>
     </target>
 
+
     <target name="phpunit"
         unless="phpunit.done"
-        depends="prepare"
+        depends="prepare,dependencies"
         description="Run unit tests with PHPUnit">
         <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
             <arg line="${phpunitArgs}" />
-            <arg value="--configuration"/>
-            <arg value="phpunit.xml"/>
         </exec>
         <property name="phpunit.done" value="true"/>
     </target>
 
     <target name="phpunit-no-coverage"
         unless="phpunit.done"
-        depends="prepare"
+        depends="prepare,dependencies"
         description="Run unit tests with PHPUnit (without generating code coverage reports)">
         <exec executable="${phpunit}" failonerror="true" taskname="phpunit">
             <arg value="${phpunitArgs}" />
-            <arg value="--configuration"/>
-            <arg path="phpunit.xml"/>
             <arg value="--no-coverage"/>
         </exec>
         <property name="phpunit.done" value="true"/>

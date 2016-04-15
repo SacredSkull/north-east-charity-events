@@ -21,10 +21,18 @@
     <option name="FILTER_BY_STATUS" value="false" />
     <option name="FILTER_MARKED_AS_FIXED" value="false" />
     <option name="SHOW_CLOSE_PROMPT" value="true" />
-    <option name="TOOL_WINDOW_SELECTED_CONTENT_INDEX" value="0" />
+    <option name="TOOL_WINDOW_SELECTED_CONTENT_INDEX" value="1" />
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
     <SELECTED_PROJECT id="project2" />
     <SELECTED_TYPE id="bt2" />
+    <treeState key="responsibilities">
+      <selectedPath>
+        <pathElement>
+          <option name="myNodeId" value="helperText" />
+          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.LinkedTextDescriptor" />
+        </pathElement>
+      </selectedPath>
+    </treeState>
     <treeState key="selectConfigurations.run">
       <expandedPath>
         <pathElement>
@@ -46,8 +54,8 @@
     <treeState key="changes">
       <selectedPath>
         <pathElement>
-          <option name="myNodeId" value="helperText" />
-          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.LinkedTextDescriptor" />
+          <option name="myNodeId" value="3" />
+          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.ChangesGroupDescriptor" />
         </pathElement>
       </selectedPath>
     </treeState>
@@ -62,16 +70,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82925544-7a82-4449-85ab-84b114c4e8db" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/site.iml" afterPath="$PROJECT_DIR$/.idea/site.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.eslintignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.eslintrc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reset.bat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reset.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/public/include/css/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/public/include/img/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/public/include/js/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/public/include/less/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/errors/403.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/errors/404.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/errors/405.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/errors/error.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/events.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/example.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/home.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/users/me.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/users/user.twig.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ssh.dockerfile" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.codeclimate.yml" afterPath="$PROJECT_DIR$/.codeclimate.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/TestRoutes.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/TestRoutes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/nginx/nginx.docker.conf" afterPath="$PROJECT_DIR$/conf/nginx/nginx.docker.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Event.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Event.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/EventQuery.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/EventQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/ColumnTypeGuesser.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/ColumnTypeGuesser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/EntityPopulator.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/EntityPopulator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/Populator.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/Populator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Middleware/AuthorisedRouteMiddleware.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Middleware/AuthorisedRouteMiddleware.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Event.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Event.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventQuery.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventTableMap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/User.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/User.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/build.xml" afterPath="$PROJECT_DIR$/src/NorthEastEvents/build.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/config/bootstrap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/config/bootstrap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/config/propel/schema.xml" afterPath="$PROJECT_DIR$/src/NorthEastEvents/config/propel/schema.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/UserTest.php" afterPath="$PROJECT_DIR$/tests/UserTest.php" />
     </list>
     <ignored path="site.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,7 +142,7 @@
       <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
+            <state relative-caret-position="578">
               <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
               <folding>
                 <element signature="e#42#72#0#PHP" expanded="true" />
@@ -116,41 +151,67 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserQuery.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/UserQuery.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+            <state relative-caret-position="527">
+              <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+              <folding>
+                <element signature="e#47#65#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+              <folding>
+                <element signature="e#488#508#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="skeleton.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventRating.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/EventRating.php">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/public/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="697">
+              <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventRatingQuery.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/EventRatingQuery.php">
+      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+              <folding>
+                <element signature="e#47#85#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventRoutes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -166,44 +227,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bootstrap.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bootstrap.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/config/bootstrap.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="635">
-              <caret line="149" column="96" selection-start-line="149" selection-start-column="96" selection-end-line="149" selection-end-column="96" />
+            <state relative-caret-position="493">
+              <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
               <folding>
                 <element signature="e#260#292#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventUsersQuery.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/EventUsersQuery.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Thread.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/Thread.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThreadQuery.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/ThreadQuery.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -216,11 +247,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/LoginSession.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/User.php" />
-        <option value="$PROJECT_DIR$/src/public/index.php" />
-        <option value="$PROJECT_DIR$/src/routes/EventsController.php" />
-        <option value="$PROJECT_DIR$/src/routes/BaseController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Event.php" />
         <option value="$PROJECT_DIR$/src/templates/example.twig.html" />
         <option value="$PROJECT_DIR$/src/config/bootstrap.php" />
@@ -249,24 +275,29 @@
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/ThreadRoutes.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/public/index.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Middleware/Permissions.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/User.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Middleware/AuthorisedRouteMiddleware.php" />
-        <option value="$PROJECT_DIR$/tests/UserTest.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Middleware/BasicAuthMiddleware.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/UserRoutes.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/TestRoutes.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/Populator.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/EntityPopulator.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/ORM/Propel2/ColumnTypeGuesser.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/Event.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/EventQuery.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/config/bootstrap.php" />
+        <option value="$PROJECT_DIR$/tests/UserTest.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.twig.html" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig" />
+        <option value="$PROJECT_DIR$/conf/nginx/nginx.docker.conf" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/public/css/style.css" />
       </list>
     </option>
   </component>
@@ -338,10 +369,10 @@
   </component>
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" port="9089" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="968" />
-    <option name="y" value="157" />
-    <option name="width" value="1296" />
-    <option name="height" value="1000" />
+    <option name="x" value="2552" />
+    <option name="y" value="250" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -390,7 +421,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -407,20 +437,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="north-east-charity-events" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="north-east-charity-events" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -482,77 +498,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="north-east-charity-events" />
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NorthEastEvents" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Models" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="north-east-charity-events" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NorthEastEvents" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Models" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Base" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="north-east-charity-events" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NorthEastEvents" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Middleware" />
+              <option name="myItemId" value="events" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -596,42 +546,21 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="north-east-charity-events" />
+              <option name="myItemId" value="Controllers" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NorthEastEvents" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="slim" />
+              <option name="myItemId" value="Routes" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="RemoteServers" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
@@ -929,7 +858,11 @@
       <workItem from="1460293111404" duration="4751000" />
       <workItem from="1460304197044" duration="15611000" />
       <workItem from="1460325459472" duration="10879000" />
-      <workItem from="1460517447620" duration="1465000" />
+      <workItem from="1460517447620" duration="1711000" />
+      <workItem from="1460563931013" duration="2313000" />
+      <workItem from="1460572603904" duration="1815000" />
+      <workItem from="1460640394670" duration="6684000" />
+      <workItem from="1460721836794" duration="5398000" />
     </task>
     <servers />
   </component>
@@ -966,7 +899,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203970000" />
+    <option name="totallyTimeSpent" value="220426000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -978,13 +911,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="968" y="157" width="1296" height="1000" extended-state="1" />
+    <frame x="2552" y="250" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18976545" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32756633" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.50970876" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32359308" sideWeight="0.49029127" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.50970876" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -999,7 +933,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32373273" sideWeight="0.49029127" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29147464" sideWeight="0.4935275" order="3" side_tool="false" content_ui="tabs" />
@@ -1035,41 +968,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/controllers/TestController.php" />
-    <entry file="file://$PROJECT_DIR$/src/controllers/CommentController.php" />
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/Comment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/vendor/psr/http-message/src/ResponseInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/vendor/kzykhys/ciconia/src/Ciconia/Ciconia.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-734">
-          <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/404.twig.html" />
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/403.twig.html" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/26246020-d880-4dfe-9e69-cf8b606ed20d/console.sql" />
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/config/slim/slim.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/coverage/dashboard.html" />
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/LoginSession.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1081,30 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="15" column="102" selection-start-line="15" selection-start-column="102" selection-end-line="15" selection-end-column="102" />
-          <folding>
-            <element signature="e#128#184#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/BaseRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1112,20 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/Routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1168,9 +1028,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
-          <folding>
-            <element signature="e#7#40#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1178,7 +1035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
           <caret line="48" column="6" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1190,49 +1046,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="91" column="12" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Middleware/BasicAuthMiddleware.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding>
-            <element signature="e#46#78#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/UserRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
-          <folding>
-            <element signature="e#136#183#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2686">
-          <caret line="167" column="82" selection-start-line="167" selection-start-column="82" selection-end-line="167" selection-end-column="82" />
-          <folding>
-            <element signature="e#46#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="76" column="54" selection-start-line="76" selection-start-column="54" selection-end-line="76" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1240,7 +1057,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1248,7 +1064,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1256,7 +1071,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1264,7 +1078,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="18" column="60" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1272,9 +1085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#42#93#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1282,7 +1092,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1290,7 +1099,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1318,33 +1126,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/EventUsersQuery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/Thread.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/ThreadQuery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
+        <state relative-caret-position="578">
           <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
           <folding>
             <element signature="e#42#72#0#PHP" expanded="true" />
@@ -1356,9 +1140,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-          <folding>
-            <marker date="1460517307554" expanded="true" signature="30046:30082" placeholder="INSERT INTO comment... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1366,9 +1147,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1460517307623" expanded="true" signature="12159:12254" placeholder="SELECT id, b... comment" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1376,25 +1154,157 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/ThreadQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/Thread.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Models/EventUsersQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/users/me.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/users/user.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/users/register.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/create.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.twig.html" />
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/config/bootstrap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="635">
-          <caret line="149" column="96" selection-start-line="149" selection-start-column="96" selection-end-line="149" selection-end-column="96" />
+        <state relative-caret-position="493">
+          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
           <folding>
             <element signature="e#260#292#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/UserRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/Routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/BaseRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="50" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="137" column="30" selection-start-line="137" selection-start-column="30" selection-end-line="137" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+          <folding>
+            <element signature="e#47#65#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/nginx/nginx.docker.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding>
+            <element signature="e#47#85#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+          <folding>
+            <element signature="e#488#508#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
