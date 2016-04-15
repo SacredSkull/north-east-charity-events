@@ -31,7 +31,7 @@ abstract class Controller implements ResourceInterface {
         if(!($message == null || strlen($message) == 0)){
             $message = $this->not_found_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/404.twig.html", $this->renderVariables([
+        return $this->ci->get("view")->render($response, "/errors/404.html.twig", $this->renderVariables([
             "error_message" => $message,
             "error_code" => 404
         ]))->withStatus(404);
@@ -49,7 +49,7 @@ abstract class Controller implements ResourceInterface {
         if($message == null || strlen($message) == 0 || $message == false){
             $message = $this->not_found_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/403.twig.html", $this->renderVariables([
+        return $this->ci->get("view")->render($response, "/errors/403.html.twig", $this->renderVariables([
             "error_message" => $message,
             "error_code" => 403
         ]))->withStatus(403);
@@ -67,7 +67,7 @@ abstract class Controller implements ResourceInterface {
         if(!($message == null || strlen($message) == 0)){
             $message = $this->not_allowed_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/405.twig.html", $this->renderVariables([
+        return $this->ci->get("view")->render($response, "/errors/405.html.twig", $this->renderVariables([
             "error_message" => $message,
             "error_code" => 405
         ]))->withStatus(405);
@@ -86,7 +86,7 @@ abstract class Controller implements ResourceInterface {
         if(!($message == null || strlen($message) == 0)){
             $message = $this->not_allowed_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/error.twig.html", $this->renderVariables([
+        return $this->ci->get("view")->render($response, "/errors/error.html.twig", $this->renderVariables([
             "error_message" => $message,
             "error_code" => $code
         ]))->withStatus($code);

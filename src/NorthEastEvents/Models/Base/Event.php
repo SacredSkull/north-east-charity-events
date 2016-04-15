@@ -79,6 +79,20 @@ abstract class Event implements ActiveRecordInterface
     protected $id;
 
     /**
+     * The value for the title field.
+     *
+     * @var        string
+     */
+    protected $title;
+
+    /**
+     * The value for the location field.
+     *
+     * @var        string
+     */
+    protected $location;
+
+    /**
      * The value for the image_url field.
      *
      * Note: this column has a database default value of: '/include/img/events/default.png'
@@ -420,6 +434,26 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [title] column value.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Get the [location] column value.
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
      * Get the [image_url] column value.
      *
      * @return string
@@ -518,6 +552,46 @@ abstract class Event implements ActiveRecordInterface
 
         return $this;
     } // setId()
+
+    /**
+     * Set the value of [title] column.
+     *
+     * @param string $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setTitle($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->title !== $v) {
+            $this->title = $v;
+            $this->modifiedColumns[EventTableMap::COL_TITLE] = true;
+        }
+
+        return $this;
+    } // setTitle()
+
+    /**
+     * Set the value of [location] column.
+     *
+     * @param string $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setLocation($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->location !== $v) {
+            $this->location = $v;
+            $this->modifiedColumns[EventTableMap::COL_LOCATION] = true;
+        }
+
+        return $this;
+    } // setLocation()
 
     /**
      * Set the value of [image_url] column.
@@ -686,25 +760,31 @@ abstract class Event implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : EventTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EventTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->title = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->location = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
             $this->image_url = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
             $this->body = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
             $this->bodyhtml = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tickets = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -717,7 +797,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\NorthEastEvents\\Models\\Event'), 0, $e);
@@ -997,6 +1077,12 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
+        if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
+            $modifiedColumns[':p' . $index++]  = 'title';
+        }
+        if ($this->isColumnModified(EventTableMap::COL_LOCATION)) {
+            $modifiedColumns[':p' . $index++]  = 'location';
+        }
         if ($this->isColumnModified(EventTableMap::COL_IMAGE_URL)) {
             $modifiedColumns[':p' . $index++]  = 'image_url';
         }
@@ -1028,6 +1114,12 @@ abstract class Event implements ActiveRecordInterface
                 switch ($columnName) {
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
+                        break;
+                    case 'title':
+                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+                        break;
+                    case 'location':
+                        $stmt->bindValue($identifier, $this->location, PDO::PARAM_STR);
                         break;
                     case 'image_url':
                         $stmt->bindValue($identifier, $this->image_url, PDO::PARAM_STR);
@@ -1113,21 +1205,27 @@ abstract class Event implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getImageUrl();
+                return $this->getTitle();
                 break;
             case 2:
-                return $this->getBody();
+                return $this->getLocation();
                 break;
             case 3:
-                return $this->getBodyHTML();
+                return $this->getImageUrl();
                 break;
             case 4:
-                return $this->getTickets();
+                return $this->getBody();
                 break;
             case 5:
-                return $this->getCreatedAt();
+                return $this->getBodyHTML();
                 break;
             case 6:
+                return $this->getTickets();
+                break;
+            case 7:
+                return $this->getCreatedAt();
+                break;
+            case 8:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1161,19 +1259,21 @@ abstract class Event implements ActiveRecordInterface
         $keys = EventTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getImageUrl(),
-            $keys[2] => $this->getBody(),
-            $keys[3] => $this->getBodyHTML(),
-            $keys[4] => $this->getTickets(),
-            $keys[5] => $this->getCreatedAt(),
-            $keys[6] => $this->getUpdatedAt(),
+            $keys[1] => $this->getTitle(),
+            $keys[2] => $this->getLocation(),
+            $keys[3] => $this->getImageUrl(),
+            $keys[4] => $this->getBody(),
+            $keys[5] => $this->getBodyHTML(),
+            $keys[6] => $this->getTickets(),
+            $keys[7] => $this->getCreatedAt(),
+            $keys[8] => $this->getUpdatedAt(),
         );
-        if ($result[$keys[5]] instanceof \DateTime) {
-            $result[$keys[5]] = $result[$keys[5]]->format('c');
+        if ($result[$keys[7]] instanceof \DateTime) {
+            $result[$keys[7]] = $result[$keys[7]]->format('c');
         }
 
-        if ($result[$keys[6]] instanceof \DateTime) {
-            $result[$keys[6]] = $result[$keys[6]]->format('c');
+        if ($result[$keys[8]] instanceof \DateTime) {
+            $result[$keys[8]] = $result[$keys[8]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1250,21 +1350,27 @@ abstract class Event implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setImageUrl($value);
+                $this->setTitle($value);
                 break;
             case 2:
-                $this->setBody($value);
+                $this->setLocation($value);
                 break;
             case 3:
-                $this->setBodyHTML($value);
+                $this->setImageUrl($value);
                 break;
             case 4:
-                $this->setTickets($value);
+                $this->setBody($value);
                 break;
             case 5:
-                $this->setCreatedAt($value);
+                $this->setBodyHTML($value);
                 break;
             case 6:
+                $this->setTickets($value);
+                break;
+            case 7:
+                $this->setCreatedAt($value);
+                break;
+            case 8:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1297,22 +1403,28 @@ abstract class Event implements ActiveRecordInterface
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setImageUrl($arr[$keys[1]]);
+            $this->setTitle($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setBody($arr[$keys[2]]);
+            $this->setLocation($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setBodyHTML($arr[$keys[3]]);
+            $this->setImageUrl($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTickets($arr[$keys[4]]);
+            $this->setBody($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setCreatedAt($arr[$keys[5]]);
+            $this->setBodyHTML($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdatedAt($arr[$keys[6]]);
+            $this->setTickets($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setCreatedAt($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setUpdatedAt($arr[$keys[8]]);
         }
     }
 
@@ -1357,6 +1469,12 @@ abstract class Event implements ActiveRecordInterface
 
         if ($this->isColumnModified(EventTableMap::COL_ID)) {
             $criteria->add(EventTableMap::COL_ID, $this->id);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
+            $criteria->add(EventTableMap::COL_TITLE, $this->title);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_LOCATION)) {
+            $criteria->add(EventTableMap::COL_LOCATION, $this->location);
         }
         if ($this->isColumnModified(EventTableMap::COL_IMAGE_URL)) {
             $criteria->add(EventTableMap::COL_IMAGE_URL, $this->image_url);
@@ -1462,6 +1580,8 @@ abstract class Event implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setTitle($this->getTitle());
+        $copyObj->setLocation($this->getLocation());
         $copyObj->setImageUrl($this->getImageUrl());
         $copyObj->setBody($this->getBody());
         $copyObj->setBodyHTML($this->getBodyHTML());
@@ -2289,6 +2409,8 @@ abstract class Event implements ActiveRecordInterface
     public function clear()
     {
         $this->id = null;
+        $this->title = null;
+        $this->location = null;
         $this->image_url = null;
         $this->body = null;
         $this->bodyhtml = null;

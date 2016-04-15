@@ -126,7 +126,7 @@ class Bootstrap {
                 $path = explode("/", substr($req->getUri()->getPath(), 1));
                 return $path[0] == "api" ?
                     $res->withJson(["Error" => ["Message" => "Resource was not found."]], 404) :
-                    $ci->get("view")->render($res, "/errors/404.twig.html", [
+                    $ci->get("view")->render($res, "/errors/404.html.twig", [
                         "error_message" => "Could not find what you were looking for.",
                     ])->withStatus(404);
             };
@@ -138,7 +138,7 @@ class Bootstrap {
                 $path = explode("/", substr($req->getUri()->getPath(), 1));
                 return $path[0] == "api" ?
                     $res->withJson(["Error" => ["Message" => "The requested method is not supported on this resource."]], 405) :
-                    $ci->get("view")->render($res, "/errors/405.twig.html", [
+                    $ci->get("view")->render($res, "/errors/405.html.twig", [
                         "error_message" => "Sorry, we can't do that.",
                     ])->withStatus(405);
             };
@@ -155,7 +155,4 @@ class Bootstrap {
     public static function getLogger(){
         return static::$ci->get("logger");
     }
-}
-//
-//$bootstrap = new Bootstrap();
-//$app = $bootstrap->initialise();
+};

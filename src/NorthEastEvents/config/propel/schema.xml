@@ -30,6 +30,8 @@
 
     <table name="event" phpName="Event">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+		<column name="title" type="varchar" size="50" required="true"/>
+		<column name="location" type="varchar" size="50" required="true"/>
         <column name="image_url" type="varchar" size="128" default="/include/img/events/default.png" />
         <column name="body" phpName="Body" type="LONGVARCHAR"/>
         <column name="bodyHTML" phpName="BodyHTML" type="LONGVARCHAR"/>

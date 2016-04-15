@@ -43,8 +43,14 @@ class TestController extends Controller {
             },
         ));
         $populator->addEntity(Event::class, 15, array(
+            'Title' => function () use ($faker) {
+                return $faker->catchPhrase;
+            },
+            'Location' => function () use ($faker) {
+                return $faker->address;
+            },
             'ImageUrl' => function () use ($faker) {
-                return $faker->imageUrl(180, 180);
+                return $faker->imageUrl(350, 240);
             },
             'Body' => function () use ($faker) {
                 return $faker->realText(750);

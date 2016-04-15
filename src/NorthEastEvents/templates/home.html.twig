@@ -1,15 +1,15 @@
 {% extends "skeleton.html.twig" %}
-{% block body %}<div class="row" id="row1">
+{% block body %}<div class="row event-row" id="row1">
     {% for event in events %}
         <div class="col-md-4">
-            <h5 class="event_title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h5>
-            <img class="event_image" src="{{ event.getImageUrl }}">
-            <h3 class="event_register"><a href="#" class="label label-primary">Sign up!</a></h3>
+            <h4 class="event-title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h4>
+            <img class="event-image" src="{{ event.getImageUrl }}">
+            <h3 class="event-register"><a href="#" class="label label-primary">Sign up!</a></h3>
             <div style="clear: both;"></div>
         </div>
         {% if loop.index is divisible by(3) %}
             </div>
-            <div class="row" id="row{{ (loop.index / 3) + 1 }}">
+            <div class="row event-row" id="row{{ (loop.index / 3) + 1 }}">
         {% endif %}
     {% endfor %}
     </div>

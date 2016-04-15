@@ -21,6 +21,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildEventQuery orderById($order = Criteria::ASC) Order by the id column
+ * @method     ChildEventQuery orderByTitle($order = Criteria::ASC) Order by the title column
+ * @method     ChildEventQuery orderByLocation($order = Criteria::ASC) Order by the location column
  * @method     ChildEventQuery orderByImageUrl($order = Criteria::ASC) Order by the image_url column
  * @method     ChildEventQuery orderByBody($order = Criteria::ASC) Order by the body column
  * @method     ChildEventQuery orderByBodyHTML($order = Criteria::ASC) Order by the bodyHTML column
@@ -29,6 +31,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method     ChildEventQuery groupById() Group by the id column
+ * @method     ChildEventQuery groupByTitle() Group by the title column
+ * @method     ChildEventQuery groupByLocation() Group by the location column
  * @method     ChildEventQuery groupByImageUrl() Group by the image_url column
  * @method     ChildEventQuery groupByBody() Group by the body column
  * @method     ChildEventQuery groupByBodyHTML() Group by the bodyHTML column
@@ -70,6 +74,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent findOneOrCreate(ConnectionInterface $con = null) Return the first ChildEvent matching the query, or a new ChildEvent object populated from the query conditions when no match is found
  *
  * @method     ChildEvent findOneById(int $id) Return the first ChildEvent filtered by the id column
+ * @method     ChildEvent findOneByTitle(string $title) Return the first ChildEvent filtered by the title column
+ * @method     ChildEvent findOneByLocation(string $location) Return the first ChildEvent filtered by the location column
  * @method     ChildEvent findOneByImageUrl(string $image_url) Return the first ChildEvent filtered by the image_url column
  * @method     ChildEvent findOneByBody(string $body) Return the first ChildEvent filtered by the body column
  * @method     ChildEvent findOneByBodyHTML(string $bodyHTML) Return the first ChildEvent filtered by the bodyHTML column
@@ -81,6 +87,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent requireOneById(int $id) Return the first ChildEvent filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByTitle(string $title) Return the first ChildEvent filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByLocation(string $location) Return the first ChildEvent filtered by the location column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByImageUrl(string $image_url) Return the first ChildEvent filtered by the image_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByBody(string $body) Return the first ChildEvent filtered by the body column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByBodyHTML(string $bodyHTML) Return the first ChildEvent filtered by the bodyHTML column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -90,6 +98,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findById(int $id) Return ChildEvent objects filtered by the id column
+ * @method     ChildEvent[]|ObjectCollection findByTitle(string $title) Return ChildEvent objects filtered by the title column
+ * @method     ChildEvent[]|ObjectCollection findByLocation(string $location) Return ChildEvent objects filtered by the location column
  * @method     ChildEvent[]|ObjectCollection findByImageUrl(string $image_url) Return ChildEvent objects filtered by the image_url column
  * @method     ChildEvent[]|ObjectCollection findByBody(string $body) Return ChildEvent objects filtered by the body column
  * @method     ChildEvent[]|ObjectCollection findByBodyHTML(string $bodyHTML) Return ChildEvent objects filtered by the bodyHTML column
@@ -194,7 +204,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, image_url, body, bodyHTML, tickets, created_at, updated_at FROM event WHERE id = :p0';
+        $sql = 'SELECT id, title, location, image_url, body, bodyHTML, tickets, created_at, updated_at FROM event WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -323,6 +333,64 @@ abstract class EventQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EventTableMap::COL_ID, $id, $comparison);
+    }
+
+    /**
+     * Filter the query on the title column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTitle('fooValue');   // WHERE title = 'fooValue'
+     * $query->filterByTitle('%fooValue%'); // WHERE title LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $title The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByTitle($title = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($title)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $title)) {
+                $title = str_replace('*', '%', $title);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_TITLE, $title, $comparison);
+    }
+
+    /**
+     * Filter the query on the location column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLocation('fooValue');   // WHERE location = 'fooValue'
+     * $query->filterByLocation('%fooValue%'); // WHERE location LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $location The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByLocation($location = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($location)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $location)) {
+                $location = str_replace('*', '%', $location);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_LOCATION, $location, $comparison);
     }
 
     /**

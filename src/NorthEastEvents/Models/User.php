@@ -16,19 +16,19 @@ use NorthEastEvents\Models\Base\User as BaseUser;
  *
  */
 class User extends BaseUser {
-    public static function CheckAuthorised($currentUser = null, $targetUser = null) {
+    public static function CheckAuthorised($currentUser = null, $targetUser) {
         if($currentUser == null) {
             return false;
         }
-        if(is_int($currentUser)) {
+        if(is_numeric($currentUser)) {
             $currentUser = UserQuery::create()->findOneById($currentUser);
         }
-        if ($currentUser->isAdmin()){
+        if (is_a($currentUser, self::class) && $currentUser->isAdmin()){
             return true;
         }
-
+        
         if ($targetUser != null) {
-            if (is_a($targetUser, 'User')) {
+            if (is_a($targetUser, self::class)) {
                 // Assume this is a User object
                 if ($currentUser->getId() === $targetUser->getId()){
                     return true;

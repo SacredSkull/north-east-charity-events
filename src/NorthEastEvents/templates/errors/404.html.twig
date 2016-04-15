@@ -1,5 +1,6 @@
-{% extends "/errors/error.twig.html" %}
+{% extends "/errors/error.html.twig" %}
         {% block body %}
-        <h1 >not found.</h1>
+        <h1>Whoops.</h1>
         <h2>{{error_message}}</h2>
+        <img src="/images/errors/404.png"/>
         {% endblock body %}

@@ -134,7 +134,7 @@ class UserController extends Controller {
     public function getUsers(Request $request, Response $response) {
         $this->page_title = "All Users";
         $users = UserQuery::create();
-        return $this->ci->get("view")->render($response, "users.twig.html", $this->renderVariables([
+        return $this->ci->get("view")->render($response, "users.html.twig", $this->renderVariables([
             'users' => $users,
         ]));
     }
