@@ -20,43 +20,43 @@ class UserRoutes extends Routes{
          * Front-end Controllers
          */
         // All users
-        $app->get('/users', '\NorthEastEvents\Controllers\UserController:GetUsers')
+        $app->get('/users', UserController::class.':GetUsers')
             ->setName("UsersList");
 
         // Single user
         $app->group('/user', function(){
             // Get current user details
             //TODO: Create GET method for /user to pull up the current user's details (i.e. omit the user ID)
-            $this->get('', '\NorthEastEvents\Controllers\UserController:UserOperations')
+            $this->get('', UserController::class.':UserOperations')
                 ->setName("UserCurrentGET");
 
             // Create new user (register)
-            $this->post('', '\NorthEastEvents\Controllers\UserController:CreateUser')
+            $this->post('', UserController::class.':CreateUser')
                 ->setName("UserCreate");
-
-            $this->get('/events', function($request, $response, $args){
-                return $response->getBody()->write("This should GET all PUBLICALLY subscribed (i.e. not private) events for user ID - unless you are viewing your own" . $args["userID"]);
-            })->setName("UserCurrentEventsGET");
 
             // Operations on a specific user
             $this->group('/{userID:[0-9]+}', function(){
                 // Get user details
-                $this->get('', '\NorthEastEvents\Controllers\UserController:UserOperations')
+                $this->get('', UserController::class.':UserOperations')
                     ->setName("UserOperations");
+
+                $this->get('/events', function($request, $response, $args){
+                    return $response->getBody()->write("This should GET all PUBLICALLY subscribed (i.e. not private) events for user ID #". $args["userID"]) .  " - unless you are viewing your own";
+                })->setName("UserCurrentEventsGET");
             });
         });
 
         // Create new user (register)
-        $app->post('/register', '\NorthEastEvents\Controllers\UserController:CreateUser')
+        $app->post('/register', UserController::class.':CreateUser')
             ->setName("UserCreate");
 
         // Login
-        $app->post('/login', '\NorthEastEvents\Controllers\UserController:LoginController')
+        $app->post('/login', UserController::class.':LoginController')
             ->setName("UserLogin");
 
         // Logout
         //TODO: Logout
-        $app->post('/logout', '\NorthEastEvents\Controllers\UserController:LogoutController')
+        $app->post('/logout', UserController::class.':LogoutController')
             ->setName("UserLogout");
 
         /**
@@ -68,18 +68,18 @@ class UserRoutes extends Routes{
             $this->group('/user', function(){
                 // Get current user details
                 //TODO: Create GET method for /user to pull up the current user's details (i.e. omit the user ID)
-                $this->get('', '\NorthEastEvents\Controllers\UserController:APIUserOperations')
+                $this->get('', UserController::class.':APIUserOperations')
                     ->setName("APIUserCurrentGET");
 
 
                 // Create new user (register)
-                $this->post('', '\NorthEastEvents\Controllers\UserController:CreateUser')
+                $this->post('', UserController::class.':CreateUser')
                     ->setName("APIUserCreate");
 
                 // Operations on a specific user
                 $this->group('/{userID:[0-9]+}', function(){
                     // Get user details, and perform administrative operations on others
-                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\Controllers\UserController:APIUserOperations')
+                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', UserController::class.':APIUserOperations')
                         ->setName("APIUserOperations")
                         ->add(new AuthorisedRouteMiddleware())->add(new BasicAuthMiddleware());
 
@@ -91,11 +91,11 @@ class UserRoutes extends Routes{
             });
 
             // Get list of users
-            $this->get('/users', '\NorthEastEvents\Controllers\UserController:APIGetUsers')
+            $this->get('/users', UserController::class.':APIGetUsers')
                 ->setName("APIUsersList");
 
             // Register
-            $this->post('/register', '\NorthEastEvents\Controllers\UserController:CreateUser')
+            $this->post('/register', UserController::class.':CreateUser')
                 ->setName("APIUserCreate");
         });
     }

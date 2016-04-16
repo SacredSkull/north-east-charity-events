@@ -9,21 +9,25 @@ abstract class Controller implements ResourceInterface {
     protected $ci;
     public $page_title = "Unknown";
     public $resource_type = "Unknown";
-    public $not_found_message = null;
-    public $unauthorised_message = null;
-    public $not_allowed_message = null;
-    public $generic_error = null;
+    public $not_found_message = "Resource could not be found.";
+    public $unauthorised_message = "You do not have access to this resource.";
+    public $not_allowed_message = "This resource does not allow that method.";
+    public $generic_error = "An error occurred when trying to process your request.";
 
     public function __construct(ContainerInterface $ci) {
         $this->ci = $ci;
     }
 
-    public function renderVariables(array $additionalVariables){
+    private function renderVariables(array $additionalVariables){
         return array_merge([
             "page_title" => $this->page_title,
             "current_user" => $this->ci->get("session")->getSegment('NorthEastEvents\Login')->get("user", null),
             "resource_type" => $this->resource_type,
         ], $additionalVariables);
+    }
+
+    public function render(Response $res, string $template, array $vars = []){
+        return $this->ci->get("view")->render($res, $template, $this->renderVariables($vars));
     }
 
     public function NotFound(string $message = null, Request $request, Response $response, array $args){

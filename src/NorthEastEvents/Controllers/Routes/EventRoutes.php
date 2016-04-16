@@ -9,6 +9,8 @@
 namespace NorthEastEvents\Controllers\Routes;
 
 
+use NorthEastEvents\Controllers\EventController;
+
 class EventRoutes extends Routes {
 
     public function routes() {
@@ -18,31 +20,34 @@ class EventRoutes extends Routes {
          */
 
         // All events
-        $app->get('/events', '\NorthEastEvents\EventController:GetEvents')
+        $app->get('/events', EventController::class.':GetEvents')
             ->setName("EventsList");
 
         // Single event
         $app->group('/event', function(){
             // Create event
-            $this->post('', '\NorthEastEvents\EventController:CreateEvent')
-                ->setName("EventCreate");
+            $this->get('/create', EventController::class.':CreateEventGet')
+                ->setName("EventCreateGET");
+
+            $this->post('/create', EventController::class.':CreateEventPost')
+                ->setName("EventCreatePOST");
 
             // Operations on a specific event
             $this->group('/{eventID:[0-9]+}', function(){
                 // Get event details
-                $this->map(["GET", "DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\EventController:EventOperations')
+                $this->map(["GET", "DELETE", "PUT", "PATCH"], '', EventController::class.':EventOperations')
                     ->setName("EventOperations");
 
                 // Get list of all publically attending users of an event
-                $this->get('/users', '\NorthEastEvents\EventController:GetEventUsers')
+                $this->get('/users', EventController::class.':GetEventUsers')
                     ->setName("EventUsersGET");
 
                 // Attend an event
-                $this->get('/register', '\NorthEastEvents\EventController:RegisterEvent')
+                $this->get('/register', EventController::class.':RegisterEvent')
                     ->setName("APIEventRegister");
 
                 // Stop attending an event
-                $this->get('/deregister', '\NorthEastEvents\EventController:DeregisterEvent')
+                $this->get('/deregister', EventController::class.':DeregisterEvent')
                     ->setName("APIEventDeregister");
 
                 // Event comments will be on the page
@@ -55,31 +60,31 @@ class EventRoutes extends Routes {
 
         $app->group('/api', function () {
             // All events
-            $this->get('/events', '\NorthEastEvents\EventController:APIGetEvents')
+            $this->get('/events', EventController::class.':APIGetEvents')
                 ->setName("APIEventsList");
 
             $this->group('/event', function() {
                 // Create event
-                $this->post('', '\NorthEastEvents\EventController:APICreateEvent')
+                $this->post('', EventController::class.':APICreateEvent')
                     ->setName("APIEventCreate");
 
                 // Specific event operations
                 $this->group('/{eventID:[0-9]+}',function(){
 
                     // Get/delete/put/patch specific event
-                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\EventController:APIEventOperations')
+                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', EventController::class.':APIEventOperations')
                         ->setName("APIEventOperations");
 
                     // Get the threads of an event
-                    $this->get('/threads', '\NorthEastEvents\EventController:APIGetEventThreads')
+                    $this->get('/threads', EventController::class.':APIGetEventThreads')
                         ->setName("APIEventThreadsList");
 
                     // Attend an event
-                    $this->get('/register', '\NorthEastEvents\EventController:APIRegisterEvent')
+                    $this->get('/register', EventController::class.':APIRegisterEvent')
                         ->setName("APIEventRegister");
 
                     // Stop attending an event
-                    $this->get('/deregister', '\NorthEastEvents\EventController:APIDeregisterEvent')
+                    $this->get('/deregister', EventController::class.':APIDeregisterEvent')
                         ->setName("APIEventDeregister");
                 });
             });

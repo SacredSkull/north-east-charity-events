@@ -42,10 +42,15 @@ class UserController extends Controller {
         } else if ($request->isGet()) {
             if(User::CheckAuthorised($currentUser, $user)) {
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
-                return $response = $response->withJson(['User' => $user]);
+
+                return $this->render($response, "/events/user.html.twig", [
+                    'user' => $user,
+                ]);
             }
             $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
-            return $response = $response->withJson(['User' => $user]);
+            return $this->render($response, "/events/user.html.twig", [
+                'user' => $user,
+            ]);
         } else if ($request->isDelete()) {
             // TODO: Should the API provide this?
             return $response = $response->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
@@ -65,7 +70,13 @@ class UserController extends Controller {
                     if (stripos('staff', $userjson['Permission']) !== FALSE)
                         $user->setAvatarUrl(UserTableMap::COL_PERMISSION_STAFF);
                 }
-                return $response->withJson([ "Success" => "The user was successfully modified.", "User" => [ $user->getId(), $user->getUsername(), $user->getAvatarUrl(), $user->getPermission() ]]);
+
+                $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
+
+                return $this->render($response, "/events/user.html.twig", [
+                    'message' => ["Type" => "Success", "Message" => "Modifications were successful!"],
+                    'user' => $user,
+                ]);
             } else {
                 return $this->Unauthorised(false, $request, $response, $args);
             }
@@ -91,7 +102,7 @@ class UserController extends Controller {
 
         // This user doesn't exist
         if ($user == null) {
-            $this->NotFound(null, $request, $response, $args);
+            $this->APINotFound(null, $request, $response, $args);
         } else if ($request->isGet()) {
             // JSON example, with sensitive:
             //{"Id":7,"Username":"edavis","Password":"$2y$10$SgwNlcG5kMJt35E34EiHIObrj7BfhXjcWGOFZFUuLtU","Email":"cook.elliot@kelly.com","FirstName":"Ryan","LastName":"Hunter","AvatarUrl":"http:\/\/lorempixel.com\/640\/480\/?51557","Permission":"staff","CreatedAt":"2016-03-19T03:14:08+00:00","UpdatedAt":"2016-03-19T03:14:08+00:00"}
@@ -134,9 +145,9 @@ class UserController extends Controller {
     public function getUsers(Request $request, Response $response) {
         $this->page_title = "All Users";
         $users = UserQuery::create();
-        return $this->ci->get("view")->render($response, "users.html.twig", $this->renderVariables([
+        return $this->render($response, "/events/users.html.twig", [
             'users' => $users,
-        ]));
+        ]);
     }
 
     public function APIGetUsers(Request $request, Response $response) {

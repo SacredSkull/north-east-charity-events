@@ -8,8 +8,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class BaseController extends Controller {
     public function Base(Request $request, Response $response) {
-        return $this->ci->get("view")->render($response, "home.html.twig", $this->renderVariables([
-            "events" => EventQuery::create()->find()
-        ]));
+        return $this->render($response, "home.html.twig", [
+            "events" => EventQuery::create()->limit(9)->find()
+        ]);
     }
 }

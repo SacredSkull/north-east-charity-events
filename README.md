@@ -19,14 +19,14 @@ Rather than having to set up a local server, I have included a [Docker](http://d
 You must clone/store this **IN YOUR USERS FOLDER** - e.g. *C:/Users/lazylewis/* - **otherwise the server WILL NOT WORK**.
 
 ### Starting
-To start the server, run **start.bat**. You will be given an IP address like (probably exactly like) `192.168.99.100:8080` - this is how you access the server (http://192.168.99.100:8080/). If you want to make it more convenient, add `<your_given_IP_address_WITHOUT_:8080> docker.dev` (e.g. 192.168.99.100 docker.dev) to your `hosts` file (google it) - and you can access it via http://docker.dev:8080/
+To start the server, run **start.bat**. You will be given an IP address like (probably exactly like) `192.168.99.100:8080` - this is how you access the server (http://192.168.99.100:8080/). If you want to make it more convenient, add `<your_given_IP_address_WITHOUT_:8080> docker.dev` to your `hosts` file (google it) - and you can access it via http://docker.dev:8080/
 
 ### Shutting down
 To properly shutdown the server, either run **stop.bat**.
 
 ### Adding Data/Viewing
 if this a freshly cloned repo, you need to first run `upgrade.bat`. 
-You now have a full working web stack - but no data.  To fill it with fake data, go to http://<your_ip_address>:8080/data. If an error shows, run `upgrade.bat` again or try recloning. Otherwise it'll give you some times taken to add the data. http://<your_ip_address>:8080/ should now have events on the front page.
+You now have a full working web stack - but no data.  To fill it with fake data, go to `http://<your_ip_address>:8080/data`. If an error shows, run `upgrade.bat` again or try recloning. Otherwise it'll give you some times taken to add the data. `http://<your_ip_address>:8080/` should now have events on the front page.
 
 ### Updating
 If a new change includes modifications to the database configuration or the project's dependencies, they will need to be applied. Running **upgrade.bat** will do this.
