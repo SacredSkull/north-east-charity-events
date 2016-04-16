@@ -56,7 +56,7 @@
 	<target name="dependencies" 
 		unless="dependencies.done"
 		description="Update/install dependencies for project">
-		<chmod file="${basedir}/php.sh" perm="ugo+rx">
+		<chmod file="${basedir}/php.sh" perm="ugo+rx"></chmod>
 		<exec executable="${basedir}/php.sh">
             <arg line="/bin/sh /var/www/upgrade.sh"/>
         </exec>
