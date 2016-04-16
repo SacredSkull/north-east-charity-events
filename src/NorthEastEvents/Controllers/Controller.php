@@ -6,7 +6,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 abstract class Controller implements ResourceInterface {
-    protected $ci;
     public $page_title = "Unknown";
     public $resource_type = "Unknown";
     public $not_found_message = "Resource could not be found.";
@@ -14,20 +13,22 @@ abstract class Controller implements ResourceInterface {
     public $not_allowed_message = "This resource does not allow that method.";
     public $generic_error = "An error occurred when trying to process your request.";
 
+    protected $ci;
+    protected $current_user = null;
+
     public function __construct(ContainerInterface $ci) {
         $this->ci = $ci;
+        $this->current_user = $this->ci->get("session")->getSegment('NorthEastEvents\Login')->get("user", null);
     }
 
-    private function renderVariables(array $additionalVariables){
-        return array_merge([
+    public function render(Request $req, Response $res, string $template, array $vars = []){
+
+        return $this->ci->get("view")->render($res, $template, array_merge([
             "page_title" => $this->page_title,
-            "current_user" => $this->ci->get("session")->getSegment('NorthEastEvents\Login')->get("user", null),
+            "current_user" => $this->current_user,
             "resource_type" => $this->resource_type,
-        ], $additionalVariables);
-    }
-
-    public function render(Response $res, string $template, array $vars = []){
-        return $this->ci->get("view")->render($res, $template, $this->renderVariables($vars));
+            "route" => $req->getAttribute('route')->getName(),
+        ], $vars));
     }
 
     public function NotFound(string $message = null, Request $request, Response $response, array $args){

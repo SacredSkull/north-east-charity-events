@@ -1,0 +1,5 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+    Some wicked sick cool events
+    {{ include('pagination.html.twig', {resources: events}) }}
+{% endblock body %}

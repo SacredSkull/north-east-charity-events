@@ -1,0 +1,15 @@
+{% if resources.haveToPaginate and route %}
+    <div class="row">
+        <div class="text-center">
+            <ul class="pagination">
+                <li {% if resources.getPage == 1 %}class="disabled"{% endif %}><a href="{{ path_for(route, { 'page': resources.getFirstPage }) }}">{{ resources.getFirstPage }}</a></li>
+                <li {% if resources.getPage == 1 %}class="disabled"{% endif %}><a href="{{ path_for(route, { 'page': resources.getPreviousPage }) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                {% for page in resources.getLinks(5) %}
+                    <li {% if resources.getPage == page %}class="active"{% endif %}><a href="{{ path_for(route, { 'page': page }) }}">{{page}}</a></li>
+                {% endfor %}
+                <li {% if resources.isLastPage %}class="disabled"{% endif %}><a href="{{ path_for(route, { 'page': resources.getNextPage }) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li {% if resources.isLastPage %}class="disabled"{% endif %}><a href="{{ path_for(route, { 'page': resources.getLastPage }) }}">...{{ resources.getLastPage }}</a></li>
+            </ul>
+        </div>
+    </div>
+{% endif %}

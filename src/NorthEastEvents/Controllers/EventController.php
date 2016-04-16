@@ -11,6 +11,8 @@ use NorthEastEvents\Bootstrap;
 use Slim\App;
 
 class EventController extends Controller {
+    const EVENTS_PER_PAGE = 12;
+
     // TODO: Do all the work- all the event controller functions!
     // TODO: Limit list functions to only returning a certain amount of recent additions.
 
@@ -20,17 +22,22 @@ class EventController extends Controller {
     
     public function GetEvents(Request $req, Response $res, array $args){
         $this->pagetitle = "All Events";
-        $events = EventQuery::create()->find();
+        $page = $args["page"] ?? 1;
+        $events = EventQuery::create()->paginate($page, self::EVENTS_PER_PAGE);
 
-        return $this->render($res, "/events/events.html.twig", [
-            "events" => $events
+        if($page > $events->getLastPage()) {
+            return $res->withHeader("Location", "/events/$events->getLastPage()");
+        }
+
+        return $this->render($req, $res, "/events/events.html.twig", [
+            "events" => $events,
         ]);
     }
 
     public function CreateEventGet(Request $req, Response $res, array $args){
         $this->pagetitle = "Creating New Event";
         
-        return $this->render($res, "/events/create.html.twig");
+        return $this->render($req, $res, "/events/create.html.twig");
     }
 
     public function CreateEventPost(Request $req, Response $res, array $args){
@@ -45,7 +52,7 @@ class EventController extends Controller {
             return $this->NotFound(null, $req, $res, $args);
         }
 
-        return $this->render($res, "/events/event.html.twig", [
+        return $this->render($req, $res, "/events/event.html.twig", [
             "event" => $event
         ]);
     }
@@ -56,7 +63,7 @@ class EventController extends Controller {
             return $this->NotFound(null, $req, $res, $args);
         }
 
-        return $this->render($res, "/events/users.html.twig", [
+        return $this->render($req, $res, "/events/users.html.twig", [
             "event" => $event,
             "users" => $event->getUsers()
         ]);

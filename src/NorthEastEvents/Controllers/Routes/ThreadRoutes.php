@@ -9,6 +9,8 @@
 namespace NorthEastEvents\Controllers\Routes;
 
 
+use NorthEastEvents\Controllers\ThreadController;
+
 class ThreadRoutes extends Routes {
 
     public function routes() {
@@ -18,7 +20,7 @@ class ThreadRoutes extends Routes {
          * Front-end Controllers
          */
 
-
+        
 
         /**
          * API Controllers
@@ -26,23 +28,23 @@ class ThreadRoutes extends Routes {
 
         $app->group('/api', function () {
             // Get the last x threads created
-            $this->get('/threads', '\NorthEastEvents\ThreadController:APIGetThreads')
+            $this->get('/threads', ThreadController::class.':APIGetThreads')
                 ->setName("APIThreadsList");
 
             // Specific thread operations
             $this->group('/thread',function(){
                 // Create thread
-                $this->post('', '\NorthEastEvents\ThreadController:APICreateThread')
+                $this->post('', ThreadController::class.':APICreateThread')
                     ->setName("APIEventThreadCreate");
 
                 // Specific thread operations
                 $this->group('/{threadID:[0-9]+}',function(){
                     // Get/delete/put/patch specific event
-                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\ThreadController:APIEventThreadHandler')
+                    $this->map(["GET", "DELETE", "PUT", "PATCH"], '', ThreadController::class.':APIEventThreadHandler')
                         ->setName("APIThreadOperations");
 
                     // Get all comments of a thread
-                    $this->get('/comments', '\NorthEastEvents\ThreadController:APIGetThreadComments')
+                    $this->get('/comments', ThreadController::class.':APIGetThreadComments')
                         ->setName("APIThreadCommentsList");
                 });
             });

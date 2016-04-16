@@ -20,7 +20,7 @@ class EventRoutes extends Routes {
          */
 
         // All events
-        $app->get('/events', EventController::class.':GetEvents')
+        $app->get('/events[/{page:[0-9]+}]', EventController::class.':GetEvents')
             ->setName("EventsList");
 
         // Single event
@@ -39,7 +39,7 @@ class EventRoutes extends Routes {
                     ->setName("EventOperations");
 
                 // Get list of all publically attending users of an event
-                $this->get('/users', EventController::class.':GetEventUsers')
+                $this->get('/users[/{page:[0-9]+}]', EventController::class.':GetEventUsers')
                     ->setName("EventUsersGET");
 
                 // Attend an event

@@ -1,0 +1,5 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+    Some wicked cool users
+    {{ include('pagination.html.twig', {resources: users}) }}
+{% endblock body %}

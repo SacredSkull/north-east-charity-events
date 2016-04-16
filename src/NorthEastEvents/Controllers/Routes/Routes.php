@@ -19,7 +19,6 @@ abstract class Routes {
 
     public function __construct(ContainerInterface $ci, string $controllerClass) {
         $this->ci = $ci;
-        $this->controllerClass = $controllerClass;
         $this->ci[$controllerClass] = function($ci) use ($controllerClass){
             $uc = new $controllerClass($ci);
             return $uc;

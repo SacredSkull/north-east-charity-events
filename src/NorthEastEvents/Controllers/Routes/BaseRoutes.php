@@ -9,10 +9,12 @@
 namespace NorthEastEvents\Controllers\Routes;
 
 
+use NorthEastEvents\Controllers\BaseController;
+
 class BaseRoutes extends Routes {
     public function routes() {
         $app = $this->app;
-        $app->get('/', $this->controllerClass.":Base");
+        $app->get('/', BaseController::class.":Base");
         // TODO: /contact
     }
 }
