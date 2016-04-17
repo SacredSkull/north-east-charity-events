@@ -5,8 +5,6 @@ namespace NorthEastEvents\Models;
 use NorthEastEvents\Models\Base\Event as BaseEvent;
 use Propel\Runtime\Connection\ConnectionInterface;
 use NorthEastEvents\Bootstrap;
-use Symfony\Component\Validator\Constraints\DateTime;
-
 /**
  * Skeleton subclass for representing a row from the 'event' table.
  *
@@ -29,12 +27,16 @@ class Event extends BaseEvent
         return $this->getTicketsRemaining() >= 1;
     }
 
+    public function soldOut(){
+        return !$this->hasTickets();
+    }
+
     public function getTicketsTaken(){
         return EventQuery::create()->findOneById($this->getId())->getUsers()->count();
     }
 
     public function hasFinished(){
-        if(new DateTime() > $this->getDate()){
+        if($this->getDate() < new \DateTime()){
             return true;
         }
         return false;

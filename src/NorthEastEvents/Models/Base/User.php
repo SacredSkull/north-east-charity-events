@@ -136,7 +136,7 @@ abstract class User implements ActiveRecordInterface
     /**
      * The value for the avatar_url field.
      *
-     * Note: this column has a database default value of: '/include/img/avatars/default.png'
+     * Note: this column has a database default value of: '/image/avatars/default.png'
      * @var        string
      */
     protected $avatar_url;
@@ -243,7 +243,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->avatar_url = '/include/img/avatars/default.png';
+        $this->avatar_url = '/image/avatars/default.png';
         $this->permission = 0;
     }
 
@@ -878,7 +878,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->avatar_url !== '/include/img/avatars/default.png') {
+            if ($this->avatar_url !== '/image/avatars/default.png') {
                 return false;
             }
 

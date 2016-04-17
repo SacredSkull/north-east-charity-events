@@ -222,7 +222,7 @@ class UserTableMap extends TableMap
         $this->addColumn('city', 'City', 'VARCHAR', true, 40, null);
         $this->addColumn('first_name', 'FirstName', 'VARCHAR', false, 20, null);
         $this->addColumn('last_name', 'LastName', 'VARCHAR', false, 20, null);
-        $this->addColumn('avatar_url', 'AvatarUrl', 'VARCHAR', false, 128, '/include/img/avatars/default.png');
+        $this->addColumn('avatar_url', 'AvatarUrl', 'VARCHAR', false, 128, '/image/avatars/default.png');
         $this->addPrimaryKey('permission', 'Permission', 'ENUM', true, null, 'normal');
         $this->getColumn('permission')->setValueSet(array (
   0 => 'normal',

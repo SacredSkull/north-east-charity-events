@@ -72,7 +72,6 @@ class UserController extends Controller {
                     if (stripos('staff', $userjson['Permission']) !== FALSE)
                         $user->setAvatarUrl(UserTableMap::COL_PERMISSION_STAFF);
                 }
-
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
                 return $this->render($request, $response, "/users/user.html.twig", [
@@ -120,7 +119,7 @@ class UserController extends Controller {
         if($user_session != null){
             // User was logged in before, invalidate previous session.
             $segment->clear();
-            $segment->regenerateId();
+            $this->ci->get("session")->regenerateId();
         }
         $segment->set('user', $user);
         return ["Session" => session_id()];
@@ -131,7 +130,8 @@ class UserController extends Controller {
         $password = $request->getParsedBody()['password'] ?? null;
         $result = $this->LoginSession($username, $password);
         if($result["Error"] ?? null){
-            $this->ci->get("flash")->addMessage("Error", $result["Error"]);
+            $this->ci->get("flash")->addMessage("Error", $result["Error"]["Message"]);
+            return $response->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
         }
         return $response->withHeader("Location", $this->ci->get("router")->pathFor("UserCurrentGET"));
     }

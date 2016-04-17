@@ -25,13 +25,22 @@
         <column name="city" type="varchar" size="40" required="true"/>
         <column name="first_name" type="varchar" size="20"/>
         <column name="last_name" type="varchar" size="20"/>
-        <column name="avatar_url" type="varchar" size="128" default="/include/img/avatars/default.png"/>
+        <column name="avatar_url" type="varchar" size="128" default="/image/avatars/default.png"/>
         <column name="permission" type="enum" valueSet="normal, staff" default="normal" primaryKey="true" />
+        <behavior name="timestampable" />
+    </table>
+    
+    <table name="charity" phpName="Charity">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="50" required="true"/>
+        <column name="bio" type="varchar" size="600" required="true"/>
+        <column name="logo" type="varchar" size="128" default="/images/default.jpg"/>
         <behavior name="timestampable" />
     </table>
 
     <table name="event" phpName="Event">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="charityID" type="integer" phpName="CharityID" required="true"/>
 		<column name="title" type="varchar" size="50" required="true"/>
         <column name="date" type="TIMESTAMP" required="true"/>
 		<column name="location" type="varchar" size="50" required="true"/>
@@ -39,12 +48,16 @@
         <column name="body" phpName="Body" type="LONGVARCHAR"/>
         <column name="bodyHTML" phpName="BodyHTML" type="LONGVARCHAR"/>
         <column name="tickets" type="integer" default="0" />
+        <column name="video_url" type="varchar" size="128"/>
         <behavior name="timestampable" />
         <behavior name="aggregate_column">
             <parameter name="name" value="tickets_remaining" />
             <parameter name="foreign_table" value="event_users" />
             <parameter name="expression" value="COUNT(userID)" />
         </behavior>
+        <foreign-key foreignTable="charity" onDelete="CASCADE">
+            <reference local="charityID" foreign="id"/>
+        </foreign-key>
     </table>
 
     <table name="event_users" phpName="EventUsers" isCrossRef="true">

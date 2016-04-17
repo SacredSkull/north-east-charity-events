@@ -8,15 +8,15 @@
          <div class="panel-heading">
             <h4>{{ event.getTitle }}</h4>
          </div>
-         <img class="img-responsive" src="{{ event.getImageUrl}}">
+         <img class="img-responsive" {% if event.hasFinished %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;" class="img-responsive" src="/images/event/finished.png"{% elseif event.soldOut %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;" class="img-responsive" src="/images/event/sold-out.png" {% else %}src="{{ event.getImageUrl }}"{% endif %}>
       </div>
    </div>
    <div class="row">
       <div class="panel-group">
          <div class="panel panel-default">
-            <div class="panel-heading">Event host</div>
+            <div class="panel-heading">Hosted by {{ event.getCharity.getName }}</div>
             <div class="panel-body">
-<img id="charityLogo" src='{{ event.getEventHost|default("http://placehold.it/200x100")}}'>
+                <img class="img-responsive" id="charityLogo" src='{{ event.getCharity.getLogo|default("http://placehold.it/200x100")}}'>
             </div>
          </div>
       </div>
@@ -26,9 +26,9 @@
          <div class="panel panel-default">
             <div class="panel-heading">Event media</div>
             <div class="panel-body">
-                    <div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="{{ event.getEventMedia|default('https://www.youtube.com/embed/d5gRPCJPIak')}}"></iframe>
-</div>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="{{ event.getEventMedia|default('https://www.youtube.com/embed/d5gRPCJPIak')}}"></iframe>
+                </div>
             </div>
          </div>
       </div>
@@ -39,26 +39,29 @@
       <div class="panel-group">
          <div class="panel panel-default">
             <div class="panel-heading">
-               <h4>Event Desciption</h4>
+               <h4>Event Description</h4>
             </div>
             <div class="panel-heading" id="eventPanHead">
-               
-               <div class="label label-primary" id="eventLabels">Event Date: {{  event.getDate|default("21/03/95") }}</div>
-               <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div>
+            <div class="label label-primary" id="eventLabels">Event Date: {{  event.getDate|date("H:i, d/m/Y") }}</div>
+            <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation }}   </div>
             </div>
             <div class="panel-body">
                  {{ event.getBodyHTML|raw }}
-                 {% if event.hasTickets and not event.getUsers.contains(current_user) %}
-                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
-                     <div class="label label-primary">
-                       {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}
-                     </div>
-                 {% else %}
-                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
-                 {% endif %}
-                 
+            {% if not event.hasFinished %}
+                {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                 <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
+                 <div class="label label-primary">
+                   {{ event.getTicketsTaken|default("12")}} out of {{ event.getTickets|default("69") }} tickets taken <span class="badge">{{ event.getTicketsRemaining }} available</span>
+                 </div>
+                {% else %}
+                 <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
+                {% endif %}
+            {% else %}
+                <div class="label label-danger">
+                    The event has ended.
+                </div>
+            {% endif %}
             </div>
-                 
          </div>
       </div>
    </div>
@@ -68,15 +71,13 @@
             <div class="panel-heading">Event ratings</div>
             <div class="panel-body disabled">
                  {% if event.hasFinished %}
-            
                <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
                <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
                <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
                <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
                <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-            
                      {% else %}
-                  The event is not over!   
+                  Ratings will be unlocked once the event has finished.
                      {% endif %}
             </div>
          </div>
@@ -105,7 +106,7 @@
                                 {% endfor %}
                           </tr>
                         </tbody>
-                      </table>         
+                    </table>
             </div>
          </div>
       </div></div>

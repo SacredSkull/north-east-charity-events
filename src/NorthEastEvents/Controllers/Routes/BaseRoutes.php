@@ -15,6 +15,7 @@ class BaseRoutes extends Routes {
     public function routes() {
         $app = $this->app;
         $app->get('/', BaseController::class.":Base")->setName("Home");
+        $app->get('/contact', BaseController::class.":Contact")->setName("Contact");
         // TODO: /contact
     }
 }

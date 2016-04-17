@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <h4 class="event-title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h4>
             <img class="event-image" src="{{ event.getImageUrl }}">
-            <h3 class="event-register"><a href="#" class="label label-primary" data-toggle="modal" data-target="#login-modal">Only {{ event.getTicketsRemaining }} tickets left!</a></h3>
+            <h3 class="event-register"><a href="{% if current_user %}{{ path_for('EventOperations', { 'eventID': event.getId }) }}{% else %}#{% endif %}" class="label label-primary" {% if not current_user %}data-toggle="modal" data-target="#login-modal"{% endif %}>Only {{ event.getTicketsRemaining }} tickets left!</a></h3>
             <div style="clear: both;"></div>
         </div>
         {% if loop.index is divisible by(3) %}

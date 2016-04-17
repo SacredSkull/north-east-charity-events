@@ -3,11 +3,15 @@
 namespace NorthEastEvents\Controllers;
 
 use Faker\Factory;
+use NorthEastEvents\Models\Charity;
+use NorthEastEvents\Models\CharityQuery;
+use NorthEastEvents\Models\CommentQuery;
 use NorthEastEvents\Models\EventRating;
 use NorthEastEvents\Models\EventRatingQuery;
 use NorthEastEvents\Models\EventUsers;
 use NorthEastEvents\Models\ORM;
 use NorthEastEvents\Models\Map;
+use NorthEastEvents\Models\ThreadQuery;
 use NorthEastEvents\Models\User;
 use NorthEastEvents\Models\Event;
 use NorthEastEvents\Models\Comment;
@@ -26,6 +30,10 @@ class TestController extends Controller {
             \NorthEastEvents\Models\Base\UserQuery::create()->deleteAll();
             EventQuery::create()->deleteAll();
             EventUsersQuery::create()->deleteAll();
+            EventRatingQuery::create()->deleteAll();
+            CharityQuery::create()->deleteAll();
+            ThreadQuery::create()->deleteAll();
+            CommentQuery::create()->deleteAll();
             $response->getBody()->write(sprintf("Wiping users, events, and event bookings (Event Users) took %.3fs<br/>", microtime(true) - $start));
             Bootstrap::getLogger()->addInfo("[DATA] Wiped users, events and everything else...");
         }
@@ -42,9 +50,27 @@ class TestController extends Controller {
             'CreatedAt' => null,
             'UpdatedAt' => null,
             'Permission' => function () use ($faker) {
-                return $faker->boolean(30) ? Map\UserTableMap::COL_PERMISSION_STAFF : Map\UserTableMap::COL_PERMISSION_NORMAL;
+                return $faker->boolean(15) ? Map\UserTableMap::COL_PERMISSION_STAFF : Map\UserTableMap::COL_PERMISSION_NORMAL;
             },
         ));
+
+        $populator->addEntity(Charity::class, 50, array(
+            'Logo' => function () use ($faker) {
+                return $faker->imageUrl(200, 100);
+            },
+            'Bio' => function () use ($faker) {
+                return $faker->realText(500);
+            },
+            'Name' => function () use ($faker) {
+                return $faker->company;
+            },
+            'UpdatedAt' => null,
+            'CreatedAt' => null,
+        ));
+
+        $usersEventsIDs = $populator->execute();
+        $populator = new ORM\Propel2\Populator($faker);
+
         $populator->addEntity(Event::class, 15, array(
             'Title' => function () use ($faker) {
                 return $faker->catchPhrase;
@@ -61,6 +87,10 @@ class TestController extends Controller {
             'Body' => function () use ($faker) {
                 return $faker->realText(1600);
             },
+            'CharityID' => function () use ($faker, $usersEventsIDs) {
+                $id = $faker->randomElement($usersEventsIDs[Charity::class]);
+                return $id;
+            },
             'BodyHTML' => null,
             'Tickets' => function () use ($faker) {
                 return $faker->numberBetween(20, 100);
@@ -69,13 +99,14 @@ class TestController extends Controller {
             'UpdatedAt' => null,
         ));
 
-        $usersEventsIDs = $populator->execute();
-        $response->getBody()->write(sprintf("Adding users & events took %.3fs<br/>", microtime(true) - $start));
+        $usersEventsIDs = array_merge($usersEventsIDs, $populator->execute());
+        $response->getBody()->write(sprintf("Adding users, charities & events took %.3fs<br/>", microtime(true) - $start));
         Bootstrap::getLogger()->addInfo(sprintf("[DATA] Added random users and events, taking %.3fs", microtime(true) - $start));
 
         $start = microtime(true);
 
         $populator = new ORM\Propel2\Populator($faker);
+
         $populator->addEntity(EventUsers::class, 200, array(
             'UserID' => function () use ($faker, $usersEventsIDs) {
                 $id = $faker->randomElement($usersEventsIDs[User::class]);

@@ -34,7 +34,7 @@
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="/register
+                                <li class="active"><a href="{% if current_user %}/user{% else %}/register{% endif %}
 ">Account<span class="sr-only">(current)</span></a></li>
                                 <li><a href="/events">Events</a></li>
                                 <li><a href="/users">Users</a></li>
@@ -44,7 +44,6 @@
                                 <li><a href="/logout">Logout</a></li>
                                 {% else %}
                                 <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-
                                 {% endif %}
                             </ul>
                             <form class="navbar-form navbar-right" role="search">

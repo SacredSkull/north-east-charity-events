@@ -2,8 +2,8 @@
 
 namespace NorthEastEvents\Models\Map;
 
-use NorthEastEvents\Models\Event;
-use NorthEastEvents\Models\EventQuery;
+use NorthEastEvents\Models\Charity;
+use NorthEastEvents\Models\CharityQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'event' table.
+ * This class defines the structure of the 'charity' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class EventTableMap extends TableMap
+class CharityTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class EventTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'NorthEastEvents.Models.Map.EventTableMap';
+    const CLASS_NAME = 'NorthEastEvents.Models.Map.CharityTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class EventTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'event';
+    const TABLE_NAME = 'charity';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\NorthEastEvents\\Models\\Event';
+    const OM_CLASS = '\\NorthEastEvents\\Models\\Charity';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'NorthEastEvents.Models.Event';
+    const CLASS_DEFAULT = 'NorthEastEvents.Models.Charity';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 13;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,72 +69,37 @@ class EventTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 13;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'event.id';
+    const COL_ID = 'charity.id';
 
     /**
-     * the column name for the charityID field
+     * the column name for the name field
      */
-    const COL_CHARITYID = 'event.charityID';
+    const COL_NAME = 'charity.name';
 
     /**
-     * the column name for the title field
+     * the column name for the bio field
      */
-    const COL_TITLE = 'event.title';
+    const COL_BIO = 'charity.bio';
 
     /**
-     * the column name for the date field
+     * the column name for the logo field
      */
-    const COL_DATE = 'event.date';
-
-    /**
-     * the column name for the location field
-     */
-    const COL_LOCATION = 'event.location';
-
-    /**
-     * the column name for the image_url field
-     */
-    const COL_IMAGE_URL = 'event.image_url';
-
-    /**
-     * the column name for the body field
-     */
-    const COL_BODY = 'event.body';
-
-    /**
-     * the column name for the bodyHTML field
-     */
-    const COL_BODYHTML = 'event.bodyHTML';
-
-    /**
-     * the column name for the tickets field
-     */
-    const COL_TICKETS = 'event.tickets';
-
-    /**
-     * the column name for the video_url field
-     */
-    const COL_VIDEO_URL = 'event.video_url';
+    const COL_LOGO = 'charity.logo';
 
     /**
      * the column name for the created_at field
      */
-    const COL_CREATED_AT = 'event.created_at';
+    const COL_CREATED_AT = 'charity.created_at';
 
     /**
      * the column name for the updated_at field
      */
-    const COL_UPDATED_AT = 'event.updated_at';
-
-    /**
-     * the column name for the tickets_remaining field
-     */
-    const COL_TICKETS_REMAINING = 'event.tickets_remaining';
+    const COL_UPDATED_AT = 'charity.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -148,11 +113,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'CharityID', 'Title', 'Date', 'Location', 'ImageUrl', 'Body', 'BodyHTML', 'Tickets', 'VideoUrl', 'CreatedAt', 'UpdatedAt', 'TicketsRemaining', ),
-        self::TYPE_CAMELNAME     => array('id', 'charityID', 'title', 'date', 'location', 'imageUrl', 'body', 'bodyHTML', 'tickets', 'videoUrl', 'createdAt', 'updatedAt', 'ticketsRemaining', ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID, EventTableMap::COL_CHARITYID, EventTableMap::COL_TITLE, EventTableMap::COL_DATE, EventTableMap::COL_LOCATION, EventTableMap::COL_IMAGE_URL, EventTableMap::COL_BODY, EventTableMap::COL_BODYHTML, EventTableMap::COL_TICKETS, EventTableMap::COL_VIDEO_URL, EventTableMap::COL_CREATED_AT, EventTableMap::COL_UPDATED_AT, EventTableMap::COL_TICKETS_REMAINING, ),
-        self::TYPE_FIELDNAME     => array('id', 'charityID', 'title', 'date', 'location', 'image_url', 'body', 'bodyHTML', 'tickets', 'video_url', 'created_at', 'updated_at', 'tickets_remaining', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', 'Bio', 'Logo', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', 'bio', 'logo', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(CharityTableMap::COL_ID, CharityTableMap::COL_NAME, CharityTableMap::COL_BIO, CharityTableMap::COL_LOGO, CharityTableMap::COL_CREATED_AT, CharityTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', 'bio', 'logo', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -162,11 +127,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'CharityID' => 1, 'Title' => 2, 'Date' => 3, 'Location' => 4, 'ImageUrl' => 5, 'Body' => 6, 'BodyHTML' => 7, 'Tickets' => 8, 'VideoUrl' => 9, 'CreatedAt' => 10, 'UpdatedAt' => 11, 'TicketsRemaining' => 12, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'imageUrl' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'videoUrl' => 9, 'createdAt' => 10, 'updatedAt' => 11, 'ticketsRemaining' => 12, ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID => 0, EventTableMap::COL_CHARITYID => 1, EventTableMap::COL_TITLE => 2, EventTableMap::COL_DATE => 3, EventTableMap::COL_LOCATION => 4, EventTableMap::COL_IMAGE_URL => 5, EventTableMap::COL_BODY => 6, EventTableMap::COL_BODYHTML => 7, EventTableMap::COL_TICKETS => 8, EventTableMap::COL_VIDEO_URL => 9, EventTableMap::COL_CREATED_AT => 10, EventTableMap::COL_UPDATED_AT => 11, EventTableMap::COL_TICKETS_REMAINING => 12, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'image_url' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'video_url' => 9, 'created_at' => 10, 'updated_at' => 11, 'tickets_remaining' => 12, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'Bio' => 2, 'Logo' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'bio' => 2, 'logo' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
+        self::TYPE_COLNAME       => array(CharityTableMap::COL_ID => 0, CharityTableMap::COL_NAME => 1, CharityTableMap::COL_BIO => 2, CharityTableMap::COL_LOGO => 3, CharityTableMap::COL_CREATED_AT => 4, CharityTableMap::COL_UPDATED_AT => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'bio' => 2, 'logo' => 3, 'created_at' => 4, 'updated_at' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -179,26 +144,19 @@ class EventTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('event');
-        $this->setPhpName('Event');
+        $this->setName('charity');
+        $this->setPhpName('Charity');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\NorthEastEvents\\Models\\Event');
+        $this->setClassName('\\NorthEastEvents\\Models\\Charity');
         $this->setPackage('NorthEastEvents.Models');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addForeignKey('charityID', 'CharityID', 'INTEGER', 'charity', 'id', true, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 50, null);
-        $this->addColumn('date', 'Date', 'TIMESTAMP', true, null, null);
-        $this->addColumn('location', 'Location', 'VARCHAR', true, 50, null);
-        $this->addColumn('image_url', 'ImageUrl', 'VARCHAR', false, 128, '/include/img/events/default.png');
-        $this->addColumn('body', 'Body', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('bodyHTML', 'BodyHTML', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('tickets', 'Tickets', 'INTEGER', false, null, 0);
-        $this->addColumn('video_url', 'VideoUrl', 'VARCHAR', false, 128, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 50, null);
+        $this->addColumn('bio', 'Bio', 'VARCHAR', true, 600, null);
+        $this->addColumn('logo', 'Logo', 'VARCHAR', false, 128, '/images/default.jpg');
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
-        $this->addColumn('tickets_remaining', 'TicketsRemaining', 'INTEGER', false, null, null);
     } // initialize()
 
     /**
@@ -206,35 +164,13 @@ class EventTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Charity', '\\NorthEastEvents\\Models\\Charity', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Event', '\\NorthEastEvents\\Models\\Event', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':charityID',
     1 => ':id',
   ),
-), 'CASCADE', null, null, false);
-        $this->addRelation('EventUsers', '\\NorthEastEvents\\Models\\EventUsers', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':eventID',
-    1 => ':id',
-  ),
-), 'CASCADE', null, 'EventUserss', false);
-        $this->addRelation('WaitingList', '\\NorthEastEvents\\Models\\WaitingList', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':eventID',
-    1 => ':id',
-  ),
-), 'CASCADE', null, 'WaitingLists', false);
-        $this->addRelation('Thread', '\\NorthEastEvents\\Models\\Thread', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':eventID',
-    1 => ':id',
-  ),
-), 'CASCADE', null, 'Threads', false);
-        $this->addRelation('User', '\\NorthEastEvents\\Models\\User', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Users');
+), 'CASCADE', null, 'Events', false);
     } // buildRelations()
 
     /**
@@ -247,19 +183,16 @@ class EventTableMap extends TableMap
     {
         return array(
             'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
-            'aggregate_column' => array('name' => 'tickets_remaining', 'expression' => 'COUNT(userID)', 'condition' => '', 'foreign_table' => 'event_users', 'foreign_schema' => '', ),
         );
     } // getBehaviors()
     /**
-     * Method to invalidate the instance pool of all tables related to event     * by a foreign key with ON DELETE CASCADE
+     * Method to invalidate the instance pool of all tables related to charity     * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
     {
         // Invalidate objects in related instance pools,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        EventUsersTableMap::clearInstancePool();
-        WaitingListTableMap::clearInstancePool();
-        ThreadTableMap::clearInstancePool();
+        EventTableMap::clearInstancePool();
     }
 
     /**
@@ -319,7 +252,7 @@ class EventTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? EventTableMap::CLASS_DEFAULT : EventTableMap::OM_CLASS;
+        return $withPrefix ? CharityTableMap::CLASS_DEFAULT : CharityTableMap::OM_CLASS;
     }
 
     /**
@@ -333,22 +266,22 @@ class EventTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Event object, last column rank)
+     * @return array           (Charity object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = EventTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = EventTableMap::getInstanceFromPool($key))) {
+        $key = CharityTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = CharityTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + EventTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + CharityTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = EventTableMap::OM_CLASS;
-            /** @var Event $obj */
+            $cls = CharityTableMap::OM_CLASS;
+            /** @var Charity $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            EventTableMap::addInstanceToPool($obj, $key);
+            CharityTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -371,18 +304,18 @@ class EventTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = EventTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = EventTableMap::getInstanceFromPool($key))) {
+            $key = CharityTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = CharityTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Event $obj */
+                /** @var Charity $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                EventTableMap::addInstanceToPool($obj, $key);
+                CharityTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -403,33 +336,19 @@ class EventTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(EventTableMap::COL_ID);
-            $criteria->addSelectColumn(EventTableMap::COL_CHARITYID);
-            $criteria->addSelectColumn(EventTableMap::COL_TITLE);
-            $criteria->addSelectColumn(EventTableMap::COL_DATE);
-            $criteria->addSelectColumn(EventTableMap::COL_LOCATION);
-            $criteria->addSelectColumn(EventTableMap::COL_IMAGE_URL);
-            $criteria->addSelectColumn(EventTableMap::COL_BODY);
-            $criteria->addSelectColumn(EventTableMap::COL_BODYHTML);
-            $criteria->addSelectColumn(EventTableMap::COL_TICKETS);
-            $criteria->addSelectColumn(EventTableMap::COL_VIDEO_URL);
-            $criteria->addSelectColumn(EventTableMap::COL_CREATED_AT);
-            $criteria->addSelectColumn(EventTableMap::COL_UPDATED_AT);
-            $criteria->addSelectColumn(EventTableMap::COL_TICKETS_REMAINING);
+            $criteria->addSelectColumn(CharityTableMap::COL_ID);
+            $criteria->addSelectColumn(CharityTableMap::COL_NAME);
+            $criteria->addSelectColumn(CharityTableMap::COL_BIO);
+            $criteria->addSelectColumn(CharityTableMap::COL_LOGO);
+            $criteria->addSelectColumn(CharityTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(CharityTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.charityID');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.date');
-            $criteria->addSelectColumn($alias . '.location');
-            $criteria->addSelectColumn($alias . '.image_url');
-            $criteria->addSelectColumn($alias . '.body');
-            $criteria->addSelectColumn($alias . '.bodyHTML');
-            $criteria->addSelectColumn($alias . '.tickets');
-            $criteria->addSelectColumn($alias . '.video_url');
+            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.bio');
+            $criteria->addSelectColumn($alias . '.logo');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
-            $criteria->addSelectColumn($alias . '.tickets_remaining');
         }
     }
 
@@ -442,7 +361,7 @@ class EventTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(EventTableMap::DATABASE_NAME)->getTable(EventTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(CharityTableMap::DATABASE_NAME)->getTable(CharityTableMap::TABLE_NAME);
     }
 
     /**
@@ -450,16 +369,16 @@ class EventTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(EventTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(EventTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new EventTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CharityTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(CharityTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new CharityTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Event or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Charity or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Event object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Charity object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -470,27 +389,27 @@ class EventTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CharityTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \NorthEastEvents\Models\Event) { // it's a model object
+        } elseif ($values instanceof \NorthEastEvents\Models\Charity) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(EventTableMap::DATABASE_NAME);
-            $criteria->add(EventTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(CharityTableMap::DATABASE_NAME);
+            $criteria->add(CharityTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = EventQuery::create()->mergeWith($criteria);
+        $query = CharityQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            EventTableMap::clearInstancePool();
+            CharityTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                EventTableMap::removeInstanceFromPool($singleval);
+                CharityTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -498,20 +417,20 @@ class EventTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the event table.
+     * Deletes all rows from the charity table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return EventQuery::create()->doDeleteAll($con);
+        return CharityQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Event or Criteria object.
+     * Performs an INSERT on the database, given a Charity or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Event object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Charity object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -520,22 +439,22 @@ class EventTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CharityTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Event object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Charity object
         }
 
-        if ($criteria->containsKey(EventTableMap::COL_ID) && $criteria->keyContainsValue(EventTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.EventTableMap::COL_ID.')');
+        if ($criteria->containsKey(CharityTableMap::COL_ID) && $criteria->keyContainsValue(CharityTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CharityTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = EventQuery::create()->mergeWith($criteria);
+        $query = CharityQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -544,7 +463,7 @@ class EventTableMap extends TableMap
         });
     }
 
-} // EventTableMap
+} // CharityTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-EventTableMap::buildTableMap();
+CharityTableMap::buildTableMap();

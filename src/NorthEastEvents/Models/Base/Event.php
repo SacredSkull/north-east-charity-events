@@ -5,6 +5,8 @@ namespace NorthEastEvents\Models\Base;
 use \DateTime;
 use \Exception;
 use \PDO;
+use NorthEastEvents\Models\Charity as ChildCharity;
+use NorthEastEvents\Models\CharityQuery as ChildCharityQuery;
 use NorthEastEvents\Models\Event as ChildEvent;
 use NorthEastEvents\Models\EventQuery as ChildEventQuery;
 use NorthEastEvents\Models\EventUsers as ChildEventUsers;
@@ -82,6 +84,13 @@ abstract class Event implements ActiveRecordInterface
     protected $id;
 
     /**
+     * The value for the charityid field.
+     *
+     * @var        int
+     */
+    protected $charityid;
+
+    /**
      * The value for the title field.
      *
      * @var        string
@@ -133,6 +142,13 @@ abstract class Event implements ActiveRecordInterface
     protected $tickets;
 
     /**
+     * The value for the video_url field.
+     *
+     * @var        string
+     */
+    protected $video_url;
+
+    /**
      * The value for the created_at field.
      *
      * @var        DateTime
@@ -152,6 +168,11 @@ abstract class Event implements ActiveRecordInterface
      * @var        int
      */
     protected $tickets_remaining;
+
+    /**
+     * @var        ChildCharity
+     */
+    protected $aCharity;
 
     /**
      * @var        ObjectCollection|ChildEventUsers[] Collection to store aggregation of ChildEventUsers objects.
@@ -463,6 +484,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [charityid] column value.
+     *
+     * @return int
+     */
+    public function getCharityID()
+    {
+        return $this->charityid;
+    }
+
+    /**
      * Get the [title] column value.
      *
      * @return string
@@ -543,6 +574,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [video_url] column value.
+     *
+     * @return string
+     */
+    public function getVideoUrl()
+    {
+        return $this->video_url;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
@@ -611,6 +652,30 @@ abstract class Event implements ActiveRecordInterface
 
         return $this;
     } // setId()
+
+    /**
+     * Set the value of [charityid] column.
+     *
+     * @param int $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setCharityID($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->charityid !== $v) {
+            $this->charityid = $v;
+            $this->modifiedColumns[EventTableMap::COL_CHARITYID] = true;
+        }
+
+        if ($this->aCharity !== null && $this->aCharity->getId() !== $v) {
+            $this->aCharity = null;
+        }
+
+        return $this;
+    } // setCharityID()
 
     /**
      * Set the value of [title] column.
@@ -753,6 +818,26 @@ abstract class Event implements ActiveRecordInterface
     } // setTickets()
 
     /**
+     * Set the value of [video_url] column.
+     *
+     * @param string $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setVideoUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->video_url !== $v) {
+            $this->video_url = $v;
+            $this->modifiedColumns[EventTableMap::COL_VIDEO_URL] = true;
+        }
+
+        return $this;
+    } // setVideoUrl()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
@@ -859,43 +944,49 @@ abstract class Event implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : EventTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EventTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EventTableMap::translateFieldName('CharityID', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->charityid = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
             $this->title = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Date', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('Date', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
             $this->location = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
             $this->image_url = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
             $this->body = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
             $this->bodyhtml = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tickets = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : EventTableMap::translateFieldName('VideoUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->video_url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : EventTableMap::translateFieldName('TicketsRemaining', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : EventTableMap::translateFieldName('TicketsRemaining', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tickets_remaining = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -905,7 +996,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 11; // 11 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 13; // 13 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\NorthEastEvents\\Models\\Event'), 0, $e);
@@ -927,6 +1018,9 @@ abstract class Event implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aCharity !== null && $this->charityid !== $this->aCharity->getId()) {
+            $this->aCharity = null;
+        }
     } // ensureConsistency
 
     /**
@@ -966,6 +1060,7 @@ abstract class Event implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aCharity = null;
             $this->collEventUserss = null;
 
             $this->collWaitingLists = null;
@@ -1083,6 +1178,18 @@ abstract class Event implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
+
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aCharity !== null) {
+                if ($this->aCharity->isModified() || $this->aCharity->isNew()) {
+                    $affectedRows += $this->aCharity->save($con);
+                }
+                $this->setCharity($this->aCharity);
+            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -1204,6 +1311,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
+        if ($this->isColumnModified(EventTableMap::COL_CHARITYID)) {
+            $modifiedColumns[':p' . $index++]  = 'charityID';
+        }
         if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
             $modifiedColumns[':p' . $index++]  = 'title';
         }
@@ -1224,6 +1334,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_TICKETS)) {
             $modifiedColumns[':p' . $index++]  = 'tickets';
+        }
+        if ($this->isColumnModified(EventTableMap::COL_VIDEO_URL)) {
+            $modifiedColumns[':p' . $index++]  = 'video_url';
         }
         if ($this->isColumnModified(EventTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
@@ -1248,6 +1361,9 @@ abstract class Event implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
+                    case 'charityID':
+                        $stmt->bindValue($identifier, $this->charityid, PDO::PARAM_INT);
+                        break;
                     case 'title':
                         $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
                         break;
@@ -1268,6 +1384,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'tickets':
                         $stmt->bindValue($identifier, $this->tickets, PDO::PARAM_INT);
+                        break;
+                    case 'video_url':
+                        $stmt->bindValue($identifier, $this->video_url, PDO::PARAM_STR);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1344,33 +1463,39 @@ abstract class Event implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getTitle();
+                return $this->getCharityID();
                 break;
             case 2:
-                return $this->getDate();
+                return $this->getTitle();
                 break;
             case 3:
-                return $this->getLocation();
+                return $this->getDate();
                 break;
             case 4:
-                return $this->getImageUrl();
+                return $this->getLocation();
                 break;
             case 5:
-                return $this->getBody();
+                return $this->getImageUrl();
                 break;
             case 6:
-                return $this->getBodyHTML();
+                return $this->getBody();
                 break;
             case 7:
-                return $this->getTickets();
+                return $this->getBodyHTML();
                 break;
             case 8:
-                return $this->getCreatedAt();
+                return $this->getTickets();
                 break;
             case 9:
-                return $this->getUpdatedAt();
+                return $this->getVideoUrl();
                 break;
             case 10:
+                return $this->getCreatedAt();
+                break;
+            case 11:
+                return $this->getUpdatedAt();
+                break;
+            case 12:
                 return $this->getTicketsRemaining();
                 break;
             default:
@@ -1404,27 +1529,29 @@ abstract class Event implements ActiveRecordInterface
         $keys = EventTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getTitle(),
-            $keys[2] => $this->getDate(),
-            $keys[3] => $this->getLocation(),
-            $keys[4] => $this->getImageUrl(),
-            $keys[5] => $this->getBody(),
-            $keys[6] => $this->getBodyHTML(),
-            $keys[7] => $this->getTickets(),
-            $keys[8] => $this->getCreatedAt(),
-            $keys[9] => $this->getUpdatedAt(),
-            $keys[10] => $this->getTicketsRemaining(),
+            $keys[1] => $this->getCharityID(),
+            $keys[2] => $this->getTitle(),
+            $keys[3] => $this->getDate(),
+            $keys[4] => $this->getLocation(),
+            $keys[5] => $this->getImageUrl(),
+            $keys[6] => $this->getBody(),
+            $keys[7] => $this->getBodyHTML(),
+            $keys[8] => $this->getTickets(),
+            $keys[9] => $this->getVideoUrl(),
+            $keys[10] => $this->getCreatedAt(),
+            $keys[11] => $this->getUpdatedAt(),
+            $keys[12] => $this->getTicketsRemaining(),
         );
-        if ($result[$keys[2]] instanceof \DateTime) {
-            $result[$keys[2]] = $result[$keys[2]]->format('c');
+        if ($result[$keys[3]] instanceof \DateTime) {
+            $result[$keys[3]] = $result[$keys[3]]->format('c');
         }
 
-        if ($result[$keys[8]] instanceof \DateTime) {
-            $result[$keys[8]] = $result[$keys[8]]->format('c');
+        if ($result[$keys[10]] instanceof \DateTime) {
+            $result[$keys[10]] = $result[$keys[10]]->format('c');
         }
 
-        if ($result[$keys[9]] instanceof \DateTime) {
-            $result[$keys[9]] = $result[$keys[9]]->format('c');
+        if ($result[$keys[11]] instanceof \DateTime) {
+            $result[$keys[11]] = $result[$keys[11]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1433,6 +1560,21 @@ abstract class Event implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aCharity) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'charity';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'charity';
+                        break;
+                    default:
+                        $key = 'Charity';
+                }
+
+                $result[$key] = $this->aCharity->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->collEventUserss) {
 
                 switch ($keyType) {
@@ -1516,33 +1658,39 @@ abstract class Event implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setTitle($value);
+                $this->setCharityID($value);
                 break;
             case 2:
-                $this->setDate($value);
+                $this->setTitle($value);
                 break;
             case 3:
-                $this->setLocation($value);
+                $this->setDate($value);
                 break;
             case 4:
-                $this->setImageUrl($value);
+                $this->setLocation($value);
                 break;
             case 5:
-                $this->setBody($value);
+                $this->setImageUrl($value);
                 break;
             case 6:
-                $this->setBodyHTML($value);
+                $this->setBody($value);
                 break;
             case 7:
-                $this->setTickets($value);
+                $this->setBodyHTML($value);
                 break;
             case 8:
-                $this->setCreatedAt($value);
+                $this->setTickets($value);
                 break;
             case 9:
-                $this->setUpdatedAt($value);
+                $this->setVideoUrl($value);
                 break;
             case 10:
+                $this->setCreatedAt($value);
+                break;
+            case 11:
+                $this->setUpdatedAt($value);
+                break;
+            case 12:
                 $this->setTicketsRemaining($value);
                 break;
         } // switch()
@@ -1575,34 +1723,40 @@ abstract class Event implements ActiveRecordInterface
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTitle($arr[$keys[1]]);
+            $this->setCharityID($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDate($arr[$keys[2]]);
+            $this->setTitle($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setLocation($arr[$keys[3]]);
+            $this->setDate($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setImageUrl($arr[$keys[4]]);
+            $this->setLocation($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setBody($arr[$keys[5]]);
+            $this->setImageUrl($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setBodyHTML($arr[$keys[6]]);
+            $this->setBody($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setTickets($arr[$keys[7]]);
+            $this->setBodyHTML($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setCreatedAt($arr[$keys[8]]);
+            $this->setTickets($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setUpdatedAt($arr[$keys[9]]);
+            $this->setVideoUrl($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setTicketsRemaining($arr[$keys[10]]);
+            $this->setCreatedAt($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setUpdatedAt($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setTicketsRemaining($arr[$keys[12]]);
         }
     }
 
@@ -1648,6 +1802,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_ID)) {
             $criteria->add(EventTableMap::COL_ID, $this->id);
         }
+        if ($this->isColumnModified(EventTableMap::COL_CHARITYID)) {
+            $criteria->add(EventTableMap::COL_CHARITYID, $this->charityid);
+        }
         if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
             $criteria->add(EventTableMap::COL_TITLE, $this->title);
         }
@@ -1668,6 +1825,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_TICKETS)) {
             $criteria->add(EventTableMap::COL_TICKETS, $this->tickets);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_VIDEO_URL)) {
+            $criteria->add(EventTableMap::COL_VIDEO_URL, $this->video_url);
         }
         if ($this->isColumnModified(EventTableMap::COL_CREATED_AT)) {
             $criteria->add(EventTableMap::COL_CREATED_AT, $this->created_at);
@@ -1764,6 +1924,7 @@ abstract class Event implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setCharityID($this->getCharityID());
         $copyObj->setTitle($this->getTitle());
         $copyObj->setDate($this->getDate());
         $copyObj->setLocation($this->getLocation());
@@ -1771,6 +1932,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setBody($this->getBody());
         $copyObj->setBodyHTML($this->getBodyHTML());
         $copyObj->setTickets($this->getTickets());
+        $copyObj->setVideoUrl($this->getVideoUrl());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         $copyObj->setTicketsRemaining($this->getTicketsRemaining());
@@ -1826,6 +1988,57 @@ abstract class Event implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildCharity object.
+     *
+     * @param  ChildCharity $v
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setCharity(ChildCharity $v = null)
+    {
+        if ($v === null) {
+            $this->setCharityID(NULL);
+        } else {
+            $this->setCharityID($v->getId());
+        }
+
+        $this->aCharity = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCharity object, it will not be re-added.
+        if ($v !== null) {
+            $v->addEvent($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildCharity object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCharity The associated ChildCharity object.
+     * @throws PropelException
+     */
+    public function getCharity(ConnectionInterface $con = null)
+    {
+        if ($this->aCharity === null && ($this->charityid !== null)) {
+            $this->aCharity = ChildCharityQuery::create()->findPk($this->charityid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCharity->addEvents($this);
+             */
+        }
+
+        return $this->aCharity;
     }
 
 
@@ -2856,7 +3069,11 @@ abstract class Event implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aCharity) {
+            $this->aCharity->removeEvent($this);
+        }
         $this->id = null;
+        $this->charityid = null;
         $this->title = null;
         $this->date = null;
         $this->location = null;
@@ -2864,6 +3081,7 @@ abstract class Event implements ActiveRecordInterface
         $this->body = null;
         $this->bodyhtml = null;
         $this->tickets = null;
+        $this->video_url = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->tickets_remaining = null;
@@ -2912,6 +3130,7 @@ abstract class Event implements ActiveRecordInterface
         $this->collWaitingLists = null;
         $this->collThreads = null;
         $this->collUsers = null;
+        $this->aCharity = null;
     }
 
     /**

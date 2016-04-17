@@ -20,4 +20,8 @@ class BaseController extends Controller {
             "events" => EventQuery::create()->orderByTicketsRemaining(Criteria::ASC)->limit(9)
         ]);
     }
+    
+    public function Contact(Request $request, Response $response){
+        return $this->render($request, $response, "contact.html.twig");
+    }
 }
