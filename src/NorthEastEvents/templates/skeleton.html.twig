@@ -40,9 +40,8 @@
                                 <li><a href="/users">Users</a></li>
                                 <li><a href="#">Charities</a></li>
                                 <li><a href="/contact">Contact us</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
                             </ul>
-
-
                             <form class="navbar-form navbar-right" role="search">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Events, users ...">
@@ -67,6 +66,24 @@
         
         
 <!--End content -->
+            
+            <!-- Modal -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    	  <div class="modal-dialog">
+				<div class="loginmodal-container">
+					<h1>Login to Your Account</h1><br>
+				  <form action="/login">
+					<input type="text" name="username" placeholder="Username">
+					<input type="password" name="password" placeholder="Password">
+					<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+				  </form>
+				  <div class="login-help">
+					<a href="/register">Register</a> - <a href="#">Forgot Password</a>
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="text-align: right">Close</button>
+				  </div>
+				</div>
+			</div>
+		  </div>
         
         <!-- footer -->
             <div class="container" id="footer">
