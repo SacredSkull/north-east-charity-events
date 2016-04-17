@@ -5,8 +5,8 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading"  style="text-align: center">Register an account</div>
-              <div class="panel-body"  style="text-align: center">                  
-                    <form action="/register" class="form-horizontal" method="post">
+              <div class="panel-body">                  
+                    <form action="/register" class="form-horizontal" method="post"   style="margin-left: 20px;">
                         <div class="form-group">
                             <label for="inputUsername">Username</label>
                             <input type="text" id="inputUsername" name="username" value="{{ previous_details.Username }}"> 
@@ -26,6 +26,15 @@
                         <div class="form-group">
                             <label for="inputLastname">Last Name</label>
                             <input type="text" id="inputLastname" name="last_name" value="{{ previous_details.LastName }}"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCity">City</label>
+                            <input type="text" id="inputCity" name="city" value="{{ previous_details.City }}"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBio">Personal Biography</label>
+                            <textarea class="form-control" id="inputBio" name="bio" value="{{ previous_details.Bio }}" rows="3"></textarea>
+                        
                         </div>
                         <div class="form-group">
                             <label for="inputAvatar">Avatar</label>
