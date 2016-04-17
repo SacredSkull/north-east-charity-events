@@ -1,0 +1,48 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+    <!--Start content -->
+        
+        <!--  Start row1 -->  
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="event-title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h4>
+            <img class="event-image" src="{{ event.getImageUrl }}">
+            <h3 class="event-register"><a href="#" class="label label-primary">Sign up!</a></h3>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                <div class="panel-heading">Event Desciption</div>
+                <div class="panel-body">
+                
+                </div>
+                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus finibus hendrerit luctus. Ut eleifend mi sit amet ipsum posuere, viverra congue erat pulvinar. Donec turpis massa, volutpat eu magna aliquam, varius cursus lectus. Quisque ac diam ut erat dictum vulputate. Fusce malesuada mollis varius. Duis ullamcorper arcu at ipsum commodo vehicula. Vivamus non purus nec velit consequat pharetra. Cras vel ornare lacus, a bibendum nibh. Cras vehicula finibus est, vehicula porta risus. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--  End row1 -->  
+    
+    <!--  Start row2 --> 
+    
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-offset-1 col-md-7"></div>
+    </div>
+    
+    <!--  End row2 -->  
+    
+    <!--  Start row3 --> 
+    
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8"></div>
+    </div>
+</div>
+        
+    <!--  End row3 -->  
+    
+{% endblock body %}

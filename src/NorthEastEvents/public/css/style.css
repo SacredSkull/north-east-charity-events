@@ -109,6 +109,10 @@ body{
     font-family: 'Titillium Web', sans-serif;
 }
 
+.label {
+    padding: 5px 10px 12px;
+}
+
 .label-primary{
     background-color: #252839;
 }
@@ -118,11 +122,77 @@ body{
     background-color: #252839;
 }
 
-.event-image img{
-    min-height: 240px;
-    min-width: 350px;
+.label-danger{
+    background-color: red;
+    color: white;
+}
+
+
+
+img{
     border-radius: 5px;
     border: 10px solid #FFC125;
+    
+}
+
+.col-md-4{
+    padding-right: 40px;
+}
+
+.panel .panel-heading {
+    background-color: #252839;
+    color: #FFA500;
+    text-align: right;
+    
+}
+
+#eventPanHead div{
+    display: inline-block;
+    
+}
+
+.thread{
+    background-color: lightgrey;
+    padding: 3px;
+    border-radius: 5px;
+    
+}
+
+.thread:nth-of-type(odd){
+    color: #FFA500;
+    background-color: #252839;
+}
+
+.panel .panel-body {
+    background-color: #FFC125;
+    color: #252839;
+    text-align: left;
+}
+
+
+
+#eventPanHead{
+    text-align: left;
+    border-radius: 0px;
+    padding-top: 15px
+}
+
+#eventInfo{
+    margin-top: -50px;
+    text-align: right;
+}
+
+#eventLabels{
+    background-color: #FFC125;
+    color: #252839;
+    padding: 3px 3px 3px;
+    margin: 3px 3px 3px;
+    
+}
+
+#charityLogo{
+    border: 0;
+    
 }
 
 #footer{
