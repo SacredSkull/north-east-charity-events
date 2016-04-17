@@ -1,0 +1,40 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+    <!--Start content -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"  style="text-align: center">Register an account</div>
+              <div class="panel-body"  style="text-align: center">                  
+                    <form action="/register" class="form-horizontal" method="post">
+                        <div class="form-group">
+                            <label for="inputUsername">Username</label>
+                            <input type="text" id="inputUsername" name="username" value="{{ previous_details.Username }}"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="text" id="inputEmail" name="email" value="{{ previous_details.Email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Password</label>
+                            <input type="text" name="password"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstname">First Name</label>
+                            <input type="text" id="inputFirstname" name="first_name" value="{{ previous_details.FirstName }}"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLastname">Last Name</label>
+                            <input type="text" id="inputLastname" name="last_name" value="{{ previous_details.LastName }}"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAvatar">Avatar</label>
+                            <input type="text" id="inputAvatar" name="avatar" value="{{ previous_details.Avatar }}"> 
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+              </div>
+           </div>
+        </div>
+    </div>
+{% endblock body %}

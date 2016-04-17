@@ -127,7 +127,10 @@ body{
     color: white;
 }
 
-
+label{
+    display: inline-block;
+    width: 150px;
+}
 
 img{
     border-radius: 5px;
