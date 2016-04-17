@@ -57,7 +57,8 @@
                        {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}</div>
                     {% else %}
                         <div class="label label-danger" >
-                            Sorry, tickets for this event are no longer available.
+                            <a href=" {{ path_for('APIEventRegister', { 'eventID': event.getId }) }}
+                  " class="label label-primary">Currently sold out, join the waiting list here.</a>
                         </div>
                     {% endif %}
                  
@@ -91,11 +92,25 @@
          <div class="panel panel-default">
             <div class="panel-heading">Event Forum</div>
             <div class="panel-body">
-                    
-               {% for thread in event.getThreads %}
-                        <div class="thread">{{thread.getUser.getUsername}} - {{ thread.getTitle}} - Last post {{ thread.getUpdatedAt|date('d/m/Y H:i')}}</div>
-                {% endfor %}
-                    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Created By</th>
+                            <th>Thread Title</th>
+                            <th>Last Posted</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                                {% for thread in event.getThreads %}
+                          <tr class="thread">
+                            <td><a href="thread.html.twig">{{thread.getUser.getUsername}}</a></td>
+                            <td><a href="thread.html.twig">{{ thread.getTitle}}</a></td>
+                            <td><a href="thread.html.twig">{{ thread.getUpdatedAt|date('d/m/Y H:i')}}</a></td>
+                          </tr>
+                                {% endfor %}
+                          </tr>
+                        </tbody>
+                      </table>         
             </div>
          </div>
       </div></div>
