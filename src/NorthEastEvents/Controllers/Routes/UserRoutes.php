@@ -40,10 +40,8 @@ class UserRoutes extends Routes{
                 $this->get('', UserController::class.':UserOperations')
                     ->setName("UserOperations");
 
-                $this->get('/events[/{page:[0-9]+}]', function($request, $response, $args){
-                    // TODO: this route
-                    return $response->getBody()->write("This should GET all PUBLICALLY subscribed (i.e. not private) events for user ID #". $args["userID"]) .  " - unless you are viewing your own";
-                })->setName("UserCurrentEventsGET");
+                $this->get('/events[/{page:[0-9]+}]', UserController::class.':UserEventsGET')
+                    ->setName("UserCurrentEventsGET");
             })->add(new AuthorisedRouteMiddleware($this->getContainer()));
         });
 

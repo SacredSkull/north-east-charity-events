@@ -18,7 +18,7 @@
             </div>
             <div class="panel-heading" id="eventPanHead">
                
-               <div class="label label-primary" id="eventLabels">Event Date: {{  event.getDate|default("21/03/95") }}</div>
+               <div class="label label-primary" id="eventLabels">Event Date: {{ event.getDate|date("H:i d/m/Y") }}</div>
                <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div>
             </div>
             <div class="panel-body">

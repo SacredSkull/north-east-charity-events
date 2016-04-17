@@ -79,7 +79,7 @@ class Bootstrap {
                 [
                     'cache' => self::DEBUG ? null : $c->get('settings')['renderer']['cache'],
                     'debug' => self::DEBUG,
-                    'autoescape' => true
+                    'autoescape' => false
                 ]
             );
             $view->addExtension(new \Slim\Views\TwigExtension(

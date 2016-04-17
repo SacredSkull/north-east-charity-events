@@ -5,6 +5,7 @@ namespace NorthEastEvents\Controllers;
 use Interop\Container\ContainerInterface;
 use NorthEastEvents\Models\Base\EventQuery;
 use NorthEastEvents\Models\EventUsers;
+use NorthEastEvents\Models\EventUsersQuery;
 use NorthEastEvents\Models\ThreadQuery;
 use NorthEastEvents\Models\UserQuery;
 use NorthEastEvents\Models\WaitingList;
@@ -75,8 +76,14 @@ class EventController extends Controller {
             return $this->NotFound(null, $req, $res, $args);
         }
 
+        $eu = null;
+
+        if($this->current_user != null) {
+            $eu = EventUsersQuery::create()->findOneByArray(["userID" => $this->current_user->getId(), "eventID" => $event->getId()]);
+        }
+
         return $this->render($req, $res, "/events/event.html.twig", [
-            "event" => $event
+            "event" => $event,
         ]);
     }
 
@@ -120,7 +127,7 @@ class EventController extends Controller {
         }
 
         if($event->hasFinished()){
-            $hourdiff = round((strtotime(new DateTime()) - strtotime($event->getDate()))/3600, 1);
+            $hourdiff = $event->getDate()->diff(new \DateTime())->h;
             $this->ci->get("flash")->addMessage("Error", sprintf("This event has already ended.|Sorry, that event ended $hourdiff hours ago!"));
             return $res->withHeader("Location", $this->ci->get("router")->pathFor("EventOperations", [
                 'eventID' => $event->getId()

@@ -4,6 +4,8 @@ namespace NorthEastEvents\Controllers;
 use Interop\Container\ContainerInterface;
 use NorthEastEvents\Middleware\AuthorisedRouteMiddleware;
 use NorthEastEvents\Middleware\BasicAuthMiddleware;
+use NorthEastEvents\Models\Base\EventUsers;
+use NorthEastEvents\Models\EventUsersQuery;
 use NorthEastEvents\Models\Map\UserTableMap;
 use NorthEastEvents\Models\User;
 use NorthEastEvents\Models\UserQuery;
@@ -43,13 +45,13 @@ class UserController extends Controller {
             $this->NotFound(null, $request, $response, $args);
         } else if ($request->isGet()) {
             if(User::CheckAuthorised($currentUser, $user)) {
-                $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
+                $user = $usersQuery->select(['Id', 'Username', 'Email', 'Bio', 'City', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
                 return $this->render($request, $response, "/users/user.html.twig", [
                     'user' => $user,
                 ]);
             }
-            $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
+            $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Bio', 'City', 'Permission'])->findOneById($user->getId());
             return $this->render($request, $response, "/users/user.html.twig", [
                 'user' => $user,
             ]);
@@ -72,7 +74,7 @@ class UserController extends Controller {
                     if (stripos('staff', $userjson['Permission']) !== FALSE)
                         $user->setAvatarUrl(UserTableMap::COL_PERMISSION_STAFF);
                 }
-                $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
+                $user = $usersQuery->select(['Id', 'Username', 'Email', 'Bio', 'City', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
                 return $this->render($request, $response, "/users/user.html.twig", [
                     'message' => ["Type" => "Success", "Message" => "Modifications were successful!"],
@@ -217,6 +219,27 @@ class UserController extends Controller {
         $this->LoginSession($user);
         $path = $this->ci->get("router")->pathFor("UserCurrentGET");
         return $response->withStatus(302)->withHeader("Location", $path);
+    }
+    
+    public function UserEventsGET(Request $request, Response $response, $args){
+        $user = UserQuery::create()->findOneById($args["userID"] ?? null);
+        if($user == null){
+            $this->NotFound(null, $request, $response, $args);
+        }
+
+        $events = null;
+
+        if(User::CheckAuthorised($this->current_user, $user)){
+            $events = $user->getEvents();
+        } else {
+            $eventqs = EventUsersQuery::create()->filterByUser($user)->filterByPrivate(false);
+            foreach ($eventqs as $event){
+                $events[] = $event->getEvent();
+            }
+        }
+        return $this->render($request, $response, "/users/events.html.twig", [
+            "events" => $events
+        ]);
     }
 
     public function APIUserOperations(Request $request, Response $response, $args) {
