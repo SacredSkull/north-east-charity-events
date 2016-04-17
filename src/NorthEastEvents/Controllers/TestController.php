@@ -36,6 +36,9 @@ class TestController extends Controller {
             'AvatarUrl' => function () use ($faker) {
                 return $faker->imageUrl(180, 180);
             },
+            'Bio' => function () use ($faker) {
+                return $faker->realText(500);
+            },
             'CreatedAt' => null,
             'UpdatedAt' => null,
             'Permission' => function () use ($faker) {
@@ -48,6 +51,9 @@ class TestController extends Controller {
             },
             'Location' => function () use ($faker) {
                 return $faker->address;
+            },
+            'Date' => function () use ($faker){
+                return $faker->dateTimeBetween('-2 days', '+3 days');
             },
             'ImageUrl' => function () use ($faker) {
                 return $faker->imageUrl(350, 240);

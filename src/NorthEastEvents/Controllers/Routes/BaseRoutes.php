@@ -14,7 +14,7 @@ use NorthEastEvents\Controllers\BaseController;
 class BaseRoutes extends Routes {
     public function routes() {
         $app = $this->app;
-        $app->get('/', BaseController::class.":Base");
+        $app->get('/', BaseController::class.":Base")->setName("Home");
         // TODO: /contact
     }
 }

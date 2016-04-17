@@ -118,8 +118,16 @@ class EventController extends Controller {
         if($event == null){
             return $this->NotFound("Could not find an Event with the requested information.", $req, $res, $args);
         }
-        
+
+        if($event->hasFinished()){
+            $hourdiff = round((strtotime(new DateTime()) - strtotime($event->getDate()))/3600, 1);
+            $this->ci->get("flash")->addMessage("Error", sprintf("This event has already ended.|Sorry, that event ended $hourdiff hours ago!"));
+            return $res->withHeader("Location", $this->ci->get("router")->pathFor("EventOperations", [
+                'eventID' => $event->getId()
+            ]))->withStatus(302);
+        }
         $body = sprintf("<h1>North East Charity Music Events</h1><p>Hey.<br/>You're now signed up to %s. Congratulations! If you can't make it to the event, please <a href='%s'>revoke your ticket with this link</a> (or on the event page) to allow others to take your place.<br/><br/>Thanks,<br/>The NE Charity Music Events Team</p>",
+            $event->getTitle(),
             $this->ci->get("router")->pathFor("EventDeregister", [
                 'eventID' => $event->getId()
             ])
@@ -144,7 +152,7 @@ class EventController extends Controller {
         $event->addUser($this->current_user);
         mail($this->current_user->getEmail(), "See you there!", $body);
 
-        $this->ci->get("flash")->addMessage("Success", sprintf("You've been registered for %s! Please make sure to unregister if you can't make it, for whatever reason.", $event->getTitle()));
+        $this->ci->get("flash")->addMessage("Success", sprintf("You've been registered for %s!|Please make sure to unregister if you can't make it, for whatever reason, to give others a chance to attend.", $event->getTitle()));
         return $res->withHeader("Location", $this->ci->get("router")->pathFor("EventOperations", [
             'eventID' => $event->getId()
         ]))->withStatus(302);

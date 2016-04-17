@@ -40,7 +40,12 @@
                                 <li><a href="/users">Users</a></li>
                                 <li><a href="#">Charities</a></li>
                                 <li><a href="/contact">Contact us</a></li>
+                                {% if current_user %}
+                                <li><a href="/logout">Logout</a></li>
+                                {% else %}
                                 <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+
+                                {% endif %}
                             </ul>
                             <form class="navbar-form navbar-right" role="search">
                                 <div class="form-group">
@@ -72,7 +77,7 @@
     	  <div class="modal-dialog">
 				<div class="loginmodal-container">
 					<h1>Login to Your Account</h1><br>
-				  <form action="/login">
+				  <form action="/login" method="post">
 					<input type="text" name="username" placeholder="Username">
 					<input type="password" name="password" placeholder="Password">
 					<input type="submit" name="login" class="login loginmodal-submit" value="Login">

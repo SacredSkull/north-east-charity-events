@@ -60,7 +60,7 @@ class UserRoutes extends Routes{
 
         // Logout
         //TODO: Logout
-        $app->post('/logout', UserController::class.':LogoutController')
+        $app->get('/logout', UserController::class.':LogoutController')
             ->setName("UserLogout");
 
         /**

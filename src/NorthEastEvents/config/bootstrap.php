@@ -20,6 +20,7 @@ use Slim\App;
 use Slim\Views\Twig;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Twig_Extension_Debug;
 
 class Bootstrap {
     private static $ci;
@@ -75,12 +76,17 @@ class Bootstrap {
          */
         static::$ci['view'] = function (ContainerInterface $c) {
             $view = new Twig($c->get('settings')['renderer']['template_path'],
-                [ 'cache' => self::DEBUG ? null : $c->get('settings')['renderer']['cache'] ]
+                [
+                    'cache' => self::DEBUG ? null : $c->get('settings')['renderer']['cache'],
+                    'debug' => self::DEBUG,
+                    'autoescape' => true
+                ]
             );
             $view->addExtension(new \Slim\Views\TwigExtension(
                 $c['router'],
                 $c['request']->getUri()
             ));
+            $view->addExtension(new Twig_Extension_Debug());
             return $view;
         };
 

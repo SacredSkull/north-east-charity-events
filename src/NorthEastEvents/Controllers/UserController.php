@@ -45,12 +45,12 @@ class UserController extends Controller {
             if(User::CheckAuthorised($currentUser, $user)) {
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
-                return $this->render($request, $response, "/events/user.html.twig", [
+                return $this->render($request, $response, "/users/user.html.twig", [
                     'user' => $user,
                 ]);
             }
             $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
-            return $this->render($request, $response, "/events/user.html.twig", [
+            return $this->render($request, $response, "/users/user.html.twig", [
                 'user' => $user,
             ]);
         } else if ($request->isDelete()) {
@@ -75,7 +75,7 @@ class UserController extends Controller {
 
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
-                return $this->render($request, $response, "/events/user.html.twig", [
+                return $this->render($request, $response, "/users/user.html.twig", [
                     'message' => ["Type" => "Success", "Message" => "Modifications were successful!"],
                     'user' => $user,
                 ]);
@@ -119,18 +119,31 @@ class UserController extends Controller {
         $user_session = $segment->get('user', null);
         if($user_session != null){
             // User was logged in before, invalidate previous session.
-            $this->ci->get("session")->clear();
-            $this->ci->get("session")->regenerateId();
+            $segment->clear();
+            $segment->regenerateId();
         }
         $segment->set('user', $user);
         return ["Session" => session_id()];
     }
 
     public function LoginController(Request $request, Response $response) {
-        $username = isset($request->getParsedBody()['username'])? $request->getParsedBody()['username'] : null;
-        $password = isset($request->getParsedBody()['password'])? $request->getParsedBody()['password'] : null;
-        $this->LoginSession($username, $password);
-        return $response->withJson(["Success" => "Logged in successfully."]);
+        $username = $request->getParsedBody()['username'] ?? null;
+        $password = $request->getParsedBody()['password'] ?? null;
+        $result = $this->LoginSession($username, $password);
+        if($result["Error"] ?? null){
+            $this->ci->get("flash")->addMessage("Error", $result["Error"]);
+        }
+        return $response->withHeader("Location", $this->ci->get("router")->pathFor("UserCurrentGET"));
+    }
+
+    public function LogoutController(Request $request, Response $response) {
+        $segment = $this->ci->get("session")->getSegment('NorthEastEvents\Login');
+        if($segment->get('user', null)){
+            $segment->clear();
+        } else {
+            $this->ci->get("flash")->addMessage("Warning", "Not logged in|Logging out is a privilege enjoyed only by those logged in.");
+        }
+        return $response->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
     }
 
     public function CreateUserGET(Request $request, Response $response, array $args = []){
@@ -143,7 +156,9 @@ class UserController extends Controller {
         $email = $request->getParsedBody()['email'] ?? null;
         $fname = $request->getParsedBody()['first_name'] ?? null;
         $lname = $request->getParsedBody()['last_name'] ?? null;
-        $avatar =$request->getParsedBody()['avatar'] ?? null;
+        $avatar = $request->getParsedBody()['avatar'] ?? null;
+        $bio = $request->getParsedBody()['bio'] ?? null;
+        $city = $request->getParsedBody()['city'] ?? null;
 
         $previousDetails = [
             "Username" => $username,
@@ -151,40 +166,41 @@ class UserController extends Controller {
             "Email" => $email,
             "FirstName" => $fname,
             "LastName" => $lname,
-            "Avatar" => $avatar
+            "Avatar" => $avatar,
+            "Bio" => $bio,
+            "City" => $city
         ];
 
         // Parse username
         $failure = false;
         if($username == null) {
-            $this->ci->get("flash")->addMessageNow('Error', 'You must provide a username.');
+            $this->ci->get("flash")->addMessageNow('Error', 'You must provide a username.|<br>');
             $failure = true;
         }
         if (UserQuery::create()->findOneByUsername($username) != null) {
-            $this->ci->get("flash")->addMessageNow('Error', 'Username has been taken');
+            $this->ci->get("flash")->addMessageNow('Error', 'Username has been taken|<br>');
             $failure = true;
         }
 
         // Parse email
         if($email == null) {
-            $this->ci->get("flash")->addMessageNow('Error', 'You must provide an email.');
+            $this->ci->get("flash")->addMessageNow('Error', 'You must provide an email.|<br>');
             $failure = true;
         }
         if(UserQuery::create()->findOneByEmail($email) != null) {
-            $this->ci->get("flash")->addMessageNow('Error', 'Email is in use.');
+            $this->ci->get("flash")->addMessageNow('Error', 'Email is in use.|<br>');
             $failure = true;
         }
 
         // Parse password
         if($password == null || strlen($password) < 4) {
-            $this->ci->get("flash")->addMessageNow('Error', 'Passwords must be larger than 4 characters.');
+            $this->ci->get("flash")->addMessageNow('Error', 'Passwords must be larger than 4 characters.|<br>');
             $failure = true;
         }
 
         if($failure){
             return $this->render($request, $response, "/users/register.html.twig", ["previous_details" => $previousDetails]);
         }
-
 
         $user = new User();
         $user->setUsername($username);
@@ -194,6 +210,8 @@ class UserController extends Controller {
         $user->setFirstName($fname);
         $user->setLastName($lname);
         $user->setAvatarUrl($avatar);
+        $user->setCity($city);
+        $user->setBio($bio);
         $user->save();
 
         $this->LoginSession($user);

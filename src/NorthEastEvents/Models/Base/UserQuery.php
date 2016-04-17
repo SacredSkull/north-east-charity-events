@@ -24,6 +24,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderByUsername($order = Criteria::ASC) Order by the username column
  * @method     ChildUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
  * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
+ * @method     ChildUserQuery orderByBio($order = Criteria::ASC) Order by the bio column
+ * @method     ChildUserQuery orderByCity($order = Criteria::ASC) Order by the city column
  * @method     ChildUserQuery orderByFirstName($order = Criteria::ASC) Order by the first_name column
  * @method     ChildUserQuery orderByLastName($order = Criteria::ASC) Order by the last_name column
  * @method     ChildUserQuery orderByAvatarUrl($order = Criteria::ASC) Order by the avatar_url column
@@ -35,6 +37,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery groupByUsername() Group by the username column
  * @method     ChildUserQuery groupByPassword() Group by the password column
  * @method     ChildUserQuery groupByEmail() Group by the email column
+ * @method     ChildUserQuery groupByBio() Group by the bio column
+ * @method     ChildUserQuery groupByCity() Group by the city column
  * @method     ChildUserQuery groupByFirstName() Group by the first_name column
  * @method     ChildUserQuery groupByLastName() Group by the last_name column
  * @method     ChildUserQuery groupByAvatarUrl() Group by the avatar_url column
@@ -99,6 +103,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneByUsername(string $username) Return the first ChildUser filtered by the username column
  * @method     ChildUser findOneByPassword(string $password) Return the first ChildUser filtered by the password column
  * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
+ * @method     ChildUser findOneByBio(string $bio) Return the first ChildUser filtered by the bio column
+ * @method     ChildUser findOneByCity(string $city) Return the first ChildUser filtered by the city column
  * @method     ChildUser findOneByFirstName(string $first_name) Return the first ChildUser filtered by the first_name column
  * @method     ChildUser findOneByLastName(string $last_name) Return the first ChildUser filtered by the last_name column
  * @method     ChildUser findOneByAvatarUrl(string $avatar_url) Return the first ChildUser filtered by the avatar_url column
@@ -113,6 +119,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneByUsername(string $username) Return the first ChildUser filtered by the username column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPassword(string $password) Return the first ChildUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByBio(string $bio) Return the first ChildUser filtered by the bio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByCity(string $city) Return the first ChildUser filtered by the city column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByFirstName(string $first_name) Return the first ChildUser filtered by the first_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByLastName(string $last_name) Return the first ChildUser filtered by the last_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByAvatarUrl(string $avatar_url) Return the first ChildUser filtered by the avatar_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -125,6 +133,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser[]|ObjectCollection findByUsername(string $username) Return ChildUser objects filtered by the username column
  * @method     ChildUser[]|ObjectCollection findByPassword(string $password) Return ChildUser objects filtered by the password column
  * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
+ * @method     ChildUser[]|ObjectCollection findByBio(string $bio) Return ChildUser objects filtered by the bio column
+ * @method     ChildUser[]|ObjectCollection findByCity(string $city) Return ChildUser objects filtered by the city column
  * @method     ChildUser[]|ObjectCollection findByFirstName(string $first_name) Return ChildUser objects filtered by the first_name column
  * @method     ChildUser[]|ObjectCollection findByLastName(string $last_name) Return ChildUser objects filtered by the last_name column
  * @method     ChildUser[]|ObjectCollection findByAvatarUrl(string $avatar_url) Return ChildUser objects filtered by the avatar_url column
@@ -229,7 +239,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, username, password, email, first_name, last_name, avatar_url, permission, created_at, updated_at FROM user WHERE id = :p0 AND permission = :p1';
+        $sql = 'SELECT id, username, password, email, bio, city, first_name, last_name, avatar_url, permission, created_at, updated_at FROM user WHERE id = :p0 AND permission = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -457,6 +467,64 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_EMAIL, $email, $comparison);
+    }
+
+    /**
+     * Filter the query on the bio column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByBio('fooValue');   // WHERE bio = 'fooValue'
+     * $query->filterByBio('%fooValue%'); // WHERE bio LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $bio The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByBio($bio = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($bio)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $bio)) {
+                $bio = str_replace('*', '%', $bio);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_BIO, $bio, $comparison);
+    }
+
+    /**
+     * Filter the query on the city column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCity('fooValue');   // WHERE city = 'fooValue'
+     * $query->filterByCity('%fooValue%'); // WHERE city LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $city The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByCity($city = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($city)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $city)) {
+                $city = str_replace('*', '%', $city);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_CITY, $city, $comparison);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace NorthEastEvents\Controllers;
 
 use NorthEastEvents\Bootstrap;
 use NorthEastEvents\Models\EventQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -16,7 +17,7 @@ class BaseController extends Controller {
         }
 
         return $this->render($request, $response, "home.html.twig", [
-            "events" => EventQuery::create()->limit(9)->find()
+            "events" => EventQuery::create()->orderByTicketsRemaining(Criteria::ASC)->limit(9)
         ]);
     }
 }
