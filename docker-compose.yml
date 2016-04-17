@@ -12,7 +12,7 @@ services:
       - db
   php:
     container_name: northeastcharityevents_php_1
-    image: sacredskull/php-7-fpm-development:alpine-debug-blackfire
+    image: sacredskull/php-7-fpm-development:alpine-debug
     volumes:
       - .:/var/www
       - ./logs/php:/var/log/php

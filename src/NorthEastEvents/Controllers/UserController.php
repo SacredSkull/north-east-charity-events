@@ -133,42 +133,70 @@ class UserController extends Controller {
         return $response->withJson(["Success" => "Logged in successfully."]);
     }
 
-    public function CreateUser(Request $request, Response $response, array $args = [], bool $api = false) {
-        $username = $request->getParsedBody()['username'];
-        $password = $request->getParsedBody()['password'];
-        $email = $request->getParsedBody()['email'];
-        $fname = isset($request->getParsedBody()['first_name'])? $request->getParsedBody()['first_name'] : null;
-        $lname = isset($request->getParsedBody()['last_name'])? $request->getParsedBody()['last_name'] : null;
-        $avatar = isset($request->getParsedBody()['avatar'])? $request->getParsedBody()['avatar'] : null;
+    public function CreateUserGET(Request $request, Response $response, array $args = []){
+        return $this->render($request, $response, "/users/register.html.twig", []);
+    }
 
-        if (isset($username) && UserQuery::create()->findOneByUsername($username) != null)
-            return $response->withJson(["Error" => ["Message" => "Username has been taken."]]);
-        if (isset($email) && UserQuery::create()->findOneByEmail($email) != null)
-            return $response->withJson(["Error" => ["Message" => "Email is in use."]]);
-        if($password == null || strlen($password) < 4)
-            return $response->withJson(["Error" => ["Message" => "Passwords must be larger than 4 characters."]]);
+    public function CreateUserPOST(Request $request, Response $response, array $args = []) {
+        $username = $request->getParsedBody()['username'] ?? null;
+        $password = $request->getParsedBody()['password'] ?? null;
+        $email = $request->getParsedBody()['email'] ?? null;
+        $fname = $request->getParsedBody()['first_name'] ?? null;
+        $lname = $request->getParsedBody()['last_name'] ?? null;
+        $avatar =$request->getParsedBody()['avatar'] ?? null;
+
+        $previousDetails = [
+            "Username" => $username,
+            "Password" => null,
+            "Email" => $email,
+            "FirstName" => $fname,
+            "LastName" => $lname,
+            "Avatar" => $avatar
+        ];
+
+        // Parse username
+        $failure = false;
+        if($username == null) {
+            $this->ci->get("flash")->addMessage('Error', 'You must provide a username.');
+            $failure = true;
+        }
+        if (UserQuery::create()->findOneByUsername($username) != null) {
+            $this->ci->get("flash")->addMessage('Error', 'Username has been taken');
+            $failure = true;
+        }
+
+        // Parse email
+        if($email == null) {
+            $this->ci->get("flash")->addMessage('Error', 'You must provide an email.');
+            $failure = true;
+        }
+        if(UserQuery::create()->findOneByEmail($email) != null) {
+            $this->ci->get("flash")->addMessage('Error', 'Email is in use.');
+            $failure = true;
+        }
+
+        // Parse password
+        if($password == null || strlen($password) < 4) {
+            $this->ci->get("flash")->addMessage('Error', 'Passwords must be larger than 4 characters.');
+            $failure = true;
+        }
+
+        if($failure)
+            return $this->render($request, $response, "/users/register.html.twig", ["previous_details" => $previousDetails]);
 
         $user = new User();
         $user->setUsername($username);
         $user->setPassword($password);
         $user->setEmail($email);
 
-        if (isset($fname))
-            $user->setFirstName($fname);
-        if (isset($lname))
-            $user->setLastName($lname);
-        if (isset($avatar))
-            $user->setAvatarUrl($avatar);
+        $user->setFirstName($fname);
+        $user->setLastName($lname);
+        $user->setAvatarUrl($avatar);
         $user->save();
 
-        if($api) {
-            $userData = UserQuery::create()->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
-            return $response->withJson(["User" => $userData, "Session" => $this->LoginSession($user)], 201);
-        } else {
-            $this->LoginSession($user);
-            $path = $this->ci->get("router")->pathFor("UserCurrentGET");
-            return $response->withStatus(302)->withHeader("Location", $path);
-        }
+        $this->LoginSession($user);
+        $path = $this->ci->get("router")->pathFor("UserCurrentGET");
+        return $response->withStatus(302)->withHeader("Location", $path);
     }
 
     public function APIUserOperations(Request $request, Response $response, $args) {
@@ -242,6 +270,11 @@ class UserController extends Controller {
     }
 
     public function APICreateUser(Request $request, Response $response){
-        return $this->CreateUser($request, $response, [], true);
+        $username = $request->getParsedBody()['username'] ?? null;
+        $password = $request->getParsedBody()['password'] ?? null;
+        $email = $request->getParsedBody()['email'] ?? null;
+        $fname = $request->getParsedBody()['first_name'] ?? null;
+        $lname = $request->getParsedBody()['last_name'] ?? null;
+        $avatar =$request->getParsedBody()['avatar'] ?? null;
     }
 }

@@ -7,7 +7,8 @@
         "slim/twig-view": "^2.0",
         "fzaninotto/faker": "^1.5",
         "kzykhys/ciconia": "~1.0.0",
-        "aura/session": "^2.0"
+        "aura/session": "^2.0",
+        "slim/flash": "^0.1.0"
     },
 
     "require-dev":{

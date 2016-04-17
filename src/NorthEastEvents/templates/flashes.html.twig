@@ -1,0 +1,40 @@
+{% for flash in flashes.Error %}
+    {% set message = flash|split("|") %}
+    <div class="alert alert-danger alert-dismissible fade in" role=alert>
+        <button type=button class=close data-dismiss=alert aria-label=Close>
+            <span aria-hidden=true>&times;</span>
+        </button>
+        <h4>{{ message[0] }}</h4>
+        <p>{{ message[1]|default(message[0]) }}</p>
+    </div>
+{% endfor %}
+{% for flash in flashes.Warning %}
+    {% set message = flash|split("|") %}
+    <div class="alert alert-warning alert-dismissible fade in" role=alert>
+        <button type=button class=close data-dismiss=alert aria-label=Close>
+            <span aria-hidden=true>&times;</span>
+        </button>
+        <h4>{{ message[0] }}</h4>
+        <p>{{ message[1]|default(message[0]) }}</p>
+    </div>
+{% endfor %}
+{% for flash in flashes.Success %}
+    {% set message = flash|split("|") %}
+    <div class="alert alert-success alert-dismissible fade in" role=alert>
+        <button type=button class=close data-dismiss=alert aria-label=Close>
+            <span aria-hidden=true>&times;</span>
+        </button>
+        <h4>{{ message[0] }}</h4>
+        <p>{{ message[1]|default(message[0]) }}</p>
+    </div>
+{% endfor %}
+{% for flash in flashes.Info %}
+    {% set message = flash|split("|") %}
+    <div class="alert alert-info alert-dismissible fade in" role=alert>
+        <button type=button class=close data-dismiss=alert aria-label=Close>
+            <span aria-hidden=true>&times;</span>
+        </button>
+        <h4>{{ message[0] }}</h4>
+        <p>{{ message[1]|default(message[0]) }}</p>
+    </div>
+{% endfor %}

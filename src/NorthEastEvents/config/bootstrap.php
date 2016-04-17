@@ -34,8 +34,8 @@ class Bootstrap {
 
     public function initialise() {
         if (!file_exists(__DIR__ . "/../vendor"))
-            echo "<p>The composer folder is missing! The website cannot run without its dependencies - try running".
-                "<i>an upgrade script (e.g. upgrade.bat)</i>, or manually attempt a fix with <i>'composer install' inside a docker instance.</i></p><br><br>.";
+            die("<p>The composer folder is missing! The website cannot run without its dependencies - try running ".
+                "<i>an upgrade script (e.g. upgrade.bat)</i>, or manually attempt a fix with <i>'composer install' inside a docker instance.</i></p><br><br>.");
 
         $settings = require __DIR__ . '/slim/slim.php';
         $slim = new \Slim\App($settings);
@@ -116,6 +116,10 @@ class Bootstrap {
             $ciconia->addExtension(new Gfm\TableExtension());
             $ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
             return $ciconia;
+        };
+
+        static::$ci['flash'] = function () {
+            return new \Slim\Flash\Messages();
         };
     }
 

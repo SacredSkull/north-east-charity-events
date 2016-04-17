@@ -17,6 +17,12 @@ use NorthEastEvents\Bootstrap;
 use NorthEastEvents\Controllers\UserController;
 
 class AuthorisedRouteMiddleware {
+    private $ci;
+
+    public function __construct(ContainerInterface $ci) {
+        $this->ci = $ci;
+    }
+
     public function __invoke(Request $request, Response $response, callable $next) {
         $route = $request->getAttribute("route");
         // The route needs to be defined
@@ -26,6 +32,8 @@ class AuthorisedRouteMiddleware {
             $current_user = $request->getAttribute("current_user", null);
             if (User::CheckAuthorised($current_user, $args["userID"] ?? $current_user)) {
                 $request = $request->withAttribute("authorised", true);
+            } else {
+                $this->ci->get("flash")->addMessage('Error', 'You must provide a username.');
             }
         }
         $response = $next($request, $response);

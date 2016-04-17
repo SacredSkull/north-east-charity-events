@@ -7,6 +7,7 @@ return [
         'renderer' => [
             'template_path' => __DIR__ . '/../../templates',
             'cache' => __DIR__ . '/../../cache',
+            'autoescape' => false
         ],
         // Monolog settings
         'logger' => [

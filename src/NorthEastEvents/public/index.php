@@ -18,6 +18,11 @@ $bootstrap = new \NorthEastEvents\Bootstrap();
 $app = $bootstrap->initialise();
 $container = $app->getContainer();
 
+session_start();
+
+if(\NorthEastEvents\Bootstrap::DEBUG)
+    $container->get("flash")->addMessage("Info", "Debug mode is on.|Debug mode is still active. Turn it off in the Bootstrap class when ready.");
+
 new Routes\BaseRoutes($container, Controllers\BaseController::class);
 new Routes\CommentRoutes($container, Controllers\CommentController::class);
 new Routes\EventRoutes($container, Controllers\EventController::class);

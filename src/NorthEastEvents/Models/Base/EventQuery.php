@@ -22,6 +22,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildEventQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildEventQuery orderByTitle($order = Criteria::ASC) Order by the title column
+ * @method     ChildEventQuery orderByDate($order = Criteria::ASC) Order by the date column
  * @method     ChildEventQuery orderByLocation($order = Criteria::ASC) Order by the location column
  * @method     ChildEventQuery orderByImageUrl($order = Criteria::ASC) Order by the image_url column
  * @method     ChildEventQuery orderByBody($order = Criteria::ASC) Order by the body column
@@ -29,9 +30,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery orderByTickets($order = Criteria::ASC) Order by the tickets column
  * @method     ChildEventQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildEventQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
+ * @method     ChildEventQuery orderByTicketsRemaining($order = Criteria::ASC) Order by the tickets_remaining column
  *
  * @method     ChildEventQuery groupById() Group by the id column
  * @method     ChildEventQuery groupByTitle() Group by the title column
+ * @method     ChildEventQuery groupByDate() Group by the date column
  * @method     ChildEventQuery groupByLocation() Group by the location column
  * @method     ChildEventQuery groupByImageUrl() Group by the image_url column
  * @method     ChildEventQuery groupByBody() Group by the body column
@@ -39,6 +42,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery groupByTickets() Group by the tickets column
  * @method     ChildEventQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildEventQuery groupByUpdatedAt() Group by the updated_at column
+ * @method     ChildEventQuery groupByTicketsRemaining() Group by the tickets_remaining column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -58,6 +62,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery rightJoinWithEventUsers() Adds a RIGHT JOIN clause and with to the query using the EventUsers relation
  * @method     ChildEventQuery innerJoinWithEventUsers() Adds a INNER JOIN clause and with to the query using the EventUsers relation
  *
+ * @method     ChildEventQuery leftJoinWaitingList($relationAlias = null) Adds a LEFT JOIN clause to the query using the WaitingList relation
+ * @method     ChildEventQuery rightJoinWaitingList($relationAlias = null) Adds a RIGHT JOIN clause to the query using the WaitingList relation
+ * @method     ChildEventQuery innerJoinWaitingList($relationAlias = null) Adds a INNER JOIN clause to the query using the WaitingList relation
+ *
+ * @method     ChildEventQuery joinWithWaitingList($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the WaitingList relation
+ *
+ * @method     ChildEventQuery leftJoinWithWaitingList() Adds a LEFT JOIN clause and with to the query using the WaitingList relation
+ * @method     ChildEventQuery rightJoinWithWaitingList() Adds a RIGHT JOIN clause and with to the query using the WaitingList relation
+ * @method     ChildEventQuery innerJoinWithWaitingList() Adds a INNER JOIN clause and with to the query using the WaitingList relation
+ *
  * @method     ChildEventQuery leftJoinThread($relationAlias = null) Adds a LEFT JOIN clause to the query using the Thread relation
  * @method     ChildEventQuery rightJoinThread($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Thread relation
  * @method     ChildEventQuery innerJoinThread($relationAlias = null) Adds a INNER JOIN clause to the query using the Thread relation
@@ -68,26 +82,29 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery rightJoinWithThread() Adds a RIGHT JOIN clause and with to the query using the Thread relation
  * @method     ChildEventQuery innerJoinWithThread() Adds a INNER JOIN clause and with to the query using the Thread relation
  *
- * @method     \NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\ThreadQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\WaitingListQuery|\NorthEastEvents\Models\ThreadQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildEvent findOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query
  * @method     ChildEvent findOneOrCreate(ConnectionInterface $con = null) Return the first ChildEvent matching the query, or a new ChildEvent object populated from the query conditions when no match is found
  *
  * @method     ChildEvent findOneById(int $id) Return the first ChildEvent filtered by the id column
  * @method     ChildEvent findOneByTitle(string $title) Return the first ChildEvent filtered by the title column
+ * @method     ChildEvent findOneByDate(string $date) Return the first ChildEvent filtered by the date column
  * @method     ChildEvent findOneByLocation(string $location) Return the first ChildEvent filtered by the location column
  * @method     ChildEvent findOneByImageUrl(string $image_url) Return the first ChildEvent filtered by the image_url column
  * @method     ChildEvent findOneByBody(string $body) Return the first ChildEvent filtered by the body column
  * @method     ChildEvent findOneByBodyHTML(string $bodyHTML) Return the first ChildEvent filtered by the bodyHTML column
  * @method     ChildEvent findOneByTickets(int $tickets) Return the first ChildEvent filtered by the tickets column
  * @method     ChildEvent findOneByCreatedAt(string $created_at) Return the first ChildEvent filtered by the created_at column
- * @method     ChildEvent findOneByUpdatedAt(string $updated_at) Return the first ChildEvent filtered by the updated_at column *
+ * @method     ChildEvent findOneByUpdatedAt(string $updated_at) Return the first ChildEvent filtered by the updated_at column
+ * @method     ChildEvent findOneByTicketsRemaining(int $tickets_remaining) Return the first ChildEvent filtered by the tickets_remaining column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent requireOneById(int $id) Return the first ChildEvent filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByTitle(string $title) Return the first ChildEvent filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByDate(string $date) Return the first ChildEvent filtered by the date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByLocation(string $location) Return the first ChildEvent filtered by the location column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByImageUrl(string $image_url) Return the first ChildEvent filtered by the image_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByBody(string $body) Return the first ChildEvent filtered by the body column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -95,10 +112,12 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent requireOneByTickets(int $tickets) Return the first ChildEvent filtered by the tickets column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByCreatedAt(string $created_at) Return the first ChildEvent filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByUpdatedAt(string $updated_at) Return the first ChildEvent filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByTicketsRemaining(int $tickets_remaining) Return the first ChildEvent filtered by the tickets_remaining column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findById(int $id) Return ChildEvent objects filtered by the id column
  * @method     ChildEvent[]|ObjectCollection findByTitle(string $title) Return ChildEvent objects filtered by the title column
+ * @method     ChildEvent[]|ObjectCollection findByDate(string $date) Return ChildEvent objects filtered by the date column
  * @method     ChildEvent[]|ObjectCollection findByLocation(string $location) Return ChildEvent objects filtered by the location column
  * @method     ChildEvent[]|ObjectCollection findByImageUrl(string $image_url) Return ChildEvent objects filtered by the image_url column
  * @method     ChildEvent[]|ObjectCollection findByBody(string $body) Return ChildEvent objects filtered by the body column
@@ -106,6 +125,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent[]|ObjectCollection findByTickets(int $tickets) Return ChildEvent objects filtered by the tickets column
  * @method     ChildEvent[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildEvent objects filtered by the created_at column
  * @method     ChildEvent[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildEvent objects filtered by the updated_at column
+ * @method     ChildEvent[]|ObjectCollection findByTicketsRemaining(int $tickets_remaining) Return ChildEvent objects filtered by the tickets_remaining column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -204,7 +224,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, title, location, image_url, body, bodyHTML, tickets, created_at, updated_at FROM event WHERE id = :p0';
+        $sql = 'SELECT id, title, date, location, image_url, body, bodyHTML, tickets, created_at, updated_at, tickets_remaining FROM event WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -362,6 +382,49 @@ abstract class EventQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EventTableMap::COL_TITLE, $title, $comparison);
+    }
+
+    /**
+     * Filter the query on the date column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDate('2011-03-14'); // WHERE date = '2011-03-14'
+     * $query->filterByDate('now'); // WHERE date = '2011-03-14'
+     * $query->filterByDate(array('max' => 'yesterday')); // WHERE date > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $date The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByDate($date = null, $comparison = null)
+    {
+        if (is_array($date)) {
+            $useMinMax = false;
+            if (isset($date['min'])) {
+                $this->addUsingAlias(EventTableMap::COL_DATE, $date['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($date['max'])) {
+                $this->addUsingAlias(EventTableMap::COL_DATE, $date['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_DATE, $date, $comparison);
     }
 
     /**
@@ -608,6 +671,47 @@ abstract class EventQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the tickets_remaining column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTicketsRemaining(1234); // WHERE tickets_remaining = 1234
+     * $query->filterByTicketsRemaining(array(12, 34)); // WHERE tickets_remaining IN (12, 34)
+     * $query->filterByTicketsRemaining(array('min' => 12)); // WHERE tickets_remaining > 12
+     * </code>
+     *
+     * @param     mixed $ticketsRemaining The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByTicketsRemaining($ticketsRemaining = null, $comparison = null)
+    {
+        if (is_array($ticketsRemaining)) {
+            $useMinMax = false;
+            if (isset($ticketsRemaining['min'])) {
+                $this->addUsingAlias(EventTableMap::COL_TICKETS_REMAINING, $ticketsRemaining['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($ticketsRemaining['max'])) {
+                $this->addUsingAlias(EventTableMap::COL_TICKETS_REMAINING, $ticketsRemaining['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_TICKETS_REMAINING, $ticketsRemaining, $comparison);
+    }
+
+    /**
      * Filter the query by a related \NorthEastEvents\Models\EventUsers object
      *
      * @param \NorthEastEvents\Models\EventUsers|ObjectCollection $eventUsers the related object to use as filter
@@ -678,6 +782,79 @@ abstract class EventQuery extends ModelCriteria
         return $this
             ->joinEventUsers($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'EventUsers', '\NorthEastEvents\Models\EventUsersQuery');
+    }
+
+    /**
+     * Filter the query by a related \NorthEastEvents\Models\WaitingList object
+     *
+     * @param \NorthEastEvents\Models\WaitingList|ObjectCollection $waitingList the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByWaitingList($waitingList, $comparison = null)
+    {
+        if ($waitingList instanceof \NorthEastEvents\Models\WaitingList) {
+            return $this
+                ->addUsingAlias(EventTableMap::COL_ID, $waitingList->getEventID(), $comparison);
+        } elseif ($waitingList instanceof ObjectCollection) {
+            return $this
+                ->useWaitingListQuery()
+                ->filterByPrimaryKeys($waitingList->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByWaitingList() only accepts arguments of type \NorthEastEvents\Models\WaitingList or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the WaitingList relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function joinWaitingList($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('WaitingList');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'WaitingList');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the WaitingList relation WaitingList object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \NorthEastEvents\Models\WaitingListQuery A secondary query class using the current class as primary query
+     */
+    public function useWaitingListQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinWaitingList($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'WaitingList', '\NorthEastEvents\Models\WaitingListQuery');
     }
 
     /**

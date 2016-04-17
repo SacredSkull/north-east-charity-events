@@ -232,6 +232,13 @@ class UserTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', null, 'EventUserss', false);
+        $this->addRelation('WaitingList', '\\NorthEastEvents\\Models\\WaitingList', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':userID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, 'WaitingLists', false);
         $this->addRelation('Thread', '\\NorthEastEvents\\Models\\Thread', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -322,6 +329,7 @@ class UserTableMap extends TableMap
         // Invalidate objects in related instance pools,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         EventUsersTableMap::clearInstancePool();
+        WaitingListTableMap::clearInstancePool();
         ThreadTableMap::clearInstancePool();
         CommentTableMap::clearInstancePool();
     }

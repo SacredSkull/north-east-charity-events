@@ -22,13 +22,27 @@ abstract class Controller implements ResourceInterface {
     }
 
     public function render(Request $req, Response $res, string $template, array $vars = []){
-
         return $this->ci->get("view")->render($res, $template, array_merge([
             "page_title" => $this->page_title,
             "current_user" => $this->current_user,
             "resource_type" => $this->resource_type,
             "route" => $req->getAttribute('route')->getName(),
+            "flashes" => $this->ci->get("flash")->getMessages()
         ], $vars));
+    }
+
+    public function sendEmail(string $to, string $subject, string $message, $additional_headers = null, $additional_params = null){
+        $headers = sprintf("From: no-reply@%s\r\n", $_SERVER['HTTP_HOST']);
+        $headers .= sprintf("Reply-To: no-reply@%s\r\n\r\n", $_SERVER['HTTP_HOST']);
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+        if($additional_headers != null)
+            $headers .= $additional_headers;
+
+        $head = "<html><body style='font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif'>";
+        $footer = "</body></html>";
+        $message = wordwrap($head . $message . $footer, 70);
+        mail($to, $subject, $message, $additional_headers, $additional_params);
     }
 
     public function NotFound(string $message = null, Request $request, Response $response, array $args){
@@ -36,10 +50,10 @@ abstract class Controller implements ResourceInterface {
         if(!($message == null || strlen($message) == 0)){
             $message = $this->not_found_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/404.html.twig", $this->renderVariables([
+        return $this->render($request, $response, "/errors/404.html.twig", [
             "error_message" => $message,
             "error_code" => 404
-        ]))->withStatus(404);
+        ])->withStatus(404);
     }
 
     public function APINotFound(string $message = null, Request $request, Response $response, array $args){
@@ -54,10 +68,11 @@ abstract class Controller implements ResourceInterface {
         if($message == null || strlen($message) == 0 || $message == false){
             $message = $this->not_found_message;
         }
-        return $this->ci->get("view")->render($response, "/errors/403.html.twig", $this->renderVariables([
+
+        return $this->render($request, $response, "/errors/403.html.twig", [
             "error_message" => $message,
             "error_code" => 403
-        ]))->withStatus(403);
+        ])->withStatus(403);
     }
 
     public function APIUnauthorised(string $message = null, Request $request, Response $response, array $args){
@@ -68,7 +83,7 @@ abstract class Controller implements ResourceInterface {
     }
 
     public function NotAllowed(string $message = null, Request $request, Response $response, array $args){
-        $this->page_title = "Not found";
+        $this->page_title = "Not allowed";
         if(!($message == null || strlen($message) == 0)){
             $message = $this->not_allowed_message;
         }

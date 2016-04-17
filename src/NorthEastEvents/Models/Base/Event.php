@@ -13,9 +13,12 @@ use NorthEastEvents\Models\Thread as ChildThread;
 use NorthEastEvents\Models\ThreadQuery as ChildThreadQuery;
 use NorthEastEvents\Models\User as ChildUser;
 use NorthEastEvents\Models\UserQuery as ChildUserQuery;
+use NorthEastEvents\Models\WaitingList as ChildWaitingList;
+use NorthEastEvents\Models\WaitingListQuery as ChildWaitingListQuery;
 use NorthEastEvents\Models\Map\EventTableMap;
 use NorthEastEvents\Models\Map\EventUsersTableMap;
 use NorthEastEvents\Models\Map\ThreadTableMap;
+use NorthEastEvents\Models\Map\WaitingListTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -86,6 +89,13 @@ abstract class Event implements ActiveRecordInterface
     protected $title;
 
     /**
+     * The value for the date field.
+     *
+     * @var        DateTime
+     */
+    protected $date;
+
+    /**
      * The value for the location field.
      *
      * @var        string
@@ -137,10 +147,23 @@ abstract class Event implements ActiveRecordInterface
     protected $updated_at;
 
     /**
+     * The value for the tickets_remaining field.
+     *
+     * @var        int
+     */
+    protected $tickets_remaining;
+
+    /**
      * @var        ObjectCollection|ChildEventUsers[] Collection to store aggregation of ChildEventUsers objects.
      */
     protected $collEventUserss;
     protected $collEventUserssPartial;
+
+    /**
+     * @var        ObjectCollection|ChildWaitingList[] Collection to store aggregation of ChildWaitingList objects.
+     */
+    protected $collWaitingLists;
+    protected $collWaitingListsPartial;
 
     /**
      * @var        ObjectCollection|ChildThread[] Collection to store aggregation of ChildThread objects.
@@ -177,6 +200,12 @@ abstract class Event implements ActiveRecordInterface
      * @var ObjectCollection|ChildEventUsers[]
      */
     protected $eventUserssScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildWaitingList[]
+     */
+    protected $waitingListsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -444,6 +473,26 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [optionally formatted] temporal [date] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getDate($format = NULL)
+    {
+        if ($format === null) {
+            return $this->date;
+        } else {
+            return $this->date instanceof \DateTimeInterface ? $this->date->format($format) : null;
+        }
+    }
+
+    /**
      * Get the [location] column value.
      *
      * @return string
@@ -534,6 +583,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [tickets_remaining] column value.
+     *
+     * @return int
+     */
+    public function getTicketsRemaining()
+    {
+        return $this->tickets_remaining;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -572,6 +631,26 @@ abstract class Event implements ActiveRecordInterface
 
         return $this;
     } // setTitle()
+
+    /**
+     * Sets the value of [date] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setDate($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->date !== null || $dt !== null) {
+            if ($this->date === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->date->format("Y-m-d H:i:s")) {
+                $this->date = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[EventTableMap::COL_DATE] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setDate()
 
     /**
      * Set the value of [location] column.
@@ -714,6 +793,26 @@ abstract class Event implements ActiveRecordInterface
     } // setUpdatedAt()
 
     /**
+     * Set the value of [tickets_remaining] column.
+     *
+     * @param int $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setTicketsRemaining($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->tickets_remaining !== $v) {
+            $this->tickets_remaining = $v;
+            $this->modifiedColumns[EventTableMap::COL_TICKETS_REMAINING] = true;
+        }
+
+        return $this;
+    } // setTicketsRemaining()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -763,32 +862,41 @@ abstract class Event implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : EventTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
             $this->title = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : EventTableMap::translateFieldName('Date', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
             $this->location = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('ImageUrl', TableMap::TYPE_PHPNAME, $indexType)];
             $this->image_url = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('Body', TableMap::TYPE_PHPNAME, $indexType)];
             $this->body = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('BodyHTML', TableMap::TYPE_PHPNAME, $indexType)];
             $this->bodyhtml = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : EventTableMap::translateFieldName('Tickets', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tickets = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : EventTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : EventTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : EventTableMap::translateFieldName('TicketsRemaining', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->tickets_remaining = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -797,7 +905,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\NorthEastEvents\\Models\\Event'), 0, $e);
@@ -859,6 +967,8 @@ abstract class Event implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->collEventUserss = null;
+
+            $this->collWaitingLists = null;
 
             $this->collThreads = null;
 
@@ -1031,6 +1141,23 @@ abstract class Event implements ActiveRecordInterface
                 }
             }
 
+            if ($this->waitingListsScheduledForDeletion !== null) {
+                if (!$this->waitingListsScheduledForDeletion->isEmpty()) {
+                    \NorthEastEvents\Models\WaitingListQuery::create()
+                        ->filterByPrimaryKeys($this->waitingListsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->waitingListsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collWaitingLists !== null) {
+                foreach ($this->collWaitingLists as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->threadsScheduledForDeletion !== null) {
                 if (!$this->threadsScheduledForDeletion->isEmpty()) {
                     \NorthEastEvents\Models\ThreadQuery::create()
@@ -1080,6 +1207,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
             $modifiedColumns[':p' . $index++]  = 'title';
         }
+        if ($this->isColumnModified(EventTableMap::COL_DATE)) {
+            $modifiedColumns[':p' . $index++]  = 'date';
+        }
         if ($this->isColumnModified(EventTableMap::COL_LOCATION)) {
             $modifiedColumns[':p' . $index++]  = 'location';
         }
@@ -1101,6 +1231,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_UPDATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'updated_at';
         }
+        if ($this->isColumnModified(EventTableMap::COL_TICKETS_REMAINING)) {
+            $modifiedColumns[':p' . $index++]  = 'tickets_remaining';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1117,6 +1250,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'title':
                         $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+                        break;
+                    case 'date':
+                        $stmt->bindValue($identifier, $this->date ? $this->date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'location':
                         $stmt->bindValue($identifier, $this->location, PDO::PARAM_STR);
@@ -1138,6 +1274,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'updated_at':
                         $stmt->bindValue($identifier, $this->updated_at ? $this->updated_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'tickets_remaining':
+                        $stmt->bindValue($identifier, $this->tickets_remaining, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1208,25 +1347,31 @@ abstract class Event implements ActiveRecordInterface
                 return $this->getTitle();
                 break;
             case 2:
-                return $this->getLocation();
+                return $this->getDate();
                 break;
             case 3:
-                return $this->getImageUrl();
+                return $this->getLocation();
                 break;
             case 4:
-                return $this->getBody();
+                return $this->getImageUrl();
                 break;
             case 5:
-                return $this->getBodyHTML();
+                return $this->getBody();
                 break;
             case 6:
-                return $this->getTickets();
+                return $this->getBodyHTML();
                 break;
             case 7:
-                return $this->getCreatedAt();
+                return $this->getTickets();
                 break;
             case 8:
+                return $this->getCreatedAt();
+                break;
+            case 9:
                 return $this->getUpdatedAt();
+                break;
+            case 10:
+                return $this->getTicketsRemaining();
                 break;
             default:
                 return null;
@@ -1260,20 +1405,26 @@ abstract class Event implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getTitle(),
-            $keys[2] => $this->getLocation(),
-            $keys[3] => $this->getImageUrl(),
-            $keys[4] => $this->getBody(),
-            $keys[5] => $this->getBodyHTML(),
-            $keys[6] => $this->getTickets(),
-            $keys[7] => $this->getCreatedAt(),
-            $keys[8] => $this->getUpdatedAt(),
+            $keys[2] => $this->getDate(),
+            $keys[3] => $this->getLocation(),
+            $keys[4] => $this->getImageUrl(),
+            $keys[5] => $this->getBody(),
+            $keys[6] => $this->getBodyHTML(),
+            $keys[7] => $this->getTickets(),
+            $keys[8] => $this->getCreatedAt(),
+            $keys[9] => $this->getUpdatedAt(),
+            $keys[10] => $this->getTicketsRemaining(),
         );
-        if ($result[$keys[7]] instanceof \DateTime) {
-            $result[$keys[7]] = $result[$keys[7]]->format('c');
+        if ($result[$keys[2]] instanceof \DateTime) {
+            $result[$keys[2]] = $result[$keys[2]]->format('c');
         }
 
         if ($result[$keys[8]] instanceof \DateTime) {
             $result[$keys[8]] = $result[$keys[8]]->format('c');
+        }
+
+        if ($result[$keys[9]] instanceof \DateTime) {
+            $result[$keys[9]] = $result[$keys[9]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1296,6 +1447,21 @@ abstract class Event implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collEventUserss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collWaitingLists) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'waitingLists';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'waiting_lists';
+                        break;
+                    default:
+                        $key = 'WaitingLists';
+                }
+
+                $result[$key] = $this->collWaitingLists->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collThreads) {
 
@@ -1353,25 +1519,31 @@ abstract class Event implements ActiveRecordInterface
                 $this->setTitle($value);
                 break;
             case 2:
-                $this->setLocation($value);
+                $this->setDate($value);
                 break;
             case 3:
-                $this->setImageUrl($value);
+                $this->setLocation($value);
                 break;
             case 4:
-                $this->setBody($value);
+                $this->setImageUrl($value);
                 break;
             case 5:
-                $this->setBodyHTML($value);
+                $this->setBody($value);
                 break;
             case 6:
-                $this->setTickets($value);
+                $this->setBodyHTML($value);
                 break;
             case 7:
-                $this->setCreatedAt($value);
+                $this->setTickets($value);
                 break;
             case 8:
+                $this->setCreatedAt($value);
+                break;
+            case 9:
                 $this->setUpdatedAt($value);
+                break;
+            case 10:
+                $this->setTicketsRemaining($value);
                 break;
         } // switch()
 
@@ -1406,25 +1578,31 @@ abstract class Event implements ActiveRecordInterface
             $this->setTitle($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setLocation($arr[$keys[2]]);
+            $this->setDate($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setImageUrl($arr[$keys[3]]);
+            $this->setLocation($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setBody($arr[$keys[4]]);
+            $this->setImageUrl($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setBodyHTML($arr[$keys[5]]);
+            $this->setBody($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setTickets($arr[$keys[6]]);
+            $this->setBodyHTML($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setCreatedAt($arr[$keys[7]]);
+            $this->setTickets($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setUpdatedAt($arr[$keys[8]]);
+            $this->setCreatedAt($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setUpdatedAt($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setTicketsRemaining($arr[$keys[10]]);
         }
     }
 
@@ -1473,6 +1651,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_TITLE)) {
             $criteria->add(EventTableMap::COL_TITLE, $this->title);
         }
+        if ($this->isColumnModified(EventTableMap::COL_DATE)) {
+            $criteria->add(EventTableMap::COL_DATE, $this->date);
+        }
         if ($this->isColumnModified(EventTableMap::COL_LOCATION)) {
             $criteria->add(EventTableMap::COL_LOCATION, $this->location);
         }
@@ -1493,6 +1674,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_UPDATED_AT)) {
             $criteria->add(EventTableMap::COL_UPDATED_AT, $this->updated_at);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_TICKETS_REMAINING)) {
+            $criteria->add(EventTableMap::COL_TICKETS_REMAINING, $this->tickets_remaining);
         }
 
         return $criteria;
@@ -1581,6 +1765,7 @@ abstract class Event implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setTitle($this->getTitle());
+        $copyObj->setDate($this->getDate());
         $copyObj->setLocation($this->getLocation());
         $copyObj->setImageUrl($this->getImageUrl());
         $copyObj->setBody($this->getBody());
@@ -1588,6 +1773,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setTickets($this->getTickets());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
+        $copyObj->setTicketsRemaining($this->getTicketsRemaining());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1597,6 +1783,12 @@ abstract class Event implements ActiveRecordInterface
             foreach ($this->getEventUserss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addEventUsers($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getWaitingLists() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addWaitingList($relObj->copy($deepCopy));
                 }
             }
 
@@ -1649,6 +1841,9 @@ abstract class Event implements ActiveRecordInterface
     {
         if ('EventUsers' == $relationName) {
             return $this->initEventUserss();
+        }
+        if ('WaitingList' == $relationName) {
+            return $this->initWaitingLists();
         }
         if ('Thread' == $relationName) {
             return $this->initThreads();
@@ -1906,6 +2101,259 @@ abstract class Event implements ActiveRecordInterface
         $query->joinWith('User', $joinBehavior);
 
         return $this->getEventUserss($query, $con);
+    }
+
+    /**
+     * Clears out the collWaitingLists collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addWaitingLists()
+     */
+    public function clearWaitingLists()
+    {
+        $this->collWaitingLists = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collWaitingLists collection loaded partially.
+     */
+    public function resetPartialWaitingLists($v = true)
+    {
+        $this->collWaitingListsPartial = $v;
+    }
+
+    /**
+     * Initializes the collWaitingLists collection.
+     *
+     * By default this just sets the collWaitingLists collection to an empty array (like clearcollWaitingLists());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initWaitingLists($overrideExisting = true)
+    {
+        if (null !== $this->collWaitingLists && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = WaitingListTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collWaitingLists = new $collectionClassName;
+        $this->collWaitingLists->setModel('\NorthEastEvents\Models\WaitingList');
+    }
+
+    /**
+     * Gets an array of ChildWaitingList objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildEvent is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildWaitingList[] List of ChildWaitingList objects
+     * @throws PropelException
+     */
+    public function getWaitingLists(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collWaitingListsPartial && !$this->isNew();
+        if (null === $this->collWaitingLists || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collWaitingLists) {
+                // return empty collection
+                $this->initWaitingLists();
+            } else {
+                $collWaitingLists = ChildWaitingListQuery::create(null, $criteria)
+                    ->filterByEvent($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collWaitingListsPartial && count($collWaitingLists)) {
+                        $this->initWaitingLists(false);
+
+                        foreach ($collWaitingLists as $obj) {
+                            if (false == $this->collWaitingLists->contains($obj)) {
+                                $this->collWaitingLists->append($obj);
+                            }
+                        }
+
+                        $this->collWaitingListsPartial = true;
+                    }
+
+                    return $collWaitingLists;
+                }
+
+                if ($partial && $this->collWaitingLists) {
+                    foreach ($this->collWaitingLists as $obj) {
+                        if ($obj->isNew()) {
+                            $collWaitingLists[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collWaitingLists = $collWaitingLists;
+                $this->collWaitingListsPartial = false;
+            }
+        }
+
+        return $this->collWaitingLists;
+    }
+
+    /**
+     * Sets a collection of ChildWaitingList objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $waitingLists A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildEvent The current object (for fluent API support)
+     */
+    public function setWaitingLists(Collection $waitingLists, ConnectionInterface $con = null)
+    {
+        /** @var ChildWaitingList[] $waitingListsToDelete */
+        $waitingListsToDelete = $this->getWaitingLists(new Criteria(), $con)->diff($waitingLists);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->waitingListsScheduledForDeletion = clone $waitingListsToDelete;
+
+        foreach ($waitingListsToDelete as $waitingListRemoved) {
+            $waitingListRemoved->setEvent(null);
+        }
+
+        $this->collWaitingLists = null;
+        foreach ($waitingLists as $waitingList) {
+            $this->addWaitingList($waitingList);
+        }
+
+        $this->collWaitingLists = $waitingLists;
+        $this->collWaitingListsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related WaitingList objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related WaitingList objects.
+     * @throws PropelException
+     */
+    public function countWaitingLists(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collWaitingListsPartial && !$this->isNew();
+        if (null === $this->collWaitingLists || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collWaitingLists) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getWaitingLists());
+            }
+
+            $query = ChildWaitingListQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByEvent($this)
+                ->count($con);
+        }
+
+        return count($this->collWaitingLists);
+    }
+
+    /**
+     * Method called to associate a ChildWaitingList object to this object
+     * through the ChildWaitingList foreign key attribute.
+     *
+     * @param  ChildWaitingList $l ChildWaitingList
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function addWaitingList(ChildWaitingList $l)
+    {
+        if ($this->collWaitingLists === null) {
+            $this->initWaitingLists();
+            $this->collWaitingListsPartial = true;
+        }
+
+        if (!$this->collWaitingLists->contains($l)) {
+            $this->doAddWaitingList($l);
+
+            if ($this->waitingListsScheduledForDeletion and $this->waitingListsScheduledForDeletion->contains($l)) {
+                $this->waitingListsScheduledForDeletion->remove($this->waitingListsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildWaitingList $waitingList The ChildWaitingList object to add.
+     */
+    protected function doAddWaitingList(ChildWaitingList $waitingList)
+    {
+        $this->collWaitingLists[]= $waitingList;
+        $waitingList->setEvent($this);
+    }
+
+    /**
+     * @param  ChildWaitingList $waitingList The ChildWaitingList object to remove.
+     * @return $this|ChildEvent The current object (for fluent API support)
+     */
+    public function removeWaitingList(ChildWaitingList $waitingList)
+    {
+        if ($this->getWaitingLists()->contains($waitingList)) {
+            $pos = $this->collWaitingLists->search($waitingList);
+            $this->collWaitingLists->remove($pos);
+            if (null === $this->waitingListsScheduledForDeletion) {
+                $this->waitingListsScheduledForDeletion = clone $this->collWaitingLists;
+                $this->waitingListsScheduledForDeletion->clear();
+            }
+            $this->waitingListsScheduledForDeletion[]= clone $waitingList;
+            $waitingList->setEvent(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Event is new, it will return
+     * an empty collection; or if this Event has previously
+     * been saved, it will retrieve related WaitingLists from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Event.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildWaitingList[] List of ChildWaitingList objects
+     */
+    public function getWaitingListsJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildWaitingListQuery::create(null, $criteria);
+        $query->joinWith('User', $joinBehavior);
+
+        return $this->getWaitingLists($query, $con);
     }
 
     /**
@@ -2410,6 +2858,7 @@ abstract class Event implements ActiveRecordInterface
     {
         $this->id = null;
         $this->title = null;
+        $this->date = null;
         $this->location = null;
         $this->image_url = null;
         $this->body = null;
@@ -2417,6 +2866,7 @@ abstract class Event implements ActiveRecordInterface
         $this->tickets = null;
         $this->created_at = null;
         $this->updated_at = null;
+        $this->tickets_remaining = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();
@@ -2441,6 +2891,11 @@ abstract class Event implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collWaitingLists) {
+                foreach ($this->collWaitingLists as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collThreads) {
                 foreach ($this->collThreads as $o) {
                     $o->clearAllReferences($deep);
@@ -2454,6 +2909,7 @@ abstract class Event implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collEventUserss = null;
+        $this->collWaitingLists = null;
         $this->collThreads = null;
         $this->collUsers = null;
     }
@@ -2480,6 +2936,33 @@ abstract class Event implements ActiveRecordInterface
         $this->modifiedColumns[EventTableMap::COL_UPDATED_AT] = true;
 
         return $this;
+    }
+
+    // aggregate_column behavior
+
+    /**
+     * Computes the value of the aggregate column tickets_remaining *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeTicketsRemaining(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT COUNT(userID) FROM event_users WHERE event_users.EVENTID = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column tickets_remaining *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateTicketsRemaining(ConnectionInterface $con)
+    {
+        $this->setTicketsRemaining($this->computeTicketsRemaining($con));
+        $this->save($con);
     }
 
     /**

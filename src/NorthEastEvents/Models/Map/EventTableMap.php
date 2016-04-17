@@ -59,7 +59,7 @@ class EventTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class EventTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the id field
@@ -80,6 +80,11 @@ class EventTableMap extends TableMap
      * the column name for the title field
      */
     const COL_TITLE = 'event.title';
+
+    /**
+     * the column name for the date field
+     */
+    const COL_DATE = 'event.date';
 
     /**
      * the column name for the location field
@@ -117,6 +122,11 @@ class EventTableMap extends TableMap
     const COL_UPDATED_AT = 'event.updated_at';
 
     /**
+     * the column name for the tickets_remaining field
+     */
+    const COL_TICKETS_REMAINING = 'event.tickets_remaining';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -128,11 +138,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'Location', 'ImageUrl', 'Body', 'BodyHTML', 'Tickets', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'location', 'imageUrl', 'body', 'bodyHTML', 'tickets', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID, EventTableMap::COL_TITLE, EventTableMap::COL_LOCATION, EventTableMap::COL_IMAGE_URL, EventTableMap::COL_BODY, EventTableMap::COL_BODYHTML, EventTableMap::COL_TICKETS, EventTableMap::COL_CREATED_AT, EventTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'location', 'image_url', 'body', 'bodyHTML', 'tickets', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('Id', 'Title', 'Date', 'Location', 'ImageUrl', 'Body', 'BodyHTML', 'Tickets', 'CreatedAt', 'UpdatedAt', 'TicketsRemaining', ),
+        self::TYPE_CAMELNAME     => array('id', 'title', 'date', 'location', 'imageUrl', 'body', 'bodyHTML', 'tickets', 'createdAt', 'updatedAt', 'ticketsRemaining', ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_ID, EventTableMap::COL_TITLE, EventTableMap::COL_DATE, EventTableMap::COL_LOCATION, EventTableMap::COL_IMAGE_URL, EventTableMap::COL_BODY, EventTableMap::COL_BODYHTML, EventTableMap::COL_TICKETS, EventTableMap::COL_CREATED_AT, EventTableMap::COL_UPDATED_AT, EventTableMap::COL_TICKETS_REMAINING, ),
+        self::TYPE_FIELDNAME     => array('id', 'title', 'date', 'location', 'image_url', 'body', 'bodyHTML', 'tickets', 'created_at', 'updated_at', 'tickets_remaining', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -142,11 +152,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Location' => 2, 'ImageUrl' => 3, 'Body' => 4, 'BodyHTML' => 5, 'Tickets' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'location' => 2, 'imageUrl' => 3, 'body' => 4, 'bodyHTML' => 5, 'tickets' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID => 0, EventTableMap::COL_TITLE => 1, EventTableMap::COL_LOCATION => 2, EventTableMap::COL_IMAGE_URL => 3, EventTableMap::COL_BODY => 4, EventTableMap::COL_BODYHTML => 5, EventTableMap::COL_TICKETS => 6, EventTableMap::COL_CREATED_AT => 7, EventTableMap::COL_UPDATED_AT => 8, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'location' => 2, 'image_url' => 3, 'body' => 4, 'bodyHTML' => 5, 'tickets' => 6, 'created_at' => 7, 'updated_at' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Date' => 2, 'Location' => 3, 'ImageUrl' => 4, 'Body' => 5, 'BodyHTML' => 6, 'Tickets' => 7, 'CreatedAt' => 8, 'UpdatedAt' => 9, 'TicketsRemaining' => 10, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'date' => 2, 'location' => 3, 'imageUrl' => 4, 'body' => 5, 'bodyHTML' => 6, 'tickets' => 7, 'createdAt' => 8, 'updatedAt' => 9, 'ticketsRemaining' => 10, ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_ID => 0, EventTableMap::COL_TITLE => 1, EventTableMap::COL_DATE => 2, EventTableMap::COL_LOCATION => 3, EventTableMap::COL_IMAGE_URL => 4, EventTableMap::COL_BODY => 5, EventTableMap::COL_BODYHTML => 6, EventTableMap::COL_TICKETS => 7, EventTableMap::COL_CREATED_AT => 8, EventTableMap::COL_UPDATED_AT => 9, EventTableMap::COL_TICKETS_REMAINING => 10, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'date' => 2, 'location' => 3, 'image_url' => 4, 'body' => 5, 'bodyHTML' => 6, 'tickets' => 7, 'created_at' => 8, 'updated_at' => 9, 'tickets_remaining' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -168,6 +178,7 @@ class EventTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('title', 'Title', 'VARCHAR', true, 50, null);
+        $this->addColumn('date', 'Date', 'TIMESTAMP', true, null, null);
         $this->addColumn('location', 'Location', 'VARCHAR', true, 50, null);
         $this->addColumn('image_url', 'ImageUrl', 'VARCHAR', false, 128, '/include/img/events/default.png');
         $this->addColumn('body', 'Body', 'LONGVARCHAR', false, null, null);
@@ -175,6 +186,7 @@ class EventTableMap extends TableMap
         $this->addColumn('tickets', 'Tickets', 'INTEGER', false, null, 0);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('tickets_remaining', 'TicketsRemaining', 'INTEGER', false, null, null);
     } // initialize()
 
     /**
@@ -189,6 +201,13 @@ class EventTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', null, 'EventUserss', false);
+        $this->addRelation('WaitingList', '\\NorthEastEvents\\Models\\WaitingList', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':eventID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, 'WaitingLists', false);
         $this->addRelation('Thread', '\\NorthEastEvents\\Models\\Thread', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -209,6 +228,7 @@ class EventTableMap extends TableMap
     {
         return array(
             'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+            'aggregate_column' => array('name' => 'tickets_remaining', 'expression' => 'COUNT(userID)', 'condition' => '', 'foreign_table' => 'event_users', 'foreign_schema' => '', ),
         );
     } // getBehaviors()
     /**
@@ -219,6 +239,7 @@ class EventTableMap extends TableMap
         // Invalidate objects in related instance pools,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         EventUsersTableMap::clearInstancePool();
+        WaitingListTableMap::clearInstancePool();
         ThreadTableMap::clearInstancePool();
     }
 
@@ -365,6 +386,7 @@ class EventTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(EventTableMap::COL_ID);
             $criteria->addSelectColumn(EventTableMap::COL_TITLE);
+            $criteria->addSelectColumn(EventTableMap::COL_DATE);
             $criteria->addSelectColumn(EventTableMap::COL_LOCATION);
             $criteria->addSelectColumn(EventTableMap::COL_IMAGE_URL);
             $criteria->addSelectColumn(EventTableMap::COL_BODY);
@@ -372,9 +394,11 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn(EventTableMap::COL_TICKETS);
             $criteria->addSelectColumn(EventTableMap::COL_CREATED_AT);
             $criteria->addSelectColumn(EventTableMap::COL_UPDATED_AT);
+            $criteria->addSelectColumn(EventTableMap::COL_TICKETS_REMAINING);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.title');
+            $criteria->addSelectColumn($alias . '.date');
             $criteria->addSelectColumn($alias . '.location');
             $criteria->addSelectColumn($alias . '.image_url');
             $criteria->addSelectColumn($alias . '.body');
@@ -382,6 +406,7 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.tickets');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
+            $criteria->addSelectColumn($alias . '.tickets_remaining');
         }
     }
 

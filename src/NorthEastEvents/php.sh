@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 export MSYS_NO_PATHCONV=1
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -17,7 +17,7 @@ shift
 
 dockerPHP () {
 	COMMAND="cd /var/www/src/NorthEastEvents; $@"
-	docker exec $CONTAINER_ID /bin/bash -c "$COMMAND"
+	docker exec $CONTAINER_ID /bin/sh -c "$COMMAND"
 }
 
 dockerPHP "$EXECUTABLE" "$@"

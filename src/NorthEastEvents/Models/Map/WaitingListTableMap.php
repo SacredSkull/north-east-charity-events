@@ -2,8 +2,8 @@
 
 namespace NorthEastEvents\Models\Map;
 
-use NorthEastEvents\Models\EventUsers;
-use NorthEastEvents\Models\EventUsersQuery;
+use NorthEastEvents\Models\WaitingList;
+use NorthEastEvents\Models\WaitingListQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'event_users' table.
+ * This class defines the structure of the 'waiting_list' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class EventUsersTableMap extends TableMap
+class WaitingListTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class EventUsersTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'NorthEastEvents.Models.Map.EventUsersTableMap';
+    const CLASS_NAME = 'NorthEastEvents.Models.Map.WaitingListTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class EventUsersTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'event_users';
+    const TABLE_NAME = 'waiting_list';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\NorthEastEvents\\Models\\EventUsers';
+    const OM_CLASS = '\\NorthEastEvents\\Models\\WaitingList';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'NorthEastEvents.Models.EventUsers';
+    const CLASS_DEFAULT = 'NorthEastEvents.Models.WaitingList';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,32 +69,27 @@ class EventUsersTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the eventID field
      */
-    const COL_EVENTID = 'event_users.eventID';
+    const COL_EVENTID = 'waiting_list.eventID';
 
     /**
      * the column name for the userID field
      */
-    const COL_USERID = 'event_users.userID';
-
-    /**
-     * the column name for the private field
-     */
-    const COL_PRIVATE = 'event_users.private';
+    const COL_USERID = 'waiting_list.userID';
 
     /**
      * the column name for the created_at field
      */
-    const COL_CREATED_AT = 'event_users.created_at';
+    const COL_CREATED_AT = 'waiting_list.created_at';
 
     /**
      * the column name for the updated_at field
      */
-    const COL_UPDATED_AT = 'event_users.updated_at';
+    const COL_UPDATED_AT = 'waiting_list.updated_at';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +103,11 @@ class EventUsersTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('EventID', 'UserID', 'Private', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_CAMELNAME     => array('eventID', 'userID', 'private', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(EventUsersTableMap::COL_EVENTID, EventUsersTableMap::COL_USERID, EventUsersTableMap::COL_PRIVATE, EventUsersTableMap::COL_CREATED_AT, EventUsersTableMap::COL_UPDATED_AT, ),
-        self::TYPE_FIELDNAME     => array('eventID', 'userID', 'private', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('EventID', 'UserID', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_CAMELNAME     => array('eventID', 'userID', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(WaitingListTableMap::COL_EVENTID, WaitingListTableMap::COL_USERID, WaitingListTableMap::COL_CREATED_AT, WaitingListTableMap::COL_UPDATED_AT, ),
+        self::TYPE_FIELDNAME     => array('eventID', 'userID', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class EventUsersTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('EventID' => 0, 'UserID' => 1, 'Private' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, ),
-        self::TYPE_CAMELNAME     => array('eventID' => 0, 'userID' => 1, 'private' => 2, 'createdAt' => 3, 'updatedAt' => 4, ),
-        self::TYPE_COLNAME       => array(EventUsersTableMap::COL_EVENTID => 0, EventUsersTableMap::COL_USERID => 1, EventUsersTableMap::COL_PRIVATE => 2, EventUsersTableMap::COL_CREATED_AT => 3, EventUsersTableMap::COL_UPDATED_AT => 4, ),
-        self::TYPE_FIELDNAME     => array('eventID' => 0, 'userID' => 1, 'private' => 2, 'created_at' => 3, 'updated_at' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('EventID' => 0, 'UserID' => 1, 'CreatedAt' => 2, 'UpdatedAt' => 3, ),
+        self::TYPE_CAMELNAME     => array('eventID' => 0, 'userID' => 1, 'createdAt' => 2, 'updatedAt' => 3, ),
+        self::TYPE_COLNAME       => array(WaitingListTableMap::COL_EVENTID => 0, WaitingListTableMap::COL_USERID => 1, WaitingListTableMap::COL_CREATED_AT => 2, WaitingListTableMap::COL_UPDATED_AT => 3, ),
+        self::TYPE_FIELDNAME     => array('eventID' => 0, 'userID' => 1, 'created_at' => 2, 'updated_at' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -139,17 +134,15 @@ class EventUsersTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('event_users');
-        $this->setPhpName('EventUsers');
+        $this->setName('waiting_list');
+        $this->setPhpName('WaitingList');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\NorthEastEvents\\Models\\EventUsers');
+        $this->setClassName('\\NorthEastEvents\\Models\\WaitingList');
         $this->setPackage('NorthEastEvents.Models');
         $this->setUseIdGenerator(false);
-        $this->setIsCrossRef(true);
         // columns
         $this->addForeignPrimaryKey('eventID', 'EventID', 'INTEGER' , 'event', 'id', true, null, null);
         $this->addForeignPrimaryKey('userID', 'UserID', 'INTEGER' , 'user', 'id', true, null, null);
-        $this->addColumn('private', 'Private', 'BOOLEAN', false, 1, false);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -185,7 +178,6 @@ class EventUsersTableMap extends TableMap
     {
         return array(
             'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
-            'aggregate_column_relation_aggregate_column' => array('foreign_table' => 'event', 'update_method' => 'updateTicketsRemaining', 'aggregate_name' => 'TicketsRemaining', ),
         );
     } // getBehaviors()
 
@@ -197,7 +189,7 @@ class EventUsersTableMap extends TableMap
      * to the cache in order to ensure that the same objects are always returned by find*()
      * and findPk*() calls.
      *
-     * @param \NorthEastEvents\Models\EventUsers $obj A \NorthEastEvents\Models\EventUsers object.
+     * @param \NorthEastEvents\Models\WaitingList $obj A \NorthEastEvents\Models\WaitingList object.
      * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
@@ -218,12 +210,12 @@ class EventUsersTableMap extends TableMap
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param mixed $value A \NorthEastEvents\Models\EventUsers object or a primary key value.
+     * @param mixed $value A \NorthEastEvents\Models\WaitingList object or a primary key value.
      */
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \NorthEastEvents\Models\EventUsers) {
+            if (is_object($value) && $value instanceof \NorthEastEvents\Models\WaitingList) {
                 $key = serialize([(null === $value->getEventID() || is_scalar($value->getEventID()) || is_callable([$value->getEventID(), '__toString']) ? (string) $value->getEventID() : $value->getEventID()), (null === $value->getUserID() || is_scalar($value->getUserID()) || is_callable([$value->getUserID(), '__toString']) ? (string) $value->getUserID() : $value->getUserID())]);
 
             } elseif (is_array($value) && count($value) === 2) {
@@ -234,7 +226,7 @@ class EventUsersTableMap extends TableMap
 
                 return;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \NorthEastEvents\Models\EventUsers object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \NorthEastEvents\Models\WaitingList object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
                 throw $e;
             }
 
@@ -308,7 +300,7 @@ class EventUsersTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? EventUsersTableMap::CLASS_DEFAULT : EventUsersTableMap::OM_CLASS;
+        return $withPrefix ? WaitingListTableMap::CLASS_DEFAULT : WaitingListTableMap::OM_CLASS;
     }
 
     /**
@@ -322,22 +314,22 @@ class EventUsersTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (EventUsers object, last column rank)
+     * @return array           (WaitingList object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = EventUsersTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = EventUsersTableMap::getInstanceFromPool($key))) {
+        $key = WaitingListTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = WaitingListTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + EventUsersTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + WaitingListTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = EventUsersTableMap::OM_CLASS;
-            /** @var EventUsers $obj */
+            $cls = WaitingListTableMap::OM_CLASS;
+            /** @var WaitingList $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            EventUsersTableMap::addInstanceToPool($obj, $key);
+            WaitingListTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -360,18 +352,18 @@ class EventUsersTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = EventUsersTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = EventUsersTableMap::getInstanceFromPool($key))) {
+            $key = WaitingListTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = WaitingListTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var EventUsers $obj */
+                /** @var WaitingList $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                EventUsersTableMap::addInstanceToPool($obj, $key);
+                WaitingListTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -392,15 +384,13 @@ class EventUsersTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(EventUsersTableMap::COL_EVENTID);
-            $criteria->addSelectColumn(EventUsersTableMap::COL_USERID);
-            $criteria->addSelectColumn(EventUsersTableMap::COL_PRIVATE);
-            $criteria->addSelectColumn(EventUsersTableMap::COL_CREATED_AT);
-            $criteria->addSelectColumn(EventUsersTableMap::COL_UPDATED_AT);
+            $criteria->addSelectColumn(WaitingListTableMap::COL_EVENTID);
+            $criteria->addSelectColumn(WaitingListTableMap::COL_USERID);
+            $criteria->addSelectColumn(WaitingListTableMap::COL_CREATED_AT);
+            $criteria->addSelectColumn(WaitingListTableMap::COL_UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.eventID');
             $criteria->addSelectColumn($alias . '.userID');
-            $criteria->addSelectColumn($alias . '.private');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }
@@ -415,7 +405,7 @@ class EventUsersTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(EventUsersTableMap::DATABASE_NAME)->getTable(EventUsersTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(WaitingListTableMap::DATABASE_NAME)->getTable(WaitingListTableMap::TABLE_NAME);
     }
 
     /**
@@ -423,16 +413,16 @@ class EventUsersTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(EventUsersTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(EventUsersTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new EventUsersTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(WaitingListTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(WaitingListTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new WaitingListTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a EventUsers or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a WaitingList or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or EventUsers object or primary key or array of primary keys
+     * @param mixed               $values Criteria or WaitingList object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -443,17 +433,17 @@ class EventUsersTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventUsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(WaitingListTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \NorthEastEvents\Models\EventUsers) { // it's a model object
+        } elseif ($values instanceof \NorthEastEvents\Models\WaitingList) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(EventUsersTableMap::DATABASE_NAME);
+            $criteria = new Criteria(WaitingListTableMap::DATABASE_NAME);
             // primary key is composite; we therefore, expect
             // the primary key passed to be an array of pkey values
             if (count($values) == count($values, COUNT_RECURSIVE)) {
@@ -461,19 +451,19 @@ class EventUsersTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(EventUsersTableMap::COL_EVENTID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(EventUsersTableMap::COL_USERID, $value[1]));
+                $criterion = $criteria->getNewCriterion(WaitingListTableMap::COL_EVENTID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(WaitingListTableMap::COL_USERID, $value[1]));
                 $criteria->addOr($criterion);
             }
         }
 
-        $query = EventUsersQuery::create()->mergeWith($criteria);
+        $query = WaitingListQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            EventUsersTableMap::clearInstancePool();
+            WaitingListTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                EventUsersTableMap::removeInstanceFromPool($singleval);
+                WaitingListTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -481,20 +471,20 @@ class EventUsersTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the event_users table.
+     * Deletes all rows from the waiting_list table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return EventUsersQuery::create()->doDeleteAll($con);
+        return WaitingListQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a EventUsers or Criteria object.
+     * Performs an INSERT on the database, given a WaitingList or Criteria object.
      *
-     * @param mixed               $criteria Criteria or EventUsers object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or WaitingList object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -503,18 +493,18 @@ class EventUsersTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventUsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(WaitingListTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from EventUsers object
+            $criteria = $criteria->buildCriteria(); // build Criteria from WaitingList object
         }
 
 
         // Set the correct dbName
-        $query = EventUsersQuery::create()->mergeWith($criteria);
+        $query = WaitingListQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -523,7 +513,7 @@ class EventUsersTableMap extends TableMap
         });
     }
 
-} // EventUsersTableMap
+} // WaitingListTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-EventUsersTableMap::buildTableMap();
+WaitingListTableMap::buildTableMap();

@@ -47,22 +47,17 @@
                <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div>
             </div>
             <div class="panel-body">
-                    
-                    {{ event.getBodyHTML|raw }}
-                 {% if not event.hasTickets %}
-                        <a href=" {{ path_for('APIEventRegister', { 'eventID': event.getId }) }}
-                  " class="label label-primary">Sign up!</a>
-                        
-                       <div class="label label-primary">
-                       {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}</div>
-                    {% else %}
-                        <div class="label label-danger" >
-                            <a href=" {{ path_for('APIEventRegister', { 'eventID': event.getId }) }}
-                  " class="label label-primary">Currently sold out, join the waiting list here.</a>
-                        </div>
-                    {% endif %}
+                 {{ event.getBodyHTML|raw }}
+                 {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
+                     <div class="label label-primary">
+                       {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}
+                     </div>
+                 {% else %}
+                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
+                 {% endif %}
                  
-                 </div>
+            </div>
                  
          </div>
       </div>

@@ -41,14 +41,28 @@ class EventRoutes extends Routes {
                 // Get list of all publically attending users of an event
                 $this->get('/users[/{page:[0-9]+}]', EventController::class.':GetEventUsers')
                     ->setName("EventUsersGET");
+                
+                $this->group('/thread', function() {
+                    $this->group('/{threadID:[0-9]+}', function(){
+                        // Get event details
+                        $this->map(["GET", "DELETE", "PUT", "PATCH"], '', EventController::class.':EventThreadOperations')
+                            ->setName("EventThreadOperations");
+
+                        $this->post('/comment', EventController::class.':CreateThreadComment')
+                            ->setName("ThreadCommentCreate");
+
+                        $this->map(["GET", "DELETE", "PUT", "PATCH"], '/comment/{commentID:[0-9]+}', EventController::class.':ThreadCommentOperations')
+                            ->setName("ThreadCommentOperations");
+                    });
+                });
 
                 // Attend an event
                 $this->get('/register', EventController::class.':RegisterEvent')
-                    ->setName("APIEventRegister");
+                    ->setName("EventRegister");
 
                 // Stop attending an event
                 $this->get('/deregister', EventController::class.':DeregisterEvent')
-                    ->setName("APIEventDeregister");
+                    ->setName("EventDeregister");
 
                 // Event comments will be on the page
             });

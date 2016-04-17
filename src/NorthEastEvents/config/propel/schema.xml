@@ -31,18 +31,36 @@
     <table name="event" phpName="Event">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
 		<column name="title" type="varchar" size="50" required="true"/>
+        <column name="date" type="TIMESTAMP" required="true"/>
 		<column name="location" type="varchar" size="50" required="true"/>
         <column name="image_url" type="varchar" size="128" default="/include/img/events/default.png" />
         <column name="body" phpName="Body" type="LONGVARCHAR"/>
         <column name="bodyHTML" phpName="BodyHTML" type="LONGVARCHAR"/>
         <column name="tickets" type="integer" default="0" />
         <behavior name="timestampable" />
+        <behavior name="aggregate_column">
+            <parameter name="name" value="tickets_remaining" />
+            <parameter name="foreign_table" value="event_users" />
+            <parameter name="expression" value="COUNT(userID)" />
+        </behavior>
     </table>
 
     <table name="event_users" phpName="EventUsers" isCrossRef="true">
         <column name="eventID" type="integer" phpName="EventID" required="true" primaryKey="true"/>
         <column name="userID" type="integer" phpName="UserID" required="true" primaryKey="true" />
         <column name="private" phpName="Private" type="boolean" default="false" />
+        <behavior name="timestampable" />
+        <foreign-key foreignTable="event" onDelete="CASCADE">
+            <reference local="eventID" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
+        </foreign-key>
+    </table>
+    
+    <table name="waiting_list" phpName="WaitingList">
+        <column name="eventID" type="integer" phpName="EventID" required="true" primaryKey="true"/>
+        <column name="userID" type="integer" phpName="UserID" required="true" primaryKey="true" />
         <behavior name="timestampable" />
         <foreign-key foreignTable="event" onDelete="CASCADE">
             <reference local="eventID" foreign="id"/>

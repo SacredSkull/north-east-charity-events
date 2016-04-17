@@ -53,7 +53,7 @@ class TestController extends Controller {
                 return $faker->imageUrl(350, 240);
             },
             'Body' => function () use ($faker) {
-                return $faker->realText(750);
+                return $faker->realText(1600);
             },
             'BodyHTML' => null,
             'Tickets' => function () use ($faker) {

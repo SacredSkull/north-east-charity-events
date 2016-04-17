@@ -4,9 +4,9 @@ namespace NorthEastEvents\Models\Base;
 
 use \Exception;
 use \PDO;
-use NorthEastEvents\Models\EventUsers as ChildEventUsers;
-use NorthEastEvents\Models\EventUsersQuery as ChildEventUsersQuery;
-use NorthEastEvents\Models\Map\EventUsersTableMap;
+use NorthEastEvents\Models\WaitingList as ChildWaitingList;
+use NorthEastEvents\Models\WaitingListQuery as ChildWaitingListQuery;
+use NorthEastEvents\Models\Map\WaitingListTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,109 +16,104 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'event_users' table.
+ * Base class that represents a query for the 'waiting_list' table.
  *
  *
  *
- * @method     ChildEventUsersQuery orderByEventID($order = Criteria::ASC) Order by the eventID column
- * @method     ChildEventUsersQuery orderByUserID($order = Criteria::ASC) Order by the userID column
- * @method     ChildEventUsersQuery orderByPrivate($order = Criteria::ASC) Order by the private column
- * @method     ChildEventUsersQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
- * @method     ChildEventUsersQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
+ * @method     ChildWaitingListQuery orderByEventID($order = Criteria::ASC) Order by the eventID column
+ * @method     ChildWaitingListQuery orderByUserID($order = Criteria::ASC) Order by the userID column
+ * @method     ChildWaitingListQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
+ * @method     ChildWaitingListQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
- * @method     ChildEventUsersQuery groupByEventID() Group by the eventID column
- * @method     ChildEventUsersQuery groupByUserID() Group by the userID column
- * @method     ChildEventUsersQuery groupByPrivate() Group by the private column
- * @method     ChildEventUsersQuery groupByCreatedAt() Group by the created_at column
- * @method     ChildEventUsersQuery groupByUpdatedAt() Group by the updated_at column
+ * @method     ChildWaitingListQuery groupByEventID() Group by the eventID column
+ * @method     ChildWaitingListQuery groupByUserID() Group by the userID column
+ * @method     ChildWaitingListQuery groupByCreatedAt() Group by the created_at column
+ * @method     ChildWaitingListQuery groupByUpdatedAt() Group by the updated_at column
  *
- * @method     ChildEventUsersQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildEventUsersQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildEventUsersQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildWaitingListQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildWaitingListQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildWaitingListQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildEventUsersQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildEventUsersQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildEventUsersQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildWaitingListQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildWaitingListQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildWaitingListQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildEventUsersQuery leftJoinEvent($relationAlias = null) Adds a LEFT JOIN clause to the query using the Event relation
- * @method     ChildEventUsersQuery rightJoinEvent($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Event relation
- * @method     ChildEventUsersQuery innerJoinEvent($relationAlias = null) Adds a INNER JOIN clause to the query using the Event relation
+ * @method     ChildWaitingListQuery leftJoinEvent($relationAlias = null) Adds a LEFT JOIN clause to the query using the Event relation
+ * @method     ChildWaitingListQuery rightJoinEvent($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Event relation
+ * @method     ChildWaitingListQuery innerJoinEvent($relationAlias = null) Adds a INNER JOIN clause to the query using the Event relation
  *
- * @method     ChildEventUsersQuery joinWithEvent($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Event relation
+ * @method     ChildWaitingListQuery joinWithEvent($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Event relation
  *
- * @method     ChildEventUsersQuery leftJoinWithEvent() Adds a LEFT JOIN clause and with to the query using the Event relation
- * @method     ChildEventUsersQuery rightJoinWithEvent() Adds a RIGHT JOIN clause and with to the query using the Event relation
- * @method     ChildEventUsersQuery innerJoinWithEvent() Adds a INNER JOIN clause and with to the query using the Event relation
+ * @method     ChildWaitingListQuery leftJoinWithEvent() Adds a LEFT JOIN clause and with to the query using the Event relation
+ * @method     ChildWaitingListQuery rightJoinWithEvent() Adds a RIGHT JOIN clause and with to the query using the Event relation
+ * @method     ChildWaitingListQuery innerJoinWithEvent() Adds a INNER JOIN clause and with to the query using the Event relation
  *
- * @method     ChildEventUsersQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
- * @method     ChildEventUsersQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
- * @method     ChildEventUsersQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
+ * @method     ChildWaitingListQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
+ * @method     ChildWaitingListQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
+ * @method     ChildWaitingListQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
  *
- * @method     ChildEventUsersQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
+ * @method     ChildWaitingListQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
  *
- * @method     ChildEventUsersQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
- * @method     ChildEventUsersQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
- * @method     ChildEventUsersQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
+ * @method     ChildWaitingListQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
+ * @method     ChildWaitingListQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
+ * @method     ChildWaitingListQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
  *
  * @method     \NorthEastEvents\Models\EventQuery|\NorthEastEvents\Models\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildEventUsers findOne(ConnectionInterface $con = null) Return the first ChildEventUsers matching the query
- * @method     ChildEventUsers findOneOrCreate(ConnectionInterface $con = null) Return the first ChildEventUsers matching the query, or a new ChildEventUsers object populated from the query conditions when no match is found
+ * @method     ChildWaitingList findOne(ConnectionInterface $con = null) Return the first ChildWaitingList matching the query
+ * @method     ChildWaitingList findOneOrCreate(ConnectionInterface $con = null) Return the first ChildWaitingList matching the query, or a new ChildWaitingList object populated from the query conditions when no match is found
  *
- * @method     ChildEventUsers findOneByEventID(int $eventID) Return the first ChildEventUsers filtered by the eventID column
- * @method     ChildEventUsers findOneByUserID(int $userID) Return the first ChildEventUsers filtered by the userID column
- * @method     ChildEventUsers findOneByPrivate(boolean $private) Return the first ChildEventUsers filtered by the private column
- * @method     ChildEventUsers findOneByCreatedAt(string $created_at) Return the first ChildEventUsers filtered by the created_at column
- * @method     ChildEventUsers findOneByUpdatedAt(string $updated_at) Return the first ChildEventUsers filtered by the updated_at column *
+ * @method     ChildWaitingList findOneByEventID(int $eventID) Return the first ChildWaitingList filtered by the eventID column
+ * @method     ChildWaitingList findOneByUserID(int $userID) Return the first ChildWaitingList filtered by the userID column
+ * @method     ChildWaitingList findOneByCreatedAt(string $created_at) Return the first ChildWaitingList filtered by the created_at column
+ * @method     ChildWaitingList findOneByUpdatedAt(string $updated_at) Return the first ChildWaitingList filtered by the updated_at column *
 
- * @method     ChildEventUsers requirePk($key, ConnectionInterface $con = null) Return the ChildEventUsers by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildEventUsers requireOne(ConnectionInterface $con = null) Return the first ChildEventUsers matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requirePk($key, ConnectionInterface $con = null) Return the ChildWaitingList by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requireOne(ConnectionInterface $con = null) Return the first ChildWaitingList matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildEventUsers requireOneByEventID(int $eventID) Return the first ChildEventUsers filtered by the eventID column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildEventUsers requireOneByUserID(int $userID) Return the first ChildEventUsers filtered by the userID column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildEventUsers requireOneByPrivate(boolean $private) Return the first ChildEventUsers filtered by the private column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildEventUsers requireOneByCreatedAt(string $created_at) Return the first ChildEventUsers filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildEventUsers requireOneByUpdatedAt(string $updated_at) Return the first ChildEventUsers filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requireOneByEventID(int $eventID) Return the first ChildWaitingList filtered by the eventID column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requireOneByUserID(int $userID) Return the first ChildWaitingList filtered by the userID column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requireOneByCreatedAt(string $created_at) Return the first ChildWaitingList filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildWaitingList requireOneByUpdatedAt(string $updated_at) Return the first ChildWaitingList filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildEventUsers[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEventUsers objects based on current ModelCriteria
- * @method     ChildEventUsers[]|ObjectCollection findByEventID(int $eventID) Return ChildEventUsers objects filtered by the eventID column
- * @method     ChildEventUsers[]|ObjectCollection findByUserID(int $userID) Return ChildEventUsers objects filtered by the userID column
- * @method     ChildEventUsers[]|ObjectCollection findByPrivate(boolean $private) Return ChildEventUsers objects filtered by the private column
- * @method     ChildEventUsers[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildEventUsers objects filtered by the created_at column
- * @method     ChildEventUsers[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildEventUsers objects filtered by the updated_at column
- * @method     ChildEventUsers[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildWaitingList[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildWaitingList objects based on current ModelCriteria
+ * @method     ChildWaitingList[]|ObjectCollection findByEventID(int $eventID) Return ChildWaitingList objects filtered by the eventID column
+ * @method     ChildWaitingList[]|ObjectCollection findByUserID(int $userID) Return ChildWaitingList objects filtered by the userID column
+ * @method     ChildWaitingList[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildWaitingList objects filtered by the created_at column
+ * @method     ChildWaitingList[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildWaitingList objects filtered by the updated_at column
+ * @method     ChildWaitingList[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class EventUsersQuery extends ModelCriteria
+abstract class WaitingListQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \NorthEastEvents\Models\Base\EventUsersQuery object.
+     * Initializes internal state of \NorthEastEvents\Models\Base\WaitingListQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\NorthEastEvents\\Models\\EventUsers', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\NorthEastEvents\\Models\\WaitingList', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildEventUsersQuery object.
+     * Returns a new ChildWaitingListQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildEventUsersQuery
+     * @return ChildWaitingListQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildEventUsersQuery) {
+        if ($criteria instanceof ChildWaitingListQuery) {
             return $criteria;
         }
-        $query = new ChildEventUsersQuery();
+        $query = new ChildWaitingListQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -141,7 +136,7 @@ abstract class EventUsersQuery extends ModelCriteria
      * @param array[$eventID, $userID] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildEventUsers|array|mixed the result, formatted by the current formatter
+     * @return ChildWaitingList|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
@@ -150,7 +145,7 @@ abstract class EventUsersQuery extends ModelCriteria
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(EventUsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(WaitingListTableMap::DATABASE_NAME);
         }
 
         $this->basePreSelect($con);
@@ -163,7 +158,7 @@ abstract class EventUsersQuery extends ModelCriteria
             return $this->findPkComplex($key, $con);
         }
 
-        if ((null !== ($obj = EventUsersTableMap::getInstanceFromPool(serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]))))) {
+        if ((null !== ($obj = WaitingListTableMap::getInstanceFromPool(serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]))))) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -180,11 +175,11 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildEventUsers A model object, or null if the key is not found
+     * @return ChildWaitingList A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT eventID, userID, private, created_at, updated_at FROM event_users WHERE eventID = :p0 AND userID = :p1';
+        $sql = 'SELECT eventID, userID, created_at, updated_at FROM waiting_list WHERE eventID = :p0 AND userID = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -196,10 +191,10 @@ abstract class EventUsersQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildEventUsers $obj */
-            $obj = new ChildEventUsers();
+            /** @var ChildWaitingList $obj */
+            $obj = new ChildWaitingList();
             $obj->hydrate($row);
-            EventUsersTableMap::addInstanceToPool($obj, serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]));
+            WaitingListTableMap::addInstanceToPool($obj, serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]));
         }
         $stmt->closeCursor();
 
@@ -212,7 +207,7 @@ abstract class EventUsersQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildEventUsers|array|mixed the result, formatted by the current formatter
+     * @return ChildWaitingList|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -254,12 +249,12 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(EventUsersTableMap::COL_EVENTID, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(EventUsersTableMap::COL_USERID, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(WaitingListTableMap::COL_EVENTID, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(WaitingListTableMap::COL_USERID, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -269,7 +264,7 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
@@ -277,8 +272,8 @@ abstract class EventUsersQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(EventUsersTableMap::COL_EVENTID, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(EventUsersTableMap::COL_USERID, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(WaitingListTableMap::COL_EVENTID, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(WaitingListTableMap::COL_USERID, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
@@ -304,18 +299,18 @@ abstract class EventUsersQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByEventID($eventID = null, $comparison = null)
     {
         if (is_array($eventID)) {
             $useMinMax = false;
             if (isset($eventID['min'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_EVENTID, $eventID['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_EVENTID, $eventID['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($eventID['max'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_EVENTID, $eventID['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_EVENTID, $eventID['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -326,7 +321,7 @@ abstract class EventUsersQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(EventUsersTableMap::COL_EVENTID, $eventID, $comparison);
+        return $this->addUsingAlias(WaitingListTableMap::COL_EVENTID, $eventID, $comparison);
     }
 
     /**
@@ -347,18 +342,18 @@ abstract class EventUsersQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByUserID($userID = null, $comparison = null)
     {
         if (is_array($userID)) {
             $useMinMax = false;
             if (isset($userID['min'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_USERID, $userID['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_USERID, $userID['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($userID['max'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_USERID, $userID['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_USERID, $userID['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -369,34 +364,7 @@ abstract class EventUsersQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(EventUsersTableMap::COL_USERID, $userID, $comparison);
-    }
-
-    /**
-     * Filter the query on the private column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPrivate(true); // WHERE private = true
-     * $query->filterByPrivate('yes'); // WHERE private = true
-     * </code>
-     *
-     * @param     boolean|string $private The value to use as filter.
-     *              Non-boolean arguments are converted using the following rules:
-     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
-     */
-    public function filterByPrivate($private = null, $comparison = null)
-    {
-        if (is_string($private)) {
-            $private = in_array(strtolower($private), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-        }
-
-        return $this->addUsingAlias(EventUsersTableMap::COL_PRIVATE, $private, $comparison);
+        return $this->addUsingAlias(WaitingListTableMap::COL_USERID, $userID, $comparison);
     }
 
     /**
@@ -417,18 +385,18 @@ abstract class EventUsersQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByCreatedAt($createdAt = null, $comparison = null)
     {
         if (is_array($createdAt)) {
             $useMinMax = false;
             if (isset($createdAt['min'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_CREATED_AT, $createdAt['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($createdAt['max'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_CREATED_AT, $createdAt['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -439,7 +407,7 @@ abstract class EventUsersQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(EventUsersTableMap::COL_CREATED_AT, $createdAt, $comparison);
+        return $this->addUsingAlias(WaitingListTableMap::COL_CREATED_AT, $createdAt, $comparison);
     }
 
     /**
@@ -460,18 +428,18 @@ abstract class EventUsersQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByUpdatedAt($updatedAt = null, $comparison = null)
     {
         if (is_array($updatedAt)) {
             $useMinMax = false;
             if (isset($updatedAt['min'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_UPDATED_AT, $updatedAt['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($updatedAt['max'])) {
-                $this->addUsingAlias(EventUsersTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(WaitingListTableMap::COL_UPDATED_AT, $updatedAt['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -482,7 +450,7 @@ abstract class EventUsersQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(EventUsersTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
+        return $this->addUsingAlias(WaitingListTableMap::COL_UPDATED_AT, $updatedAt, $comparison);
     }
 
     /**
@@ -493,20 +461,20 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildEventUsersQuery The current query, for fluid interface
+     * @return ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByEvent($event, $comparison = null)
     {
         if ($event instanceof \NorthEastEvents\Models\Event) {
             return $this
-                ->addUsingAlias(EventUsersTableMap::COL_EVENTID, $event->getId(), $comparison);
+                ->addUsingAlias(WaitingListTableMap::COL_EVENTID, $event->getId(), $comparison);
         } elseif ($event instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(EventUsersTableMap::COL_EVENTID, $event->toKeyValue('PrimaryKey', 'Id'), $comparison);
+                ->addUsingAlias(WaitingListTableMap::COL_EVENTID, $event->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByEvent() only accepts arguments of type \NorthEastEvents\Models\Event or Collection');
         }
@@ -518,7 +486,7 @@ abstract class EventUsersQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function joinEvent($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
@@ -570,20 +538,20 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildEventUsersQuery The current query, for fluid interface
+     * @return ChildWaitingListQuery The current query, for fluid interface
      */
     public function filterByUser($user, $comparison = null)
     {
         if ($user instanceof \NorthEastEvents\Models\User) {
             return $this
-                ->addUsingAlias(EventUsersTableMap::COL_USERID, $user->getId(), $comparison);
+                ->addUsingAlias(WaitingListTableMap::COL_USERID, $user->getId(), $comparison);
         } elseif ($user instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(EventUsersTableMap::COL_USERID, $user->toKeyValue('Id', 'Id'), $comparison);
+                ->addUsingAlias(WaitingListTableMap::COL_USERID, $user->toKeyValue('Id', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByUser() only accepts arguments of type \NorthEastEvents\Models\User or Collection');
         }
@@ -595,7 +563,7 @@ abstract class EventUsersQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
@@ -642,15 +610,15 @@ abstract class EventUsersQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildEventUsers $eventUsers Object to remove from the list of results
+     * @param   ChildWaitingList $waitingList Object to remove from the list of results
      *
-     * @return $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return $this|ChildWaitingListQuery The current query, for fluid interface
      */
-    public function prune($eventUsers = null)
+    public function prune($waitingList = null)
     {
-        if ($eventUsers) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(EventUsersTableMap::COL_EVENTID), $eventUsers->getEventID(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(EventUsersTableMap::COL_USERID), $eventUsers->getUserID(), Criteria::NOT_EQUAL);
+        if ($waitingList) {
+            $this->addCond('pruneCond0', $this->getAliasedColName(WaitingListTableMap::COL_EVENTID), $waitingList->getEventID(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(WaitingListTableMap::COL_USERID), $waitingList->getUserID(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
@@ -658,63 +626,7 @@ abstract class EventUsersQuery extends ModelCriteria
     }
 
     /**
-     * Code to execute before every DELETE statement
-     *
-     * @param     ConnectionInterface $con The connection object used by the query
-     */
-    protected function basePreDelete(ConnectionInterface $con)
-    {
-        // aggregate_column_relation_aggregate_column behavior
-        $this->findRelatedEventTicketsRemainings($con);
-
-        return $this->preDelete($con);
-    }
-
-    /**
-     * Code to execute after every DELETE statement
-     *
-     * @param     int $affectedRows the number of deleted rows
-     * @param     ConnectionInterface $con The connection object used by the query
-     */
-    protected function basePostDelete($affectedRows, ConnectionInterface $con)
-    {
-        // aggregate_column_relation_aggregate_column behavior
-        $this->updateRelatedEventTicketsRemainings($con);
-
-        return $this->postDelete($affectedRows, $con);
-    }
-
-    /**
-     * Code to execute before every UPDATE statement
-     *
-     * @param     array $values The associative array of columns and values for the update
-     * @param     ConnectionInterface $con The connection object used by the query
-     * @param     boolean $forceIndividualSaves If false (default), the resulting call is a Criteria::doUpdate(), otherwise it is a series of save() calls on all the found objects
-     */
-    protected function basePreUpdate(&$values, ConnectionInterface $con, $forceIndividualSaves = false)
-    {
-        // aggregate_column_relation_aggregate_column behavior
-        $this->findRelatedEventTicketsRemainings($con);
-
-        return $this->preUpdate($values, $con, $forceIndividualSaves);
-    }
-
-    /**
-     * Code to execute after every UPDATE statement
-     *
-     * @param     int $affectedRows the number of updated rows
-     * @param     ConnectionInterface $con The connection object used by the query
-     */
-    protected function basePostUpdate($affectedRows, ConnectionInterface $con)
-    {
-        // aggregate_column_relation_aggregate_column behavior
-        $this->updateRelatedEventTicketsRemainings($con);
-
-        return $this->postUpdate($affectedRows, $con);
-    }
-
-    /**
-     * Deletes all rows from the event_users table.
+     * Deletes all rows from the waiting_list table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -722,7 +634,7 @@ abstract class EventUsersQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventUsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(WaitingListTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -733,8 +645,8 @@ abstract class EventUsersQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            EventUsersTableMap::clearInstancePool();
-            EventUsersTableMap::clearRelatedInstancePool();
+            WaitingListTableMap::clearInstancePool();
+            WaitingListTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -752,23 +664,23 @@ abstract class EventUsersQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(EventUsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(WaitingListTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(EventUsersTableMap::DATABASE_NAME);
+        $criteria->setDbName(WaitingListTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            EventUsersTableMap::removeInstanceFromPool($criteria);
+            WaitingListTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            EventUsersTableMap::clearRelatedInstancePool();
+            WaitingListTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -781,41 +693,41 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @param      int $nbDays Maximum age of the latest update in days
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function recentlyUpdated($nbDays = 7)
     {
-        return $this->addUsingAlias(EventUsersTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+        return $this->addUsingAlias(WaitingListTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
     }
 
     /**
      * Order by update date desc
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function lastUpdatedFirst()
     {
-        return $this->addDescendingOrderByColumn(EventUsersTableMap::COL_UPDATED_AT);
+        return $this->addDescendingOrderByColumn(WaitingListTableMap::COL_UPDATED_AT);
     }
 
     /**
      * Order by update date asc
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function firstUpdatedFirst()
     {
-        return $this->addAscendingOrderByColumn(EventUsersTableMap::COL_UPDATED_AT);
+        return $this->addAscendingOrderByColumn(WaitingListTableMap::COL_UPDATED_AT);
     }
 
     /**
      * Order by create date desc
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function lastCreatedFirst()
     {
-        return $this->addDescendingOrderByColumn(EventUsersTableMap::COL_CREATED_AT);
+        return $this->addDescendingOrderByColumn(WaitingListTableMap::COL_CREATED_AT);
     }
 
     /**
@@ -823,51 +735,21 @@ abstract class EventUsersQuery extends ModelCriteria
      *
      * @param      int $nbDays Maximum age of in days
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function recentlyCreated($nbDays = 7)
     {
-        return $this->addUsingAlias(EventUsersTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+        return $this->addUsingAlias(WaitingListTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
     }
 
     /**
      * Order by create date asc
      *
-     * @return     $this|ChildEventUsersQuery The current query, for fluid interface
+     * @return     $this|ChildWaitingListQuery The current query, for fluid interface
      */
     public function firstCreatedFirst()
     {
-        return $this->addAscendingOrderByColumn(EventUsersTableMap::COL_CREATED_AT);
+        return $this->addAscendingOrderByColumn(WaitingListTableMap::COL_CREATED_AT);
     }
 
-    // aggregate_column_relation_aggregate_column behavior
-
-    /**
-     * Finds the related Event objects and keep them for later
-     *
-     * @param ConnectionInterface $con A connection object
-     */
-    protected function findRelatedEventTicketsRemainings($con)
-    {
-        $criteria = clone $this;
-        if ($this->useAliasInSQL) {
-            $alias = $this->getModelAlias();
-            $criteria->removeAlias($alias);
-        } else {
-            $alias = '';
-        }
-        $this->eventTicketsRemainings = \NorthEastEvents\Models\EventQuery::create()
-            ->joinEventUsers($alias)
-            ->mergeWith($criteria)
-            ->find($con);
-    }
-
-    protected function updateRelatedEventTicketsRemainings($con)
-    {
-        foreach ($this->eventTicketsRemainings as $eventTicketsRemaining) {
-            $eventTicketsRemaining->updateTicketsRemaining($con);
-        }
-        $this->eventTicketsRemainings = array();
-    }
-
-} // EventUsersQuery
+} // WaitingListQuery

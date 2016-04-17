@@ -41,14 +41,18 @@ class UserRoutes extends Routes{
                     ->setName("UserOperations");
 
                 $this->get('/events[/{page:[0-9]+}]', function($request, $response, $args){
+                    // TODO: this route
                     return $response->getBody()->write("This should GET all PUBLICALLY subscribed (i.e. not private) events for user ID #". $args["userID"]) .  " - unless you are viewing your own";
                 })->setName("UserCurrentEventsGET");
-            });
+            })->add(new AuthorisedRouteMiddleware($this->getContainer()));
         });
 
         // Create new user (register)
-        $app->post('/register', UserController::class.':CreateUser')
-            ->setName("UserCreate");
+        $app->get('/register', UserController::class.':CreateUserGET')
+            ->setName("UserCreateGET");
+
+        $app->post('/register', UserController::class.':CreateUserPOST')
+            ->setName("UserCreatePOST");
 
         // Login
         $app->post('/login', UserController::class.':LoginController')
@@ -81,7 +85,7 @@ class UserRoutes extends Routes{
                     // Get user details, and perform administrative operations on others
                     $this->map(["GET", "DELETE", "PUT", "PATCH"], '', UserController::class.':APIUserOperations')
                         ->setName("APIUserOperations")
-                        ->add(new AuthorisedRouteMiddleware())->add(new BasicAuthMiddleware());
+                        ->add(new AuthorisedRouteMiddleware($this->getContainer()))->add(new BasicAuthMiddleware());
 
                     // Get events this user is publically attending
                     $this->get('/events', function($request, $response, $args){
