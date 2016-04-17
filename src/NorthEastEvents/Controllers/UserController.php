@@ -157,32 +157,34 @@ class UserController extends Controller {
         // Parse username
         $failure = false;
         if($username == null) {
-            $this->ci->get("flash")->addMessage('Error', 'You must provide a username.');
+            $this->ci->get("flash")->addMessageNow('Error', 'You must provide a username.');
             $failure = true;
         }
         if (UserQuery::create()->findOneByUsername($username) != null) {
-            $this->ci->get("flash")->addMessage('Error', 'Username has been taken');
+            $this->ci->get("flash")->addMessageNow('Error', 'Username has been taken');
             $failure = true;
         }
 
         // Parse email
         if($email == null) {
-            $this->ci->get("flash")->addMessage('Error', 'You must provide an email.');
+            $this->ci->get("flash")->addMessageNow('Error', 'You must provide an email.');
             $failure = true;
         }
         if(UserQuery::create()->findOneByEmail($email) != null) {
-            $this->ci->get("flash")->addMessage('Error', 'Email is in use.');
+            $this->ci->get("flash")->addMessageNow('Error', 'Email is in use.');
             $failure = true;
         }
 
         // Parse password
         if($password == null || strlen($password) < 4) {
-            $this->ci->get("flash")->addMessage('Error', 'Passwords must be larger than 4 characters.');
+            $this->ci->get("flash")->addMessageNow('Error', 'Passwords must be larger than 4 characters.');
             $failure = true;
         }
 
-        if($failure)
+        if($failure){
             return $this->render($request, $response, "/users/register.html.twig", ["previous_details" => $previousDetails]);
+        }
+
 
         $user = new User();
         $user->setUsername($username);

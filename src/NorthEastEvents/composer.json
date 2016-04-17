@@ -1,4 +1,10 @@
 {
+    "repositories":[
+      {
+        "type": "vcs",
+        "url": "https://github.com/thinksalot/Slim-Flash"
+      }
+    ],
     "require": {
         "slim/slim": "^3.0",
         "twig/twig": "~1.0",
@@ -8,7 +14,7 @@
         "fzaninotto/faker": "^1.5",
         "kzykhys/ciconia": "~1.0.0",
         "aura/session": "^2.0",
-        "slim/flash": "^0.1.0"
+        "slim/flash": "dev-flash-current-request"
     },
 
     "require-dev":{
