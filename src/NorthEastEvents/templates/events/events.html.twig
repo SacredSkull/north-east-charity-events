@@ -1,5 +1,45 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
-    Some wicked sick cool events
+<div class="col-md-4">
+   <div class="row">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+            <h4>{{ event.getTitle }}</h4>
+         </div>
+         <img class="img-responsive" src="{{ event.getImageUrl}}">
+      </div>
+    </div>
+</div>
+
+
+<div class="col-md-8" >
+   <div class="row">
+      <div class="panel-group">
+         <div class="panel panel-default">
+            <div class="panel-heading">
+               <h4>Event Desciption</h4>
+            </div>
+            <div class="panel-heading" id="eventPanHead">
+               
+               <div class="label label-primary" id="eventLabels">Event Date: {{  event.getDate|default("21/03/95") }}</div>
+               <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div>
+            </div>
+            <div class="panel-body">
+                 {{ event.getBodyHTML|raw }}
+                 {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
+                     <div class="label label-primary">
+                       {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}
+                     </div>
+                 {% else %}
+                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
+                 {% endif %}
+                 
+            </div>
+                 
+         </div>
+      </div>
+   </div>
+</div>
     {{ include('pagination.html.twig', {resources: events}) }}
 {% endblock body %}
