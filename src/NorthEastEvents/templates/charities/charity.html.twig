@@ -1,0 +1,45 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+{% for charity in charities %}
+{% for event in charity.getEvents %}
+<div class="row">
+    <div class="col-md-2"  style="margin-right: -70px;">
+        <div class="panel panel-default" style="border-radius: 0px; border: 0px;">
+            <img class="img-responsive"  src="{{ charity.getLogo }}">
+        </div>
+    </div>
+    <div class="col-md-offset-1 col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                            <h3>{{>{{ charity.getName }}</h3>
+            </div>
+            <div class="panel-body">
+                {{ charity.getBio }}
+                <br></br>
+                <a href="#" class="label label-primary" style="text-align: right;"> Events by {{ charity.getName }}</a>
+                <table class="table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% set link = path_for('EventOperations', {'eventID': event.getID}) %}
+                            <td><a href="{{ link }}">{{ event.getTitle }}</a></td>
+                            <td><a href="{{ link }}">{{ event.getLocation }}</a></td>
+                            <td><a href="{{ link }}">{{ event.getDate|date("H:i d/m/Y") }}</a></td>
+                        </tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %} 
+{% endfor %} 
+{{ include('pagination.html.twig', {resources: charities}) }}
+{% endblock body %}

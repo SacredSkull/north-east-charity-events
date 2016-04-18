@@ -17,19 +17,19 @@
                <h4>Event Desciption</h4>
             </div>
             <div class="panel-heading" id="eventPanHead">
-               <div class="label label-primary" id="eventLabels">Event Date: {{ event.getDate|date("H:i d/m/Y") }}</div>
-               <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div>
+               <h4><div class="label label-primary" id="eventLabels">Event Date: {{ event.getDate|date("H:i d/m/Y") }}</div>
+                           <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div></h4>
             </div>
             <div class="panel-body">
                  {{ event.getBodyHTML|raw }}
                  {% if event.hasTickets and not event.getUsers.contains(current_user) %}
-                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
+                     <h4><a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
                      <div class="label label-primary">
                        {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}
                      </div>
                  {% else %}
                      <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
-                 {% endif %}
+                                 {% endif %}</h4>
                  
             </div>
                  

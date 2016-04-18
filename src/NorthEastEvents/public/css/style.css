@@ -21,6 +21,11 @@ a:hover{
     
 }
 
+a:visited{
+    color: #FFA500;
+    
+}
+
 .background-container{
     display: -webkit-box;
     display: -moz-box;
@@ -171,13 +176,14 @@ a:hover{
 }
 
 .label-danger{
-    background-color: red;
+    background-color: maroon;
     color: white;
 }
 
 .label-warning{
-    background-color: red;
+    background-color: maroon;
     margin-bottom: 20px;
+    color: white;
 }
 
 label{
