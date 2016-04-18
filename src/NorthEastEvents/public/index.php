@@ -28,7 +28,7 @@ new Routes\CommentRoutes($container, Controllers\CommentController::class);
 new Routes\EventRoutes($container, Controllers\EventController::class);
 new Routes\ThreadRoutes($container, Controllers\ThreadController::class);
 new Routes\UserRoutes($container, Controllers\UserController::class);
-new Routes\UserRoutes($container, Controllers\CharityController::class);
+new Routes\CharityRoutes($container, Controllers\CharityController::class);
 
 // These routes should only be used if development is ongoing!
 if(\NorthEastEvents\Bootstrap::DEBUG) {
