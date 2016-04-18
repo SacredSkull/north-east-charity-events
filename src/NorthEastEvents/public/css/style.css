@@ -127,6 +127,11 @@ body{
     color: white;
 }
 
+.label-warning{
+    text-align: left;
+    background-color: red;
+}
+
 label{
     display: inline-block;
     width: 150px;
@@ -149,6 +154,7 @@ img{
     
 }
 
+
 #eventPanHead div{
     display: inline-block;
     
@@ -164,6 +170,18 @@ img{
     color: #FFA500;
     background-color: #252839;
 }
+
+.charity-events{
+    background-color: #FFC125;
+    color: #252839;
+}
+
+.table {
+   background-color: #252839;
+    color:#FFC125;
+}
+
+
 
 .panel .panel-body {
     background-color: #FFC125;
