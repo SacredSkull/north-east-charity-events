@@ -11,7 +11,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 class BaseController extends Controller {
     public function Base(Request $request, Response $response) {
         return $this->render($request, $response, "home.html.twig", [
-            "events" => EventQuery::create()->orderByTicketsRemaining(Criteria::ASC)->limit(9)
+            "events" => EventQuery::create()->filterByDate(new \DateTime(), Criteria::GREATER_THAN)->orderByTicketsRemaining(Criteria::ASC)->limit(9)
         ]);
     }
     

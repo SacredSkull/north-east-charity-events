@@ -191,6 +191,9 @@ class TestController extends Controller {
             'UpdatedAt' => null,
         ));
 
+        $admin = new User();
+        $admin->setUsername("admin")->setPassword("admin")->setEmail("admin@whatever.com")->setPermission(Map\UserTableMap::COL_PERMISSION_STAFF)->save();
+
         $comments = $populator->execute();
 
         Bootstrap::getLogger()->addInfo(sprintf("[DATA] Connected all the dots between users and events, taking %.3fs", microtime(true) - $start));

@@ -55,7 +55,7 @@ class UserController extends Controller {
                 $sql = "SELECT realEvents.* FROM (SELECT eventID FROM event_users WHERE userID = :user_id) as eventUsers LEFT JOIN event AS realEvents ON eventUsers.eventID = realEvents.id;";
 
                 $stmt = $con->prepare($sql);
-                $stmt->execute([":user_id" => $user->getId()]);
+                $stmt->execute([":user_id" => $user["Id"]]);
 
                 $formatter = new ObjectFormatter();
                 $formatter->setClass(Event::class);

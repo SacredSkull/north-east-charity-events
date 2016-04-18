@@ -11,7 +11,7 @@
       <div class="panel-group">
          <div class="panel panel-default">
             <div class="panel-heading">
-                    {% if user.isAdmin %}
+                    {% if not user.isAdmin %}
                      <h4> User: {{ user.Username }}</h4></div>
                     {% else %}
                     <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span  class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
