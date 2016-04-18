@@ -1,57 +1,74 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
-    <!--Start content -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"  style="text-align: center">Add a new event</div>
-              <div class="panel-body">
-                      
+<!--Start content -->
+<div class="row">
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading"  style="text-align: center">Add a new event</div>
+        <div class="panel-body">
+            <form role="form" action="" method="post" >
+                <div class="col-lg-6">
                     <div class="form-group">
-                            <label for="inputTitle">Event Title</label>
-                            <input type="text" id="inputTitle" name="title" value=""> 
+                        <label for="inputTitle">Event Title</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="title" id="inputTitle" placeholder="Enter Event Title" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputHost">Event Host</label>
-                            <input type="text" id="inputHost" name="host" value=""> 
+                    <div class="form-group">
+                        <label for="inputHost">Event Host</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="host" id="inputHost" placeholder="Enter Event Host" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputImage">Event Image</label>
-                            <input type="text" id="inputImage" name="imageUrl" value=""> 
+                    <div class="form-group">
+                        <label for="inputImage">Event Image</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="imageUrl" id="inputImage" placeholder="Enter Event Image" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputDate">Event Date</label>
-                            <input type="text" id="inputDate" name="date" value=""> 
+                    <div class="form-group">
+                        <label for="inputDate">Event Date</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="date" id="inputDate" placeholder="Enter Event Date" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputLocation">Event Location</label>
-                            <input type="text" id="inputLocation" name="location" value=""> 
+                    <div class="form-group">
+                        <label for="inputLocation">Event Location</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter Event Location" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputBody">Event Description</label>
-                            <textarea class="form-control" id="inputBody" name="body" value=""rows="3"></textarea> 
+                    <div class="form-group">
+                        <label for="inputBody">Event Description</label>
+                        <div class="input-group"
+                            >
+                            <textarea name="body" id="inputBody" class="form-control" rows="5" required></textarea>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputCapacity">Event Capacity</label>
-                            <input type="text" id="inputCapacity" name="tickets" value=""> 
+                    <div class="form-group">
+                        <label for="inputCapacity">Event Capacity</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="tickets" id="inputCapacity" placeholder="Enter Event Capacity" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                      <div class="form-group">
-                            <label for="inputMedia">Event Media</label>
-                            <input type="text" id="inputMedia" name="videoUrl" value=""> 
+                    <div class="form-group">
+                        <label for="inputMedia">Event Media</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="videoUrl" id="inputMedia" placeholder="Enter Event Capacity" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
                     </div>
-                      
-                    
-                      
-                    
-                      <button type="submit" class="btn btn-default">Submit</button>
-           </div>
+                    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
+                </div>
+            </form>
         </div>
     </div>
+</div>
 {% endblock body %}
