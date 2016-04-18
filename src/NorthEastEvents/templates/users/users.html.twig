@@ -1,31 +1,34 @@
 {% extends "skeleton.html.twig" %}
+{% block pageCSS %}
+
+{% endblock pageCSS %}
 {% block body %}
     {% for user in users %}
-    <div class="row">
-       <div class="col-md-2"  style="margin-right: -70px;">
-            {{ user.getName }} 
-          <div class="panel panel-default">
-             <img class="img-responsive"  src="{{ user.getAvatarUrl }}">
-          </div>
-       </div>
-       <div class="col-md-offset-1 col-md-9">
-          <div class="panel panel-default">
-             <div class="panel-heading" style="text-align: left;">
-                    {% if user.isAdmin %}
-                User: <a href="{{ path_for('UserOperations', { 'userID': user.getId }) }}
-                    ">{{ user.getUsername }}</a> <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    {% else %}
-                User: <a href="{{ path_for('UserOperations', { 'userID': user.getId }) }}
-                    ">{{ user.getUsername }}</a>
-                    {% endif %}
-             </div>
-             <div class="panel-body">                  
-                City: {{ user.getCity }}<br>
-                Bio: {{ user.getBio }}</br>
-             </div>
-          </div>
-       </div>
-    </div>
-    {% endfor %} 
-{{ include('pagination.html.twig', {resources: users}) }}
+        <div class="row">
+            <div class="col-md-2" style="margin-right: -70px;">
+                {{ user.getName }}
+                <div class="panel panel-default">
+                    <img class="img-responsive" src="{{ user.getAvatarUrl }}">
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="text-align: left;">
+                        {% if user.isAdmin %}
+                            User: <a href="{{ path_for('UserOperations', { 'userID': user.getId }) }}
+					">{{ user.getUsername }}</a> <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        {% else %}
+                            User: <a href="{{ path_for('UserOperations', { 'userID': user.getId }) }}
+					">{{ user.getUsername }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">
+                        City: {{ user.getCity }}<br/>
+                        Bio: {{ user.getBio }}<br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {{ include('pagination.html.twig', {resources: users}) }}
 {% endblock body %}

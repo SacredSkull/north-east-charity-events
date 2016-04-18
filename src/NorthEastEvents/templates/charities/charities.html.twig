@@ -32,9 +32,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a href="thread.html.twig">{{ event.getTitle }}</a></td>
-                            <td><a href="thread.html.twig">{{ event.getLocation }}</a></td>
-                            <td><a href="thread.html.twig">{{ event.getDate|date("H:i d/m/Y") }}</a></td>
+                            {% set link = path_for('EventOperations', {'eventID': event.getID}) %}
+                            <td><a href="{{ link }}">{{ event.getTitle }}</a></td>
+                            <td><a href="{{ link }}">{{ event.getLocation }}</a></td>
+                            <td><a href="{{ link }}">{{ event.getDate|date("H:i d/m/Y") }}</a></td>
                         </tr>
                         </tr>
                     </tbody>

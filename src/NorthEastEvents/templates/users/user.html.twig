@@ -1,71 +1,75 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
-<div class="row">
-<div class="col-md-4">
-       <div class="panel panel-default">
-               <div class="panel-heading" style="text-align: left;"><h4> {{ user.Username }}'s Avatar</div></h4>
-         <img class="img-responsive" src="{{ user.AvatarUrl }}">
-      </div>
-</div>
-<div class="col-md-8" >
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">
-                    {% if not user.isAdmin %}
-                     <h4> User: {{ user.Username }}</h4></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="text-align: left;">
+                    <h4> {{ user.Username }}'s Avatar</h4>
+                </div>
+                <img class="img-responsive" src="{{ user.AvatarUrl }}">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% if user.isAdmin %}
+                        <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span class="glyphicon glyphicon-star"
+                                                                                 aria-hidden="true"></span></span>
+                        <h4> User: {{ user.Username }}</h4></div>
                     {% else %}
-                    <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span  class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
                     <h4> User: {{ user.Username }}</h4></div>
-                    {% endif %}
-            <div class="panel-body">
+                {% endif %}
+                <div class="panel-body">
                     <h4>Username: {{ user.Username }}</h4>
-                    <h4><br>City: {{ user.City }}</br></h4>
-                    <br> {{ user.Bio }}</br>
-            </div>
-                 
-         </div>
-      </div>
-</div>
-    
-    <div class="col-md-12" >
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading"><h4>Attending</h4>
-            </div>
-            <div class="panel-body">
-                {% for event in user_events %}
-                    {% if not event.hasFinished %}
-                        <p>
-                            <a href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
-                            {% if event.getPrivate == true %}<span title="You attended this event privately." class="glyphicon glyphicon-eye-close"></span>{% endif %}<br>
-                        </p>
-                    {% endif %}
-                {% endfor %}
-            </div>
-                 
-         </div>
-      </div>
-</div>
+                    <h4>City: {{ user.City }}<br/></h4>
+                    {{ user.Bio }}<br/>
+                </div>
 
-<div class="col-md-12" >
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading"><h4>Attended</h4>
             </div>
-            <div class="panel-body">
-                {% for event in user_events %}
-                    {% if event.hasFinished %}
-                        <p>
-                            <a href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
-                            {% if event.getPrivate == true %}<span title="You attended this event privately." class="glyphicon glyphicon-eye-close"></span>{% endif %}<br>
-                        </p>
-                    {% endif %}
-                {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Attending</h4>
+                </div>
+                <div class="panel-body">
+                    {% for event in user_events %}
+                        {% if not event.hasFinished %}
+                            <p>
+                                <a class="unstyled-link" href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
+                                {% if event.getPrivate == true %}<span title="You attended this event privately."
+                                                                       class="glyphicon glyphicon-eye-close"></span>{% endif %}
+                                <br>
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-                 
-         </div>
-      </div>
-</div>
-</div>
-    
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Attended</h4>
+                </div>
+                <div class="panel-body">
+                    {% for event in user_events %}
+                        {% if event.hasFinished %}
+                            <p>
+                                <a class="unstyled-link" href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
+                                {% if event.getPrivate == true %}<span title="You attended this event privately."
+                                                                       class="glyphicon glyphicon-eye-close"></span>{% endif %}
+                                <br>
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock body %}
