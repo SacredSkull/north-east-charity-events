@@ -20,7 +20,7 @@ class CharityRoutes extends Routes
 
         $app->get('/charities[/{page:[0-9]+}]', CharityController::class.":CharitiesList");
 
-        $app->group('/user', function(){
+        $app->group('/charity', function(){
             // Create new Charity
             $this->get('/create', CharityController::class.':CreateCharityGET')
                 ->setName("CharityCreateGET");
