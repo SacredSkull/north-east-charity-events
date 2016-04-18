@@ -37,11 +37,8 @@ class UserRoutes extends Routes{
             // Operations on a specific user
             $this->group('/{userID:[0-9]+}', function(){
                 // Get user details
-                $this->get('', UserController::class.':UserOperations')
+                $this->get('[/{page:[0-9]+}]', UserController::class.':UserOperations')
                     ->setName("UserOperations");
-
-                $this->get('/events[/{page:[0-9]+}]', UserController::class.':UserEventsGET')
-                    ->setName("UserCurrentEventsGET");
             })->add(new AuthorisedRouteMiddleware($this->getContainer()));
         });
 
