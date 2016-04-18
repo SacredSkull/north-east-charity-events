@@ -1,14 +1,56 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
-    <!--Start content -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"  style="text-align: center">Login</div>
-              <div class="panel-body"  style="text-align: center">                  
+<div class="row">
+<div class="col-md-4">
+       <div class="panel panel-default">
+               <div class="panel-heading" style="text-align: left;"><h4> {{ user.Username }}'s Avatar</div></h4>
+         <img class="img-responsive" src="{{ user.AvatarUrl }}">
+      </div>
+</div>
+<div class="col-md-8" >
+      <div class="panel-group">
+         <div class="panel panel-default">
+            <div class="panel-heading">
+                    {% if user.isAdmin %}
+                     <h4> User: {{ user.Username }}</h4></div>
+                    {% else %}
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span><h4> User: {{ user.Username }}</h4></div>
+                    {% endif %}
+            <div class="panel-body">
+                    <h4>Username: {{ user.Username }}</h4>
+                    <h4><br>City: {{ user.City }}</br></h4>
+                    <br> {{ user.Bio }}</br>
+            </div>
+                 
+         </div>
+      </div>
+</div>
+    
+    <div class="col-md-12" >
+      <div class="panel-group">
+         <div class="panel panel-default">
+            <div class="panel-heading"><h4> {{ user.Username }} is attending
+            </div></h4>
+            <div class="panel-body">
                     
-              </div>
-           </div>
-        </div>
-    </div>
+            </div>
+                 
+         </div>
+      </div>
+</div>
+
+<div class="col-md-12" >
+      <div class="panel-group">
+         <div class="panel panel-default">
+            <div class="panel-heading"><h4> {{ user.Username }} attended
+            </div></h4>
+            <div class="panel-body">
+                    
+            </div>
+                 
+         </div>
+      </div>
+</div>
+</div>
+    
 {% endblock body %}
