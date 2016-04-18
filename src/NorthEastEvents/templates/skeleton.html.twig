@@ -5,6 +5,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto|Titillium+Web' rel='stylesheet' type='text/css'>
       <link href="/css/style.css" rel="stylesheet" />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -34,8 +35,10 @@
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
+                                
                                 <li class="active"><a href="{% if current_user %}/user{% else %}/register{% endif %}
-">Account<span class="sr-only">(current)</span></a></li>
+                                ">{% if current_user %}Account{% else %}Register{% endif %}<span class="sr-only">(current)</span></a></li>
+                                
                                 <li><a href="/events">Events</a></li>
                                 <li><a href="/users">Users</a></li>
                                 <li><a href="/charities">Charities</a></li>

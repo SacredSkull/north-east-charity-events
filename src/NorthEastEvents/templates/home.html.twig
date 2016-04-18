@@ -2,10 +2,14 @@
 {% block body %}<div class="row event-row" id="row1">
     {% for event in events %}
         <div class="col-md-4">
-            <h4 class="event-title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h4>
+                    
+                    
+                    <a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="btn btn-primary pull-left" role="button">{{ event.getTitle }}</a>
             <img class="event-image" src="{{ event.getImageUrl }}">
-            <h3 class="event-register"><a href="{% if current_user %}{{ path_for('EventOperations', { 'eventID': event.getId }) }}{% else %}#{% endif %}" class="label label-primary" {% if not current_user %}data-toggle="modal" data-target="#login-modal"{% endif %}>Only {{ event.getTicketsRemaining }} tickets left!</a></h3>
-            <div style="clear: both;"></div>
+                    
+                    <a href="{% if current_user %}{{ path_for('EventOperations', { 'eventID': event.getId }) }}{% else %}#{% endif %}" class="btn btn-info pull-right" role="button"{% if not current_user %}data-toggle="modal" data-target="#login-modal"{% endif %}>Only {{ event.getTicketsRemaining }} tickets left!</a>
+                    
+           
         </div>
         {% if loop.index is divisible by(3) %}
             </div>

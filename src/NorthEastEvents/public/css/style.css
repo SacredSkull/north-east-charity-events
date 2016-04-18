@@ -9,6 +9,16 @@ body{
     background-color: -moz-linear-gradient(#FFC125, #FFA500); /* For Firefox 3.6 to 15 */
     background-color: linear-gradient(#FFC125, #FFA500); /* Standard syntax */
     padding-bottom: 220px;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+a:link {
+    color: #FFA500;
+}
+
+a:hover{
+    color: white;
+    
 }
 
 .background-container{
@@ -74,6 +84,13 @@ body{
     color: #FFA500;
 }
 
+.navbar-default .navbar-nav > li > a:hover {
+    color: #252839;
+    background-color: #FFA500;
+}
+
+
+
 .container{
     background-color: white;
     text-align: center;
@@ -109,12 +126,43 @@ body{
     font-family: 'Titillium Web', sans-serif;
 }
 
+.btn-primary{
+    margin-top: 20px;
+    background-color: #252839;
+}
+
+.btn-info{
+    margin-bottom: 40px;
+    background-color: #252839;
+}
+
+.btn:hover {
+  background-color: #FFA500;
+    color: #252839;
+}
+
+.label:hover {
+  background-color: #FFA500;
+    color: #252839;
+}
+
+.admin-addcharity{
+    position: relative;
+    
+    left: 25%;
+}
+
 .label {
     padding: 5px 10px 12px;
 }
 
 .label-primary{
     background-color: #252839;
+}
+
+.label-primary:hover{
+    background-color: #FFA500;
+    color: #252839;
 }
 
 .label-default{
@@ -128,8 +176,8 @@ body{
 }
 
 .label-warning{
-    text-align: left;
     background-color: red;
+    margin-bottom: 20px;
 }
 
 label{
@@ -153,6 +201,8 @@ img{
     text-align: right;
     
 }
+
+
 
 
 #eventPanHead div{
@@ -214,6 +264,8 @@ img{
     border: 0;
     
 }
+
+
 
 #footer{
     position: relative;
