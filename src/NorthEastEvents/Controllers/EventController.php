@@ -192,6 +192,8 @@ class EventController extends Controller {
     }
 
     public function EventOperations(Request $req, Response $res, array $args){
+        $flash = $this->ci->get("flash");
+        $router = $this->ci->get("router");
         $this->pagetitle = "Event " . $args["eventID"] ?? null;
 
         $event = EventQuery::create()->findOneById($args["eventID"] ?? null);
@@ -199,13 +201,26 @@ class EventController extends Controller {
             return $this->NotFound(null, $req, $res, $args);
         }
 
-        return $this->render($req, $res, "/events/event.html.twig", [
-            "event" => $event
-        ]);
+        if($req->isGet()) {
+            return $this->render($req, $res, "/events/event.html.twig", [
+                "event" => $event
+            ]);
+        } else if($req->isDelete()){
+            if($this->current_user != null && $this->current_user->isAdmin()){
+                $event->delete();
+                return $res->withHeader("Location", $router->pathFor("Home"));
+            } else {
+                $flash->addMessage("Error", "You do not have permissions to do this.");
+                return $res->withHeader("Location", $router->pathFor("Home"));
+            }
+        }
     }
 
     public function EventThreadOperations(Request $req, Response $res, array $args){
+        $flash = $this->ci->get("flash");
+        $router = $this->ci->get("router");
         $this->pagetitle = "Event " . $args["eventID"] ?? null;
+
 
         $event = EventQuery::create()->findOneById($args["eventID"] ?? null);
         if($event == null){
@@ -213,14 +228,25 @@ class EventController extends Controller {
         }
 
         $thread = ThreadQuery::create()->findOneById($args["threadID"] ?? null);
-        if($thread == null) {
+        if ($thread == null) {
             return $this->NotFound("Could not find any thread by this ID.", $req, $res, $args);
         }
 
-        return $this->render($req, $res, "/events/thread.html.twig", [
-            "event" => $event,
-            "thread" => $thread
-        ]);
+        if($req->isGet()) {
+            return $this->render($req, $res, "/events/thread.html.twig", [
+                "event" => $event,
+                "thread" => $thread
+            ]);
+        } else if($req->isDelete()){
+            if($this->current_user != null && ($this->current_user->isAdmin() || $this->current_user->getId() == $thread->getUserID())){
+                $flash->addMessage("Success", "The thread has been deleted.");
+                $thread->delete();
+                return $res->withHeader("Location", $router->pathFor("Home"));
+            } else {
+                $flash->addMessage("Error", "You do not have permissions to do this.");
+                return $res->withHeader("Location", $router->pathFor("Home"));
+            }
+        }
     }
 
     public function GetEventUsers(Request $req, Response $res, array $args){

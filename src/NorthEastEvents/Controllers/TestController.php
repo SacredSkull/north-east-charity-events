@@ -42,7 +42,7 @@ class TestController extends Controller {
         $populator = new ORM\Propel2\Populator($faker);
         $populator->addEntity(User::class, 50, array(
             'AvatarUrl' => function () use ($faker) {
-                $img = $faker->image('/var/www/src/NorthEastEvents/public/images/avatar', 180, 180);
+                $img = $faker->image('/var/www/src/NorthEastEvents/public/images/avatars', 180, 180);
                 return "/images/avatars/" . basename($img);
             },
             'Bio' => function () use ($faker) {

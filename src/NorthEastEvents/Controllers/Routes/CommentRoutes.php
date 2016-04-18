@@ -9,6 +9,8 @@
 namespace NorthEastEvents\Controllers\Routes;
 
 
+use NorthEastEvents\Controllers\CommentController;
+
 class CommentRoutes extends Routes {
     public function routes() {
         $app = $this->app;
@@ -21,8 +23,8 @@ class CommentRoutes extends Routes {
             // Specific comment operations
             $this->group('/{commentID:[0-9]+}',function(){
                 // Get/delete/put/patch specific comment
-                $this->map(["DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\Controllers\CommentController:APICommentHandler')
-                    ->setName("APIThreadCommentOperations");
+                $this->map(["DELETE"], '', CommentController::class.':DeleteComment')
+                    ->setName("CommentOperations");
             });
         });
 

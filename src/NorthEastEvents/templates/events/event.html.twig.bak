@@ -21,16 +21,18 @@
                      class="img-responsive" src="/images/event/sold-out.png"
                      {% else %}src="{{ event.getImageUrl }}"{% endif %}>
             </div>
-        </div>
-        <div class="row">
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Hosted by {{ event.getCharity.getName }}</div>
-                    <div class="panel-body">
-                        <img class="img-responsive" id="charityLogo"
-                             src='{{ event.getCharity.getLogo|default("http://placehold.it/200x100") }}'>
-                    </div>
-                </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="col-md-8" >
+   <div class="row">
+      <div class="panel-group">
+         <div class="panel panel-default">
+            <div class="panel-heading">
+                    <h4><a href="#"><span class="label label-warning glyphicon glyphicon-remove  pull-left" aria-hidden="true">  Remove Event</span></a></h4>
+                    
+               <h4>Event Description</h4>
             </div>
         </div>
         {% if not event.getVideoUrl|length == 0 %}
@@ -53,11 +55,7 @@
         <div class="row">
             <div class="panel-group">
                 <div class="panel panel-default">
-
                     <div class="panel-heading">
-                            {% if current_user.isAdmin %}
-                            <form action="{{ path_for('EventOperations', {"eventID": event.getId}) }}" method="post"><input type="hidden" name="_METHOD" value="DELETE"/><button class="btn btn-large" type="submit"><span class="label label-warning glyphicon glyphicon-remove  pull-left" aria-hidden="true">  Remove Event</span></button></form>
-                            {% endif %}
                         <h4>Event Description</h4>
                     </div>
                     <div class="panel-heading" id="eventPanHead">

@@ -86,7 +86,7 @@ class UserController extends Controller {
             ]);
         } else if ($req->isDelete()) {
             // TODO: Should the API provide this?
-            return $res = $res->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
+            return $this->NotAllowed(null, $req, $res, $args);
         } else if ($req->isPut() || $req->isPatch()) {
             if($currentUser->isAuthorised($user)) {
                 $userjson = $req->getParsedBody()['user'];

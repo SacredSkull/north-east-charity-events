@@ -70,37 +70,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82925544-7a82-4449-85ab-84b114c4e8db" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/NorthEastEvents/public/images/avatars/default.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/php/php.ini" afterPath="$PROJECT_DIR$/conf/php/php.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CharityController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CharityController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Charity.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Charity.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Event.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/Event.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventQuery.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventRating.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventRating.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventRatingQuery.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/EventRatingQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/User.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/UserQuery.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Base/UserQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/CharityTableMap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/CharityTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventRatingTableMap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventRatingTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventTableMap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/EventTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/UserTableMap.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Models/Map/UserTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/config/propel/schema.xml" afterPath="$PROJECT_DIR$/src/NorthEastEvents/config/propel/schema.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/charities.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/charities.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/create.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/create.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/create.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" afterPath="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/events.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/events.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig" afterPath="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig" />
     </list>
     <ignored path="site.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -180,45 +157,28 @@
       <file leaf-file-name="EventController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="277" column="21" selection-start-line="277" selection-start-column="21" selection-end-line="277" selection-end-column="21" />
+            <state relative-caret-position="595">
+              <caret line="243" column="78" selection-start-line="243" selection-start-column="78" selection-end-line="243" selection-end-column="78" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig">
+      <file leaf-file-name="ThreadRoutes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/ThreadRoutes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="102" column="61" selection-start-line="102" selection-start-column="61" selection-end-line="102" selection-end-column="61" />
-              <folding>
-                <element signature="e#4699#4743#0#HTML" expanded="true" />
-                <element signature="e#4906#4945#0#HTML" expanded="true" />
-                <element signature="e#5147#5186#0#HTML" expanded="true" />
-                <element signature="e#5388#5427#0#HTML" expanded="true" />
-                <element signature="e#5629#5668#0#HTML" expanded="true" />
-                <element signature="e#5870#5909#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="console.sql" pinned="false" current-in-tab="true">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/69c8f2db-3ce6-458f-9ae8-f0e2e05498a6/console.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="614">
+              <caret line="43" column="57" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="62" column="45" selection-start-line="62" selection-start-column="45" selection-end-line="62" selection-end-column="45" />
+            <state relative-caret-position="0">
+              <caret line="44" column="88" selection-start-line="44" selection-start-column="88" selection-end-line="44" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -227,7 +187,7 @@
       <file leaf-file-name="EventRoutes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
+            <state relative-caret-position="529">
               <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="46" />
               <folding />
             </state>
@@ -259,8 +219,20 @@
       <file leaf-file-name="thread.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
-              <caret line="137" column="10" selection-start-line="137" selection-start-column="10" selection-end-line="137" selection-end-column="10" />
+            <state relative-caret-position="549">
+              <caret line="95" column="122" selection-start-line="95" selection-start-column="122" selection-end-line="95" selection-end-column="122" />
+              <folding>
+                <element signature="e#4548#4576#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommentRoutes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="25" column="68" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -303,7 +275,6 @@
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CharityRoutes.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/public/index.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/UserRoutes.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Models/User.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/BaseController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/public/css/style.css" />
@@ -312,19 +283,20 @@
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/charities.html.twig" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/events.html.twig" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/home.html.twig" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/create.html.twig" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/charities/create.html.twig" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CharityController.php" />
         <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
-        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/69c8f2db-3ce6-458f-9ae8-f0e2e05498a6/console.sql" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php" />
+        <option value="$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php" />
       </list>
     </option>
   </component>
@@ -1040,7 +1012,7 @@
       <workItem from="1460721836794" duration="13859000" />
       <workItem from="1460797024673" duration="3967000" />
       <workItem from="1460815410874" duration="27201000" />
-      <workItem from="1460894593914" duration="66729000" />
+      <workItem from="1460894593914" duration="69896000" />
     </task>
     <servers />
   </component>
@@ -1077,7 +1049,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="326784000" />
+    <option name="totallyTimeSpent" value="329951000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1097,7 +1069,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32718894" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3391116" sideWeight="0.49114582" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3391116" sideWeight="0.49114582" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19616205" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32286024" sideWeight="0.49029127" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1264,7 +1236,7 @@
         <state relative-caret-position="196">
           <caret line="3042" column="48" selection-start-line="3042" selection-start-column="39" selection-end-line="3042" selection-end-column="48" />
           <folding>
-            <marker date="1460966208241" expanded="true" signature="42498:42531" placeholder="INSERT INTO user... " />
+            <marker date="1460968899086" expanded="true" signature="42498:42531" placeholder="INSERT INTO user... " />
           </folding>
         </state>
       </provider>
@@ -1402,8 +1374,8 @@
         <state relative-caret-position="391">
           <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
           <folding>
-            <marker date="1460949623003" expanded="true" signature="35:2883" placeholder="{% block body ...%}" />
-            <marker date="1460949623003" expanded="true" signature="56:2800" placeholder="{% for event in events ...%}" />
+            <marker date="1460969743237" expanded="true" signature="35:2883" placeholder="{% block body ...%}" />
+            <marker date="1460969743237" expanded="true" signature="56:2800" placeholder="{% for event in events ...%}" />
           </folding>
         </state>
       </provider>
@@ -1426,61 +1398,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="65" selection-start-line="17" selection-start-column="65" selection-end-line="17" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#47#77#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="245" column="22" selection-start-line="245" selection-start-column="22" selection-end-line="245" selection-end-column="22" />
-          <folding>
-            <element signature="e#46#87#0#PHP" expanded="true" />
-            <marker date="1460942282142" expanded="true" signature="2320:2484" placeholder="SELECT realE... eventID" />
-            <marker date="1460942282142" expanded="true" signature="2320:2486" placeholder="SELECT realE... eventID" />
-            <marker date="1460942282142" expanded="true" signature="2346:2401" placeholder="SELECT event... event_users" />
-            <marker date="1460942282142" expanded="true" signature="3247:3363" placeholder="SELECT realE... eventID" />
-            <marker date="1460942282142" expanded="true" signature="3247:3455" placeholder="SELECT realE... eventID" />
-            <marker date="1460942282142" expanded="true" signature="3273:3321" placeholder="SELECT event... event_users" />
-            <marker date="1460942282142" expanded="true" signature="3273:3348" placeholder="SELECT event... event_users" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/skeleton.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="707">
           <caret line="63" column="25" selection-start-line="63" selection-start-column="25" selection-end-line="63" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/ThreadRoutes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1505,14 +1426,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="137" column="10" selection-start-line="137" selection-start-column="10" selection-end-line="137" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1548,49 +1461,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/69c8f2db-3ce6-458f-9ae8-f0e2e05498a6/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="62" column="45" selection-start-line="62" selection-start-column="45" selection-end-line="62" selection-end-column="45" />
+        <state relative-caret-position="119">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="46" />
+        <state relative-caret-position="538">
+          <caret line="88" column="62" selection-start-line="88" selection-start-column="62" selection-end-line="88" selection-end-column="62" />
+          <folding>
+            <element signature="e#46#87#0#PHP" expanded="true" />
+            <marker date="1460970659986" expanded="true" signature="2320:2484" placeholder="SELECT realE... eventID" />
+            <marker date="1460970659986" expanded="true" signature="2320:2486" placeholder="SELECT realE... eventID" />
+            <marker date="1460970659986" expanded="true" signature="2346:2401" placeholder="SELECT event... event_users" />
+            <marker date="1460970659986" expanded="true" signature="3247:3363" placeholder="SELECT realE... eventID" />
+            <marker date="1460970659986" expanded="true" signature="3247:3455" placeholder="SELECT realE... eventID" />
+            <marker date="1460970659986" expanded="true" signature="3273:3321" placeholder="SELECT event... event_users" />
+            <marker date="1460970659986" expanded="true" signature="3273:3348" placeholder="SELECT event... event_users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/ThreadController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="243" column="78" selection-start-line="243" selection-start-column="78" selection-end-line="243" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/event.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="102" column="61" selection-start-line="102" selection-start-column="61" selection-end-line="102" selection-end-column="61" />
+        <state relative-caret-position="527">
+          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
           <folding>
-            <element signature="e#4699#4743#0#HTML" expanded="true" />
-            <element signature="e#4906#4945#0#HTML" expanded="true" />
-            <element signature="e#5147#5186#0#HTML" expanded="true" />
-            <element signature="e#5388#5427#0#HTML" expanded="true" />
-            <element signature="e#5629#5668#0#HTML" expanded="true" />
-            <element signature="e#5870#5909#0#HTML" expanded="true" />
+            <element signature="e#5140#5184#0#HTML" expanded="true" />
+            <element signature="e#5347#5386#0#HTML" expanded="true" />
+            <element signature="e#5588#5627#0#HTML" expanded="true" />
+            <element signature="e#5829#5868#0#HTML" expanded="true" />
+            <element signature="e#6070#6109#0#HTML" expanded="true" />
+            <element signature="e#6311#6350#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/EventController.php">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/ThreadRoutes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="277" column="21" selection-start-line="277" selection-start-column="21" selection-end-line="277" selection-end-column="21" />
+        <state relative-caret-position="614">
+          <caret line="43" column="57" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/69c8f2db-3ce6-458f-9ae8-f0e2e05498a6/console.sql">
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/CommentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="793">
+          <caret line="63" column="42" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/templates/events/thread.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="95" column="122" selection-start-line="95" selection-start-column="122" selection-end-line="95" selection-end-column="122" />
+          <folding>
+            <element signature="e#4548#4576#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/CommentRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="25" column="68" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/Routes/EventRoutes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NorthEastEvents/Controllers/TestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="44" column="88" selection-start-line="44" selection-start-column="88" selection-end-line="44" selection-end-column="88" />
           <folding />
         </state>
       </provider>

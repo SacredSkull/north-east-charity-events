@@ -5,6 +5,7 @@ namespace NorthEastEvents\Controllers;
 use NorthEastEvents\Bootstrap;
 use NorthEastEvents\Models\Base\EventQuery;
 use NorthEastEvents\Models\Comment;
+use NorthEastEvents\Models\CommentQuery;
 use NorthEastEvents\Models\ThreadQuery;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -45,5 +46,28 @@ class CommentController extends Controller {
         $thread->save();
 
         return $res->withHeader("Location", $router->pathFor("EventThreadOperations", ["eventID" => $event->getId(), "threadID" => $thread->getId()]));
+    }
+
+    public function DeleteComment(Request $req, Response $res, $args){
+        $flash = $this->ci->get("flash");
+        $router = $this->ci->get("router");
+
+        if($this->current_user == null){
+            return $this->Unauthorised($req, $res, $args);
+        }
+
+        $comment = CommentQuery::create()->findOneById($args["commentID"]);
+        if($comment == null){
+            return $this->NotFound($req, $res, $args);
+        }
+
+        if($this->current_user->isAdmin() || $comment->getUserID() == $this->current_user->getId()){
+            $comment->delete();
+            $flash->addMessage("Success", "The comment was deleted.");
+            return $res->withHeader("Location", $router->pathFor("Home"));
+        } else {
+            $flash->addMessage("Error", "You do not have permissions to do this.");
+            return $res->withHeader("Location", $router->pathFor("Home"));
+        }
     }
 }
