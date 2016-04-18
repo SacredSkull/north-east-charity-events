@@ -75,7 +75,7 @@
     <hr/>
     <br>
     <hr/>
-    <div class="col-md-12"><h1>{{ thread.getTitle }}</h1></div>
+    <div class="col-md-12"><h1><a href="#"><span class="label label-warning glyphicon glyphicon-remove" style="font-size: 15px;"aria-hidden="true"> Delete thread</span></a> {{ thread.getTitle }}</h1></div>
     <hr/>
     {% for comment in thread.getComments %}
         {% set user = comment.getUser %}
@@ -97,7 +97,7 @@
             {% endif %}
             <div class="col-md-offset-1 col-md-8">
                 <div class="panel panel-warning">
-                    <div class="panel-heading"></div>
+                    <div class="panel-heading"><h4><a href="#"><span class="label label-warning glyphicon glyphicon-remove" aria-hidden="true">  Remove Post</span></a></h4></div>
                     <div class="comment panel-body">
                         {{ comment.getBody }}
                     </div>
