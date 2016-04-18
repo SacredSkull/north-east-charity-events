@@ -48,6 +48,19 @@
                                 {% else %}
                                 <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
                                 {% endif %}
+                                
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-admin dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{ path_for('EventCreateGET') }}
+">Add Event</a></li>
+                                    <li><a href="{{ path_for('CharityCreateGET') }}
+">Add Charity</a></li>
+                                  </ul>
+                                </div>
+                                
                             </ul>
                             <form class="navbar-form navbar-right" role="search">
                                 <div class="form-group">

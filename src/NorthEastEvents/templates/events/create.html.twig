@@ -1,48 +1,57 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
     <!--Start content -->
-        
-        <!--  Start row1 -->  
-<div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h4 class="event-title"><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="label label-default">{{ event.getTitle }}</a></h4>
-            <img class="event-image" src="{{ event.getImageUrl }}">
-            <h3 class="event-register"><a href="#" class="label label-primary">Sign up!</a></h3>
-            <div style="clear: both;"></div>
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"  style="text-align: center">Add a new event</div>
+              <div class="panel-body">
+                      
+                    <div class="form-group">
+                            <label for="inputTitle">Event Title</label>
+                            <input type="text" id="inputTitle" name="title" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputHost">Event Host</label>
+                            <input type="text" id="inputHost" name="host" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputImage">Event Image</label>
+                            <input type="text" id="inputImage" name="imageUrl" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputDate">Event Date</label>
+                            <input type="text" id="inputDate" name="date" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputLocation">Event Location</label>
+                            <input type="text" id="inputLocation" name="location" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputBody">Event Description</label>
+                            <textarea class="form-control" id="inputBody" name="body" value=""rows="3"></textarea> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputCapacity">Event Capacity</label>
+                            <input type="text" id="inputCapacity" name="tickets" value=""> 
+                    </div>
+                      
+                      <div class="form-group">
+                            <label for="inputMedia">Event Media</label>
+                            <input type="text" id="inputMedia" name="videoUrl" value=""> 
+                    </div>
+                      
+                    
+                      
+                    
+                      <button type="submit" class="btn btn-default">Submit</button>
+           </div>
         </div>
-        <div class="col-md-8">
-            <div class="panel-group">
-                <div class="panel panel-default">
-                <div class="panel-heading">Event Desciption</div>
-                <div class="panel-body">
-                
-                </div>
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus finibus hendrerit luctus. Ut eleifend mi sit amet ipsum posuere, viverra congue erat pulvinar. Donec turpis massa, volutpat eu magna aliquam, varius cursus lectus. Quisque ac diam ut erat dictum vulputate. Fusce malesuada mollis varius. Duis ullamcorper arcu at ipsum commodo vehicula. Vivamus non purus nec velit consequat pharetra. Cras vel ornare lacus, a bibendum nibh. Cras vehicula finibus est, vehicula porta risus. </div>
-                </div>
-            </div>
-        </div>
     </div>
-    
-    <!--  End row1 -->  
-    
-    <!--  Start row2 --> 
-    
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-offset-1 col-md-7"></div>
-    </div>
-    
-    <!--  End row2 -->  
-    
-    <!--  Start row3 --> 
-    
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-8"></div>
-    </div>
-</div>
-        
-    <!--  End row3 -->  
-    
 {% endblock body %}

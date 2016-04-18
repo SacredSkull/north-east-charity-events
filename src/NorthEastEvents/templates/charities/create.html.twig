@@ -1,0 +1,28 @@
+{% extends "skeleton.html.twig" %}
+{% block body %}
+    <!--Start content -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"  style="text-align: center">Add a new charity</div>
+              <div class="panel-body">
+                      
+                    <div class="form-group">
+                            <label for="inputName">Charity Name</label>
+                            <input type="text" id="inputName" name="name" value=""> 
+                    </div>
+                      
+                    <div class="form-group">
+                            <label for="inputBio">Charity Biography</label>
+                            <textarea class="form-control" id="inputBio" name="Bio" value=""rows="3"></textarea> 
+                    </div>
+                      
+                    <div class="form-group">
+                            <label for="inputLogo">Charity Logo</label>
+                            <input type="text" id="inputLogo" name="Logo" value=""> 
+                    </div>
+                      <button type="submit" class="btn btn-default">Submit</button>
+           </div>
+        </div>
+    </div>
+{% endblock body %}
