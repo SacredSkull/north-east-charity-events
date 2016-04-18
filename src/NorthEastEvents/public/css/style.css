@@ -186,6 +186,14 @@ a:visited{
     color: white;
 }
 
+.remove-element{
+    color: red;
+}
+
+.remove-element:hover{
+    color: white;
+}
+
 label{
     display: inline-block;
     width: 150px;
