@@ -14,7 +14,8 @@
                     {% if user.isAdmin %}
                      <h4> User: {{ user.Username }}</h4></div>
                     {% else %}
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span><h4> User: {{ user.Username }}</h4></div>
+                    <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span  class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
+                    <h4> User: {{ user.Username }}</h4></div>
                     {% endif %}
             <div class="panel-body">
                     <h4>Username: {{ user.Username }}</h4>
@@ -29,10 +30,17 @@
     <div class="col-md-12" >
       <div class="panel-group">
          <div class="panel panel-default">
-            <div class="panel-heading"><h4> {{ user.Username }} is attending
-            </div></h4>
+            <div class="panel-heading"><h4>Attending</h4>
+            </div>
             <div class="panel-body">
-                    
+                {% for event in user_events %}
+                    {% if not event.hasFinished %}
+                        <p>
+                            <a href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
+                            {% if event.getPrivate == true %}<span title="You attended this event privately." class="glyphicon glyphicon-eye-close"></span>{% endif %}<br>
+                        </p>
+                    {% endif %}
+                {% endfor %}
             </div>
                  
          </div>
@@ -42,10 +50,17 @@
 <div class="col-md-12" >
       <div class="panel-group">
          <div class="panel panel-default">
-            <div class="panel-heading"><h4> {{ user.Username }} attended
-            </div></h4>
+            <div class="panel-heading"><h4>Attended</h4>
+            </div>
             <div class="panel-body">
-                    
+                {% for event in user_events %}
+                    {% if event.hasFinished %}
+                        <p>
+                            <a href="{{ path_for('EventOperations', {'eventID': event.getId}) }}">{{ event.getTitle }}</a>
+                            {% if event.getPrivate == true %}<span title="You attended this event privately." class="glyphicon glyphicon-eye-close"></span>{% endif %}<br>
+                        </p>
+                    {% endif %}
+                {% endfor %}
             </div>
                  
          </div>

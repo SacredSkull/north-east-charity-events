@@ -5,10 +5,14 @@ use Interop\Container\ContainerInterface;
 use NorthEastEvents\Middleware\AuthorisedRouteMiddleware;
 use NorthEastEvents\Middleware\BasicAuthMiddleware;
 use NorthEastEvents\Models\Base\EventUsers;
+use NorthEastEvents\Models\Event;
 use NorthEastEvents\Models\EventUsersQuery;
 use NorthEastEvents\Models\Map\UserTableMap;
 use NorthEastEvents\Models\User;
 use NorthEastEvents\Models\UserQuery;
+use Propel\Runtime\Formatter\ObjectFormatter;
+use Propel\Runtime\Propel;
+use Propel\Runtime\Util\PropelModelPager;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use NorthEastEvents\Bootstrap;
@@ -23,7 +27,7 @@ class UserController extends Controller {
     public $not_found_message = "A user could not be found with the information provided.";
     public $generic_error = "An error occurred attempting to interact with this User.";
 
-    public function UserOperations(Request $request, Response $response, $args){
+    public function UserOperations(Request $req, Response $res, $args){
         $usersQuery = UserQuery::create();
         $user = null;
 
@@ -36,31 +40,56 @@ class UserController extends Controller {
             if(!$currentUser == null) {
                 $user = $currentUser;
             } else {
-                return $this->Unauthorised("You must login to view your own data.", $request, $response, $args);
+                return $this->Unauthorised("You must login to view your own data.", $req, $res, $args);
             }
         }
 
         // This user doesn't exist
         if ($user == null) {
-            $this->NotFound(null, $request, $response, $args);
-        } else if ($request->isGet()) {
+            $this->NotFound(null, $req, $res, $args);
+        } else if ($req->isGet()) {
             if(User::CheckAuthorised($currentUser, $user)) {
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'Bio', 'City', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
-                return $this->render($request, $response, "/users/user.html.twig", [
+                $con = Propel::getWriteConnection(\NorthEastEvents\Models\Map\EventTableMap::DATABASE_NAME);
+                $sql = "SELECT realEvents.* FROM (SELECT eventID FROM event_users WHERE userID = :user_id) as eventUsers LEFT JOIN event AS realEvents ON eventUsers.eventID = realEvents.id;";
+
+                $stmt = $con->prepare($sql);
+                $stmt->execute([":user_id" => $user->getId()]);
+
+                $formatter = new ObjectFormatter();
+                $formatter->setClass(Event::class);
+                $userEvents = $formatter->format($con->getDataFetcher($stmt));
+
+                return $this->render($req, $res, "/users/user.html.twig", [
                     'user' => $user,
+                    "user_events" => $userEvents
                 ]);
             }
+
             $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Bio', 'City', 'Permission'])->findOneById($user->getId());
-            return $this->render($request, $response, "/users/user.html.twig", [
+            
+            $con = Propel::getWriteConnection(\NorthEastEvents\Models\Map\EventTableMap::DATABASE_NAME);
+            $sql = "SELECT realEvents.* FROM (SELECT eventID FROM event_users WHERE userID = :user_id AND private = false) as eventUsers "
+                   . "LEFT JOIN event AS realEvents ON eventUsers.eventID = realEvents.id;";
+
+            $stmt = $con->prepare($sql);
+            $stmt->execute([":user_id" => $user['Id']]);
+
+            $formatter = new ObjectFormatter();
+            $formatter->setClass(Event::class);
+            $userEvents = $formatter->format($con->getDataFetcher($stmt));
+
+            return $this->render($req, $res, "/users/user.html.twig", [
                 'user' => $user,
+                "user_events" => $userEvents
             ]);
-        } else if ($request->isDelete()) {
+        } else if ($req->isDelete()) {
             // TODO: Should the API provide this?
-            return $response = $response->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
-        } else if ($request->isPut() || $request->isPatch()) {
+            return $res = $res->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
+        } else if ($req->isPut() || $req->isPatch()) {
             if($currentUser->isAuthorised($user)) {
-                $userjson = $request->getParsedBody()['user'];
+                $userjson = $req->getParsedBody()['user'];
                 $userjson = json_decode($userjson, true);
                 if (array_key_exists('FirstName', $userjson))
                     $user->setFirstName($userjson['FirstName']);
@@ -76,21 +105,21 @@ class UserController extends Controller {
                 }
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'Bio', 'City', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
 
-                return $this->render($request, $response, "/users/user.html.twig", [
+                return $this->render($req, $res, "/users/user.html.twig", [
                     'message' => ["Type" => "Success", "Message" => "Modifications were successful!"],
                     'user' => $user,
                 ]);
             } else {
-                return $this->Unauthorised(false, $request, $response, $args);
+                return $this->Unauthorised(false, $req, $res, $args);
             }
         }
     }
 
-    public function GetUsers(Request $request, Response $response, $args) {
+    public function GetUsers(Request $req, Response $res, $args) {
         $this->page_title = "All Users";
         $page = $args["page"] ?? 1;
         $users = UserQuery::create()->paginate($page, self::USERS_PER_PAGE);
-        return $this->render($request, $response, "/users/users.html.twig", [
+        return $this->render($req, $res, "/users/users.html.twig", [
             'users' => $users,
         ]);
     }
@@ -127,40 +156,40 @@ class UserController extends Controller {
         return ["Session" => session_id()];
     }
 
-    public function LoginController(Request $request, Response $response) {
-        $username = $request->getParsedBody()['username'] ?? null;
-        $password = $request->getParsedBody()['password'] ?? null;
+    public function LoginController(Request $req, Response $res) {
+        $username = $req->getParsedBody()['username'] ?? null;
+        $password = $req->getParsedBody()['password'] ?? null;
         $result = $this->LoginSession($username, $password);
         if($result["Error"] ?? null){
             $this->ci->get("flash")->addMessage("Error", $result["Error"]["Message"]);
-            return $response->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
+            return $res->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
         }
-        return $response->withHeader("Location", $this->ci->get("router")->pathFor("UserCurrentGET"));
+        return $res->withHeader("Location", $this->ci->get("router")->pathFor("UserCurrentGET"));
     }
 
-    public function LogoutController(Request $request, Response $response) {
+    public function LogoutController(Request $req, Response $res) {
         $segment = $this->ci->get("session")->getSegment('NorthEastEvents\Login');
         if($segment->get('user', null)){
             $segment->clear();
         } else {
             $this->ci->get("flash")->addMessage("Warning", "Not logged in|Logging out is a privilege enjoyed only by those logged in.");
         }
-        return $response->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
+        return $res->withHeader("Location", $this->ci->get("router")->pathFor("Home"));
     }
 
-    public function CreateUserGET(Request $request, Response $response, array $args = []){
-        return $this->render($request, $response, "/users/register.html.twig", []);
+    public function CreateUserGET(Request $req, Response $res, array $args = []){
+        return $this->render($req, $res, "/users/register.html.twig", []);
     }
 
-    public function CreateUserPOST(Request $request, Response $response, array $args = []) {
-        $username = $request->getParsedBody()['username'] ?? null;
-        $password = $request->getParsedBody()['password'] ?? null;
-        $email = $request->getParsedBody()['email'] ?? null;
-        $fname = $request->getParsedBody()['first_name'] ?? null;
-        $lname = $request->getParsedBody()['last_name'] ?? null;
-        $avatar = $request->getParsedBody()['avatar'] ?? null;
-        $bio = $request->getParsedBody()['bio'] ?? null;
-        $city = $request->getParsedBody()['city'] ?? null;
+    public function CreateUserPOST(Request $req, Response $res, array $args = []) {
+        $username = $req->getParsedBody()['username'] ?? null;
+        $password = $req->getParsedBody()['password'] ?? null;
+        $email = $req->getParsedBody()['email'] ?? null;
+        $fname = $req->getParsedBody()['first_name'] ?? null;
+        $lname = $req->getParsedBody()['last_name'] ?? null;
+        $avatar = $req->getParsedBody()['avatar'] ?? null;
+        $bio = $req->getParsedBody()['bio'] ?? null;
+        $city = $req->getParsedBody()['city'] ?? null;
 
         $previousDetails = [
             "Username" => $username,
@@ -201,7 +230,7 @@ class UserController extends Controller {
         }
 
         if($failure){
-            return $this->render($request, $response, "/users/register.html.twig", ["previous_details" => $previousDetails]);
+            return $this->render($req, $res, "/users/register.html.twig", ["previous_details" => $previousDetails]);
         }
 
         $user = new User();
@@ -218,36 +247,22 @@ class UserController extends Controller {
 
         $this->LoginSession($user);
         $path = $this->ci->get("router")->pathFor("UserCurrentGET");
-        return $response->withStatus(302)->withHeader("Location", $path);
+        return $res->withStatus(302)->withHeader("Location", $path);
     }
     
-    public function UserEventsGET(Request $request, Response $response, $args){
+    public function UserEventsGET(Request $req, Response $res, $args){
         $user = UserQuery::create()->findOneById($args["userID"] ?? null);
         if($user == null){
-            $this->NotFound(null, $request, $response, $args);
+            $this->NotFound(null, $req, $res, $args);
         }
-
-        $events = null;
-
-        if(User::CheckAuthorised($this->current_user, $user)){
-            $events = $user->getEvents();
-        } else {
-            $eventqs = EventUsersQuery::create()->filterByUser($user)->filterByPrivate(false);
-            foreach ($eventqs as $event){
-                $events[] = $event->getEvent();
-            }
-        }
-        return $this->render($request, $response, "/users/events.html.twig", [
-            "events" => $events
-        ]);
     }
 
-    public function APIUserOperations(Request $request, Response $response, $args) {
+    public function APIUserOperations(Request $req, Response $res, $args) {
         $usersQuery = UserQuery::create();
         $user = null;
 
         /** @var User $currentUser */
-        $currentUser = $request->getAttribute("current_user", null);
+        $currentUser = $req->getAttribute("current_user", null);
 
         if(isset($args['userID']))
             $user = $usersQuery->findOneById($args['userID']);
@@ -255,32 +270,32 @@ class UserController extends Controller {
             if(!$currentUser == null) {
                 $user = $currentUser;
             } else {
-                return $response->withJson(["Error" => ["Message" => "You must login to view your own data."]], 403);
+                return $res->withJson(["Error" => ["Message" => "You must login to view your own data."]], 403);
             }
         }
 
         // This user doesn't exist
         if ($user == null) {
-            $this->APINotFound(null, $request, $response, $args);
-        } else if ($request->isGet()) {
+            $this->APINotFound(null, $req, $res, $args);
+        } else if ($req->isGet()) {
             // JSON example, with sensitive:
             //{"Id":7,"Username":"edavis","Password":"$2y$10$SgwNlcG5kMJt35E34EiHIObrj7BfhXjcWGOFZFUuLtU","Email":"cook.elliot@kelly.com","FirstName":"Ryan","LastName":"Hunter","AvatarUrl":"http:\/\/lorempixel.com\/640\/480\/?51557","Permission":"staff","CreatedAt":"2016-03-19T03:14:08+00:00","UpdatedAt":"2016-03-19T03:14:08+00:00"}
             // Public view:
             //{"Id":7,"Username":"edavis","AvatarUrl":"http:\/\/lorempixel.com\/640\/480\/?51557","Permission":"1"}
             // Same format, which is great! All that is needed is a check if user is logged in && query_user == current_user to return sensitive.
 
-            if($request->getAttribute("authorised", false)) {
+            if($req->getAttribute("authorised", false)) {
                 $user = $usersQuery->select(['Id', 'Username', 'Email', 'FirstName', 'LastName', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
             } else {
                 $user = $usersQuery->select(['Id', 'Username', 'AvatarUrl', 'Permission'])->findOneById($user->getId());
             }
-            return $response = $response->withJson(['User' => $user]);
-        } else if ($request->isDelete()) {
+            return $res = $res->withJson(['User' => $user]);
+        } else if ($req->isDelete()) {
             // TODO: Should the API provide this?
-            return $response = $response->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
-        } else if ($request->isPut() || $request->isPatch()) {
-            if($request->getAttribute("authorisation", false)) {
-                $userjson = $request->getParsedBody()['user'];
+            return $res = $res->withJson(['Error' => ["Message" => "Deleting user accounts is not currently permissible using the API."]], 405);
+        } else if ($req->isPut() || $req->isPatch()) {
+            if($req->getAttribute("authorisation", false)) {
+                $userjson = $req->getParsedBody()['user'];
                 $userjson = json_decode($userjson, true);
                 if (array_key_exists('FirstName', $userjson))
                     $user->setFirstName($userjson['FirstName']);
@@ -294,30 +309,30 @@ class UserController extends Controller {
                     if (stripos('staff', $userjson['Permission']) !== FALSE)
                         $user->setAvatarUrl(UserTableMap::COL_PERMISSION_STAFF);
                 }
-                return $response->withJson([ "Success" => "The user was successfully modified.", "User" => [ $user->getId(), $user->getUsername(), $user->getAvatarUrl(), $user->getPermission() ]]);
+                return $res->withJson([ "Success" => "The user was successfully modified.", "User" => [ $user->getId(), $user->getUsername(), $user->getAvatarUrl(), $user->getPermission() ]]);
             } else {
-                return $this->Unauthorised(false, $request, $response, $args);
+                return $this->Unauthorised(false, $req, $res, $args);
             }
         }
     }
 
-    public function APIGetUsers(Request $request, Response $response) {
+    public function APIGetUsers(Request $req, Response $res) {
         $users = UserQuery::create()->select(['Id', 'Username', 'AvatarUrl', 'Permission'])->find();
-        return $response->withJson($users->getData());
+        return $res->withJson($users->getData());
     }
 
-    public function APILoginController(Request $request, Response $response) {
-        $username = isset($request->getParsedBody()['username'])? $request->getParsedBody()['username'] : null;
-        $password = isset($request->getParsedBody()['password'])? $request->getParsedBody()['password'] : null;
-        return $response->withJson($this->LoginSession($username, $password));
+    public function APILoginController(Request $req, Response $res) {
+        $username = $req->getParsedBody()['username'] ?? null;
+        $password = $req->getParsedBody()['password'] ?? null;
+        return $res->withJson($this->LoginSession($username, $password));
     }
 
-    public function APICreateUser(Request $request, Response $response){
-        $username = $request->getParsedBody()['username'] ?? null;
-        $password = $request->getParsedBody()['password'] ?? null;
-        $email = $request->getParsedBody()['email'] ?? null;
-        $fname = $request->getParsedBody()['first_name'] ?? null;
-        $lname = $request->getParsedBody()['last_name'] ?? null;
-        $avatar =$request->getParsedBody()['avatar'] ?? null;
+    public function APICreateUser(Request $req, Response $res){
+        $username = $req->getParsedBody()['username'] ?? null;
+        $password = $req->getParsedBody()['password'] ?? null;
+        $email = $req->getParsedBody()['email'] ?? null;
+        $fname = $req->getParsedBody()['first_name'] ?? null;
+        $lname = $req->getParsedBody()['last_name'] ?? null;
+        $avatar =$req->getParsedBody()['avatar'] ?? null;
     }
 }
