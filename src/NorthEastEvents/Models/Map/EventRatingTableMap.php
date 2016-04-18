@@ -101,14 +101,6 @@ class EventRatingTableMap extends TableMap
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
 
-    /** The enumerated values for the rating field */
-    const COL_RATING_0 = '0';
-    const COL_RATING_1 = '1';
-    const COL_RATING_2 = '2';
-    const COL_RATING_3 = '3';
-    const COL_RATING_4 = '4';
-    const COL_RATING_5 = '5';
-
     /**
      * holds an array of fieldnames
      *
@@ -137,39 +129,6 @@ class EventRatingTableMap extends TableMap
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
-    /** The enumerated values for this table */
-    protected static $enumValueSets = array(
-                EventRatingTableMap::COL_RATING => array(
-                            self::COL_RATING_0,
-            self::COL_RATING_1,
-            self::COL_RATING_2,
-            self::COL_RATING_3,
-            self::COL_RATING_4,
-            self::COL_RATING_5,
-        ),
-    );
-
-    /**
-     * Gets the list of values for all ENUM and SET columns
-     * @return array
-     */
-    public static function getValueSets()
-    {
-      return static::$enumValueSets;
-    }
-
-    /**
-     * Gets the list of values for an ENUM or SET column
-     * @param string $colname
-     * @return array list of possible values for the column
-     */
-    public static function getValueSet($colname)
-    {
-        $valueSets = self::getValueSets();
-
-        return $valueSets[$colname];
-    }
-
     /**
      * Initialize the table attributes and columns
      * Relations are not initialized by this method since they are lazy loaded
@@ -187,17 +146,9 @@ class EventRatingTableMap extends TableMap
         $this->setPackage('NorthEastEvents.Models');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('eventID', 'EventID', 'INTEGER', true, null, null);
-        $this->addPrimaryKey('userID', 'UserID', 'INTEGER', true, null, null);
-        $this->addColumn('rating', 'Rating', 'ENUM', false, null, '0');
-        $this->getColumn('rating')->setValueSet(array (
-  0 => '0',
-  1 => '1',
-  2 => '2',
-  3 => '3',
-  4 => '4',
-  5 => '5',
-));
+        $this->addForeignPrimaryKey('eventID', 'EventID', 'INTEGER' , 'event', 'id', true, null, null);
+        $this->addForeignPrimaryKey('userID', 'UserID', 'INTEGER' , 'user', 'id', true, null, null);
+        $this->addColumn('rating', 'Rating', 'INTEGER', false, null, 0);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -207,6 +158,20 @@ class EventRatingTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Event', '\\NorthEastEvents\\Models\\Event', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':eventID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, null, false);
+        $this->addRelation('User', '\\NorthEastEvents\\Models\\User', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':userID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, null, false);
     } // buildRelations()
 
     /**
@@ -219,6 +184,7 @@ class EventRatingTableMap extends TableMap
     {
         return array(
             'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
+            'aggregate_column_relation_2' => array('foreign_table' => 'event', 'update_method' => 'updateAverageRating', 'aggregate_name' => 'AverageRating', ),
         );
     } // getBehaviors()
 

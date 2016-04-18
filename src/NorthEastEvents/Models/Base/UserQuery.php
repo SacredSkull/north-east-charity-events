@@ -74,6 +74,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery rightJoinWithWaitingList() Adds a RIGHT JOIN clause and with to the query using the WaitingList relation
  * @method     ChildUserQuery innerJoinWithWaitingList() Adds a INNER JOIN clause and with to the query using the WaitingList relation
  *
+ * @method     ChildUserQuery leftJoinEventRating($relationAlias = null) Adds a LEFT JOIN clause to the query using the EventRating relation
+ * @method     ChildUserQuery rightJoinEventRating($relationAlias = null) Adds a RIGHT JOIN clause to the query using the EventRating relation
+ * @method     ChildUserQuery innerJoinEventRating($relationAlias = null) Adds a INNER JOIN clause to the query using the EventRating relation
+ *
+ * @method     ChildUserQuery joinWithEventRating($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the EventRating relation
+ *
+ * @method     ChildUserQuery leftJoinWithEventRating() Adds a LEFT JOIN clause and with to the query using the EventRating relation
+ * @method     ChildUserQuery rightJoinWithEventRating() Adds a RIGHT JOIN clause and with to the query using the EventRating relation
+ * @method     ChildUserQuery innerJoinWithEventRating() Adds a INNER JOIN clause and with to the query using the EventRating relation
+ *
  * @method     ChildUserQuery leftJoinThread($relationAlias = null) Adds a LEFT JOIN clause to the query using the Thread relation
  * @method     ChildUserQuery rightJoinThread($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Thread relation
  * @method     ChildUserQuery innerJoinThread($relationAlias = null) Adds a INNER JOIN clause to the query using the Thread relation
@@ -94,7 +104,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery rightJoinWithComment() Adds a RIGHT JOIN clause and with to the query using the Comment relation
  * @method     ChildUserQuery innerJoinWithComment() Adds a INNER JOIN clause and with to the query using the Comment relation
  *
- * @method     \NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\WaitingListQuery|\NorthEastEvents\Models\ThreadQuery|\NorthEastEvents\Models\CommentQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\WaitingListQuery|\NorthEastEvents\Models\EventRatingQuery|\NorthEastEvents\Models\ThreadQuery|\NorthEastEvents\Models\CommentQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUser findOne(ConnectionInterface $con = null) Return the first ChildUser matching the query
  * @method     ChildUser findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUser matching the query, or a new ChildUser object populated from the query conditions when no match is found
@@ -877,6 +887,79 @@ abstract class UserQuery extends ModelCriteria
         return $this
             ->joinWaitingList($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'WaitingList', '\NorthEastEvents\Models\WaitingListQuery');
+    }
+
+    /**
+     * Filter the query by a related \NorthEastEvents\Models\EventRating object
+     *
+     * @param \NorthEastEvents\Models\EventRating|ObjectCollection $eventRating the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByEventRating($eventRating, $comparison = null)
+    {
+        if ($eventRating instanceof \NorthEastEvents\Models\EventRating) {
+            return $this
+                ->addUsingAlias(UserTableMap::COL_ID, $eventRating->getUserID(), $comparison);
+        } elseif ($eventRating instanceof ObjectCollection) {
+            return $this
+                ->useEventRatingQuery()
+                ->filterByPrimaryKeys($eventRating->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByEventRating() only accepts arguments of type \NorthEastEvents\Models\EventRating or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the EventRating relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function joinEventRating($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('EventRating');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'EventRating');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the EventRating relation EventRating object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \NorthEastEvents\Models\EventRatingQuery A secondary query class using the current class as primary query
+     */
+    public function useEventRatingQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinEventRating($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'EventRating', '\NorthEastEvents\Models\EventRatingQuery');
     }
 
     /**

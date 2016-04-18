@@ -25,7 +25,7 @@
         <column name="city" type="varchar" size="40" required="true"/>
         <column name="first_name" type="varchar" size="20"/>
         <column name="last_name" type="varchar" size="20"/>
-        <column name="avatar_url" type="varchar" size="128" default="/image/avatars/default.png"/>
+        <column name="avatar_url" type="varchar" size="128" default="/images/avatars/default.png"/>
         <column name="permission" type="enum" valueSet="normal, staff" default="normal" primaryKey="true" />
         <behavior name="timestampable" />
     </table>
@@ -34,7 +34,7 @@
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="varchar" size="50" required="true"/>
         <column name="bio" type="varchar" size="600" required="true"/>
-        <column name="logo" type="varchar" size="128" default="/images/default.jpg"/>
+        <column name="logo" type="varchar" size="128" default="/images/charity/default.jpg"/>
         <behavior name="timestampable" />
     </table>
 
@@ -44,16 +44,21 @@
 		<column name="title" type="varchar" size="50" required="true"/>
         <column name="date" type="TIMESTAMP" required="true"/>
 		<column name="location" type="varchar" size="50" required="true"/>
-        <column name="image_url" type="varchar" size="128" default="/include/img/events/default.png" />
+        <column name="image_url" type="varchar" size="128" default="/images/events/default.png" />
         <column name="body" phpName="Body" type="LONGVARCHAR"/>
         <column name="bodyHTML" phpName="BodyHTML" type="LONGVARCHAR"/>
         <column name="tickets" type="integer" default="0" />
-        <column name="video_url" type="varchar" size="128"/>
+        <column name="video_url" type="varchar" size="128" default="https://www.youtube.com/embed/d5gRPCJPIak"/>
         <behavior name="timestampable" />
         <behavior name="aggregate_column">
             <parameter name="name" value="tickets_remaining" />
             <parameter name="foreign_table" value="event_users" />
             <parameter name="expression" value="COUNT(userID)" />
+        </behavior>
+        <behavior id="2" name="aggregate_column">
+            <parameter name="name" value="average_rating" />
+            <parameter name="foreign_table" value="event_rating" />
+            <parameter name="expression" value="AVG(rating)" />
         </behavior>
         <foreign-key foreignTable="charity" onDelete="CASCADE">
             <reference local="charityID" foreign="id"/>
@@ -88,8 +93,14 @@
     <table name="event_rating" phpName="EventRating">
         <column name="eventID" phpName="EventID" type="integer" required="true" primaryKey="true" />
         <column name="userID" type="integer" phpName="UserID" required="true" primaryKey="true" />
-        <column name="rating" type="enum" valueSet="0, 1, 2, 3, 4, 5" default="0" />
+        <column name="rating" type="integer" default="0" />
         <behavior name="timestampable" />
+        <foreign-key foreignTable="event" onDelete="CASCADE">
+            <reference local="eventID" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="userID" foreign="id"/>
+        </foreign-key>
     </table>
 
     <table name="thread" phpName="Thread">

@@ -1,45 +1,54 @@
 {% extends "skeleton.html.twig" %}
 {% block body %}
     {% for event in events %}
-    <div class="row">
-<div class="col-md-4">
-       <div class="panel panel-default">
-         <div class="panel-heading">
-            <h4><a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}">{{ event.getTitle }}</a></h4>
-                     
-                     
-                     
-         </div>
-         <img class="img-responsive" src="{{ event.getImageUrl}}">
-      </div>
-</div>
-<div class="col-md-8" >
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">
-               <h4>Event Desciption</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>
+                            <a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}">{{ event.getTitle }}</a>
+                        </h4>
+                    </div>
+                    <img class="img-responsive"
+                         {% if event.hasFinished %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                         class="img-responsive" src="/images/event/finished.png"
+                         {% elseif event.soldOut %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                         class="img-responsive" src="/images/event/sold-out.png"
+                         {% else %}src="{{ event.getImageUrl }}"{% endif %}>
+                </div>
             </div>
-            <div class="panel-heading" id="eventPanHead">
-               <h4><div class="label label-primary" id="eventLabels">Event Date: {{ event.getDate|date("H:i d/m/Y") }}</div>
-                           <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation}}   </div></h4>
+            <div class="col-md-8">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Event Desciption</h4>
+                        </div>
+                        <div class="panel-heading" id="eventPanHead">
+                            <div class="label label-primary" id="eventLabels">Event
+                                Date: {{ event.getDate|date("H:i d/m/Y") }}</div>
+                            <div class="label label-primary" id="eventLabels">Event
+                                Venue: {{ event.getLocation }}   </div>
+                        </div>
+                        <div class="panel-body">
+                            {{ event.getBodyHTML|raw }}
+                            {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                                <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                   class="label label-primary">Sign up!</a>
+                                <div class="label label-primary">
+                                    {{ event.getTicketsRemaining|default("12") }} out
+                                    of {{ event.getTickets|default("69") }}
+                                </div>
+                            {% else %}
+                                <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                   class="label label-lrg label-danger">Join the waiting list</a>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                 {{ event.getBodyHTML|raw }}
-                 {% if event.hasTickets and not event.getUsers.contains(current_user) %}
-                     <h4><a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
-                     <div class="label label-primary">
-                       {{ event.getTicketsRemaining|default("12")}} out of {{ event.getTickets|default("69") }}
-                     </div>
-                 {% else %}
-                     <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
-                                 {% endif %}</h4>
-                 
-            </div>
-                 
-         </div>
-      </div>
-</div>
-</div>
-    {% endfor %} 
+        </div>
+    {% endfor %}
     {{ include('pagination.html.twig', {resources: events}) }}
 {% endblock body %}

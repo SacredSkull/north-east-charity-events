@@ -41,6 +41,12 @@ class EventRoutes extends Routes {
                 // Get list of all publically attending users of an event
                 $this->get('/users[/{page:[0-9]+}]', EventController::class.':GetEventUsers')
                     ->setName("EventUsersGET");
+
+                $this->post('/thread/create', EventController::class.':CreateThread')
+                    ->setName("ThreadCreate");
+
+                $this->get('/rating/{rating:[1-5]}', EventController::class.':EventRating')
+                    ->setName("EventRating");
                 
                 $this->group('/thread', function() {
                     $this->group('/{threadID:[0-9]+}', function(){

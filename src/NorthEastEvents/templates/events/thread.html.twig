@@ -1,0 +1,139 @@
+{% extends "skeleton.html.twig" %}
+{% block pageCSS %}
+    div .panel .comment{
+    min-height: 100px;
+    }
+{% endblock pageCSS %}
+{% block body %}
+    <div class="col-md-4">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>{{ event.getTitle }}</h4>
+                </div>
+                <img class="img-responsive"
+                     {% if event.hasFinished %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                     class="img-responsive" src="/images/event/finished.png"
+                     {% elseif event.soldOut %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                     class="img-responsive" src="/images/event/sold-out.png"
+                     {% else %}src="{{ event.getImageUrl }}"{% endif %}>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Hosted by {{ event.getCharity.getName }}</div>
+                    <div class="panel-body">
+                        <img class="img-responsive" id="charityLogo"
+                             src='{{ event.getCharity.getLogo|default("http://placehold.it/200x100") }}'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Event Description</h4>
+                    </div>
+                    <div class="panel-heading" id="eventPanHead">
+                        <h4>
+                            <div class="label label-primary" id="eventLabels">Event
+                                Date: {{ event.getDate|date("H:i, d/m/Y") }}</div>
+                            <div class="label label-primary" id="eventLabels">Event
+                                Venue: {{ event.getLocation }}   </div>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        {{ event.getBodyHTML|raw }}
+                        {% if not event.hasFinished %}
+                            {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                                <h4><a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                       class="label label-primary">Sign up!</a>
+                                    <div class="label label-primary">
+                                        {{ event.getTicketsTaken|default("12") }} out
+                                        of {{ event.getTickets|default("69") }} tickets taken <span
+                                                class="badge">{{ event.getTicketsRemaining }} available</span>
+                                    </div>
+                                </h4>
+                            {% else %}
+                                <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                   class="label label-lrg label-danger">Join the waiting list</a>
+                            {% endif %}
+                        {% else %}
+                            <div class="label label-danger">
+                                The event has ended.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <br>
+    <hr/>
+    <div class="col-md-12"><h1>{{ thread.getTitle }}</h1></div>
+    <hr/>
+    {% for comment in thread.getComments %}
+        {% set user = comment.getUser %}
+        <div class="row">
+            {% set odd = true %}
+            {% if loop.index is divisible by(2) %}
+                <a class="unstyled-link" href="{{ path_for('UserOperations', {'userID': user.getId}) }}">
+                    <div class="col-md-offset-1 col-md-2" style="margin-right: -70px;">
+
+                        <div class="panel panel-default">
+                            <img class="img-responsive" src="{{ user.getAvatarUrl }}">
+                        </div>
+                        <h4>{{ user.getUsername }} </h4>
+                        <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span class="glyphicon glyphicon-star"
+                                                                                 aria-hidden="true"></span></span>
+                    </div>
+                </a>
+                {% set odd = false %}
+            {% endif %}
+            <div class="col-md-offset-1 col-md-8">
+                <div class="panel panel-warning">
+                    <div class="panel-heading"></div>
+                    <div class="comment panel-body">
+                        {{ comment.getBody }}
+                    </div>
+                </div>
+            </div>
+
+            {% if odd == true %}
+                <a class="unstyled-link" href="{{ path_for('UserOperations', {'userID': user.getId}) }}">
+                    <div class="col-md-offset-1 col-md-2" style="margin-left: -0px;">
+
+                        <div class="panel panel-default">
+                            <img class="img-responsive" src="{{ user.getAvatarUrl }}">
+                        </div>
+                        <h4>{{ user.getUsername }}</h4>
+                        <span title="Admin" class="badge">Admin&nbsp;&nbsp;<span class="glyphicon glyphicon-star"
+                                                                                 aria-hidden="true"></span></span>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+        <br>
+        <hr/>
+        <br>
+    {% endfor %}
+    <div class="col-md-12">
+        <form method="post"
+              action="{{ path_for('ThreadCommentCreate', { 'eventID': event.getId, 'threadID': thread.getId }) }}">
+            <div class="form-group">
+                <label for="inputBody">Comment</label>
+                <textarea {% if not current_user %}disabled{% endif %} class="form-control" id="inputBody" name="body"
+                          placeholder="Your thoughts..."></textarea>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary btn-lg" id="submitComment" value="Submit"
+                       {% if not current_user %}disabled{% endif %} type="submit">
+            </div>
+        </form>
+    </div>
+{% endblock body %}

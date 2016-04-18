@@ -1,4 +1,7 @@
 {% extends "skeleton.html.twig" %}
+{% block javascript %}
+    
+{% endblock javascript %}
 {% block body %}
 <!--Start content -->
 <div class="row">
@@ -9,59 +12,63 @@
             <form role="form" action="" method="post" >
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="inputTitle">Event Title</label>
+                        <label for="inputTitle">Title</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="title" id="inputTitle" placeholder="Enter Event Title" required>
+                            <input type="text" value="{{ previous_details.title }}" class="form-control" name="title" id="inputTitle" placeholder="Enter Event Title" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputHost">Event Host</label>
+                        <label for="inputHost">Host</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="host" id="inputHost" placeholder="Enter Event Host" required>
+                            <select name="charityID" class="form-control" id="inputHost" required>
+                                {% for charity in charities %}
+                                    <option value="{{ charity.getId }}" {% if previous_details.CharityID == charity.getId %}selected{% endif %}>{{ charity.getName }}</option>
+                                {% endfor %}
+                            </select>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputImage">Event Image</label>
+                        <label for="inputImage">Image</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="imageUrl" id="inputImage" placeholder="Enter Event Image" required>
+                            <input value="{{ previous_details.imageUrl }}" type="text" class="form-control" name="imageUrl" id="inputImage" placeholder="Enter Event Image" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputDate">Event Date</label>
+                        <label for="inputDate">Date</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="date" id="inputDate" placeholder="Enter Event Date" required>
+                            <input value="{{ previous_details.date|date("H:i d/m/Y") }}" type="text" class="form-control" name="date" id="inputDate" placeholder="Enter Event Date" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputLocation">Event Location</label>
+                        <label for="inputLocation">Location</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter Event Location" required>
+                            <input value="{{ previous_details.location }}" type="text" class="form-control" name="location" id="inputLocation" placeholder="Enter Event Location" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputBody">Event Description</label>
+                        <label for="inputBody">Description</label>
                         <div class="input-group"
                             >
-                            <textarea name="body" id="inputBody" class="form-control" rows="5" required></textarea>
+                            <textarea  name="body" id="inputBody" class="form-control" rows="5" required>{{ previous_details.body }}</textarea>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputCapacity">Event Capacity</label>
+                        <label for="inputCapacity">Capacity</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="tickets" id="inputCapacity" placeholder="Enter Event Capacity" required>
+                            <input type="text" value="{{ previous_details.tickets }}" class="form-control" name="tickets" id="inputCapacity" placeholder="Enter Event Capacity" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputMedia">Event Media</label>
+                        <label for="inputMedia">Media</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="videoUrl" id="inputMedia" placeholder="Enter Event Capacity" required>
+                            <input type="text" value="{{ previous_details.videoUrl }}" class="form-control" name="videoUrl" id="inputMedia" placeholder="Youtube Embed Link" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>

@@ -154,7 +154,7 @@ class CharityTableMap extends TableMap
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 50, null);
         $this->addColumn('bio', 'Bio', 'VARCHAR', true, 600, null);
-        $this->addColumn('logo', 'Logo', 'VARCHAR', false, 128, '/images/default.jpg');
+        $this->addColumn('logo', 'Logo', 'VARCHAR', false, 128, '/images/charity/default.jpg');
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()

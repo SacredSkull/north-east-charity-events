@@ -1,119 +1,166 @@
 {% extends "skeleton.html.twig" %}
+{% block pageCSS %}
+.ratings .star{
+    color: black;
+    text-decoration: none;
+}
+{% endblock pageCSS %}
 {% block body %}
-<!--Start content -->
-<!--  Start row1 --> 
-<div class="col-md-4">
-   <div class="row">
-      <div class="panel panel-default">
-         <div class="panel-heading">
-            <h4>{{ event.getTitle }}</h4>
-         </div>
-         <img class="img-responsive" {% if event.hasFinished %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;" class="img-responsive" src="/images/event/finished.png"{% elseif event.soldOut %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;" class="img-responsive" src="/images/event/sold-out.png" {% else %}src="{{ event.getImageUrl }}"{% endif %}>
-      </div>
-   </div>
-   <div class="row">
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">Hosted by {{ event.getCharity.getName }}</div>
-            <div class="panel-body">
-                <img class="img-responsive" id="charityLogo" src='{{ event.getCharity.getLogo|default("http://placehold.it/200x100")}}'>
+    <!--Start content -->
+    <!--  Start row1 -->
+    <div class="col-md-4">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>{{ event.getTitle }}</h4>
+                </div>
+                <img class="img-responsive"
+                     {% if event.hasFinished %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                     class="img-responsive" src="/images/event/finished.png"
+                     {% elseif event.soldOut %}style="background-image: url( {{ event.getImageUrl }} ); background-size: cover;"
+                     class="img-responsive" src="/images/event/sold-out.png"
+                     {% else %}src="{{ event.getImageUrl }}"{% endif %}>
             </div>
-         </div>
-      </div>
-   </div>
-   <div class="row">
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">Event media</div>
-            <div class="panel-body">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ event.getEventMedia|default('https://www.youtube.com/embed/d5gRPCJPIak')}}"></iframe>
+        </div>
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Hosted by {{ event.getCharity.getName }}</div>
+                    <div class="panel-body">
+                        <img class="img-responsive" id="charityLogo"
+                             src='{{ event.getCharity.getLogo|default("http://placehold.it/200x100") }}'>
+                    </div>
                 </div>
             </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="col-md-8" >
-   <div class="row">
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">
-                    <h4><a href="#"><span class="label label-warning glyphicon glyphicon-remove  pull-left" aria-hidden="true">  Remove Event</span></a></h4>
-                    
-               <h4>Event Description</h4>
+        </div>
+        {% if not event.getVideoUrl|length == 0 %}
+            <div class="row">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Event media</div>
+                        <div class="panel-body">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item"
+                                        src="{{ event.getVideoUrl|default('https://www.youtube.com/embed/d5gRPCJPIak') }}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-heading" id="eventPanHead">
-            <h4><div class="label label-primary" id="eventLabels">Event Date: {{  event.getDate|date("H:i, d/m/Y") }}</div>
-            <div class="label label-primary" id="eventLabels">Event Venue: {{ event.getLocation }}   </div></h4>
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Event Description</h4>
+                    </div>
+                    <div class="panel-heading" id="eventPanHead">
+                        <h4>
+                            <div class="label label-primary" id="eventLabels">Event
+                                Date: {{ event.getDate|date("H:i, d/m/Y") }}</div>
+                            <div class="label label-primary" id="eventLabels">Event
+                                Venue: {{ event.getLocation }}   </div>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        {{ event.getBodyHTML|raw }}
+                        {% if not event.hasFinished %}
+                            {% if event.hasTickets and not event.getUsers.contains(current_user) %}
+                                <h4><a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                       class="label label-primary">Sign up!</a>
+                                    <div class="label label-primary">
+                                        {{ event.getTicketsTaken|default("12") }} out
+                                        of {{ event.getTickets|default("69") }} tickets taken <span
+                                                class="badge">{{ event.getTicketsRemaining }} available</span>
+                                    </div>
+                                </h4>
+                            {% else %}
+                                <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}"
+                                   class="label label-lrg label-danger">Join the waiting list</a>
+                            {% endif %}
+                        {% else %}
+                            <div class="label label-danger">
+                                The event has ended.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                 {{ event.getBodyHTML|raw }}
-            {% if not event.hasFinished %}
-                {% if event.hasTickets and not event.getUsers.contains(current_user) %}
-                 <h4><a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-primary">Sign up!</a>
-                 <div class="label label-primary">
-                   {{ event.getTicketsTaken|default("12")}} out of {{ event.getTickets|default("69") }} tickets taken <span class="badge">{{ event.getTicketsRemaining }} available</span>
-                 </div></h4>
-                {% else %}
-                 <a href="{{ path_for('EventRegister', { 'eventID': event.getId }) }}" class="label label-lrg label-danger">Join the waiting list</a>
-                {% endif %}
-            {% else %}
-                <h4><div class="label label-danger">
-                    The event has ended.
-                </div></h4>
-            {% endif %}
+        </div>
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Event ratings</div>
+                    <div class="panel-body disabled ratings" style="color: black; text-decoration: none;">
+                        {% set rating = event.getAverageRating %}
+                        {% if event.hasFinished %}
+                            <a class="star" {% if rating >= 1 %}style="color: gold"{% endif %} href="{{ path_for('EventRating', {'eventID': event.getId, 'rating': 1}) }}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                            <a class="star" {% if rating >= 2 %}style="color: gold"{% endif %} href="{{ path_for('EventRating', {'eventID': event.getId, 'rating': 2}) }}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                            <a class="star" {% if rating >= 3 %}style="color: gold"{% endif %} href="{{ path_for('EventRating', {'eventID': event.getId, 'rating': 3}) }}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                            <a class="star" {% if rating >= 4 %}style="color: gold"{% endif %} href="{{ path_for('EventRating', {'eventID': event.getId, 'rating': 4}) }}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                            <a class="star" {% if rating >= 5 %}style="color: gold"{% endif %} href="{{ path_for('EventRating', {'eventID': event.getId, 'rating': 5}) }}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                        {% else %}
+                            Ratings will be unlocked once the event has finished.
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-   <div class="row">
-      <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">Event ratings</div>
-            <div class="panel-body disabled">
-                 {% if event.hasFinished %}
-               <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-               <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-               <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-               <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-               <a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-                     {% else %}
-                  Ratings will be unlocked once the event has finished.
-                     {% endif %}
+        </div>
+        <div class="row">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Event Forum</div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Created By</th>
+                                <th>Thread Title</th>
+                                <th>Last Posted</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for thread in event.getThreads %}
+                                <tr class="thread">
+                                    <td>
+                                        <a href="{{ path_for('EventThreadOperations', {'eventID': event.getId, 'threadID': thread.getId }) }}">{{ thread.getUser.getUsername }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path_for('EventThreadOperations', {'eventID': event.getId, 'threadID': thread.getId }) }}">{{ thread.getTitle }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path_for('EventThreadOperations', {'eventID': event.getId, 'threadID': thread.getId }) }}">{{ thread.getUpdatedAt|date('d/m/Y H:i') }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if current_user %}
+                            <form class="form-inline"
+                                  action="{{ path_for('ThreadCreate', {'eventID': event.getId} ) }}" method="post">
+                                <div class="form-group">
+                                    <label for="inputTitle">Thread Title</label>
+                                    <div class="input-group">
+                                        <input type="text" value="{{ previous_details.title }}"
+                                               class="form-control" name="title" id="inputTitle"
+                                               placeholder="Enter Thread Title" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-default">Create Thread</button>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-   <div class="row">      
-           <div class="panel-group">
-         <div class="panel panel-default">
-            <div class="panel-heading">Event Forum</div>
-            <div class="panel-body">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Created By</th>
-                            <th>Thread Title</th>
-                            <th>Last Posted</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                                {% for thread in event.getThreads %}
-                          <tr class="thread">
-                            <td><a href="thread.html.twig">{{thread.getUser.getUsername}}</a></td>
-                            <td><a href="thread.html.twig">{{ thread.getTitle}}</a></td>
-                            <td><a href="thread.html.twig">{{ thread.getUpdatedAt|date('d/m/Y H:i')}}</a></td>
-                          </tr>
-                                {% endfor %}
-                          </tr>
-                        </tbody>
-                    </table>
-            </div>
-         </div>
-      </div></div>
-</div>
+        </div>
+    </div>
 
-<!--  End row3 -->  
-<!--  End row3 -->  
+    <!--  End row3 -->
+    <!--  End row3 -->
 {% endblock body %}

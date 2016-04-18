@@ -4,3 +4,4 @@ putty.exe
 .idea/
 build/*
 logs/*
+src/NorthEastEvents/public/images/avatars/

@@ -59,7 +59,7 @@ class EventTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 13;
+    const NUM_COLUMNS = 14;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class EventTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 13;
+    const NUM_HYDRATE_COLUMNS = 14;
 
     /**
      * the column name for the id field
@@ -137,6 +137,11 @@ class EventTableMap extends TableMap
     const COL_TICKETS_REMAINING = 'event.tickets_remaining';
 
     /**
+     * the column name for the average_rating field
+     */
+    const COL_AVERAGE_RATING = 'event.average_rating';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -148,11 +153,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'CharityID', 'Title', 'Date', 'Location', 'ImageUrl', 'Body', 'BodyHTML', 'Tickets', 'VideoUrl', 'CreatedAt', 'UpdatedAt', 'TicketsRemaining', ),
-        self::TYPE_CAMELNAME     => array('id', 'charityID', 'title', 'date', 'location', 'imageUrl', 'body', 'bodyHTML', 'tickets', 'videoUrl', 'createdAt', 'updatedAt', 'ticketsRemaining', ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID, EventTableMap::COL_CHARITYID, EventTableMap::COL_TITLE, EventTableMap::COL_DATE, EventTableMap::COL_LOCATION, EventTableMap::COL_IMAGE_URL, EventTableMap::COL_BODY, EventTableMap::COL_BODYHTML, EventTableMap::COL_TICKETS, EventTableMap::COL_VIDEO_URL, EventTableMap::COL_CREATED_AT, EventTableMap::COL_UPDATED_AT, EventTableMap::COL_TICKETS_REMAINING, ),
-        self::TYPE_FIELDNAME     => array('id', 'charityID', 'title', 'date', 'location', 'image_url', 'body', 'bodyHTML', 'tickets', 'video_url', 'created_at', 'updated_at', 'tickets_remaining', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('Id', 'CharityID', 'Title', 'Date', 'Location', 'ImageUrl', 'Body', 'BodyHTML', 'Tickets', 'VideoUrl', 'CreatedAt', 'UpdatedAt', 'TicketsRemaining', 'AverageRating', ),
+        self::TYPE_CAMELNAME     => array('id', 'charityID', 'title', 'date', 'location', 'imageUrl', 'body', 'bodyHTML', 'tickets', 'videoUrl', 'createdAt', 'updatedAt', 'ticketsRemaining', 'averageRating', ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_ID, EventTableMap::COL_CHARITYID, EventTableMap::COL_TITLE, EventTableMap::COL_DATE, EventTableMap::COL_LOCATION, EventTableMap::COL_IMAGE_URL, EventTableMap::COL_BODY, EventTableMap::COL_BODYHTML, EventTableMap::COL_TICKETS, EventTableMap::COL_VIDEO_URL, EventTableMap::COL_CREATED_AT, EventTableMap::COL_UPDATED_AT, EventTableMap::COL_TICKETS_REMAINING, EventTableMap::COL_AVERAGE_RATING, ),
+        self::TYPE_FIELDNAME     => array('id', 'charityID', 'title', 'date', 'location', 'image_url', 'body', 'bodyHTML', 'tickets', 'video_url', 'created_at', 'updated_at', 'tickets_remaining', 'average_rating', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -162,11 +167,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'CharityID' => 1, 'Title' => 2, 'Date' => 3, 'Location' => 4, 'ImageUrl' => 5, 'Body' => 6, 'BodyHTML' => 7, 'Tickets' => 8, 'VideoUrl' => 9, 'CreatedAt' => 10, 'UpdatedAt' => 11, 'TicketsRemaining' => 12, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'imageUrl' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'videoUrl' => 9, 'createdAt' => 10, 'updatedAt' => 11, 'ticketsRemaining' => 12, ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_ID => 0, EventTableMap::COL_CHARITYID => 1, EventTableMap::COL_TITLE => 2, EventTableMap::COL_DATE => 3, EventTableMap::COL_LOCATION => 4, EventTableMap::COL_IMAGE_URL => 5, EventTableMap::COL_BODY => 6, EventTableMap::COL_BODYHTML => 7, EventTableMap::COL_TICKETS => 8, EventTableMap::COL_VIDEO_URL => 9, EventTableMap::COL_CREATED_AT => 10, EventTableMap::COL_UPDATED_AT => 11, EventTableMap::COL_TICKETS_REMAINING => 12, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'image_url' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'video_url' => 9, 'created_at' => 10, 'updated_at' => 11, 'tickets_remaining' => 12, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'CharityID' => 1, 'Title' => 2, 'Date' => 3, 'Location' => 4, 'ImageUrl' => 5, 'Body' => 6, 'BodyHTML' => 7, 'Tickets' => 8, 'VideoUrl' => 9, 'CreatedAt' => 10, 'UpdatedAt' => 11, 'TicketsRemaining' => 12, 'AverageRating' => 13, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'imageUrl' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'videoUrl' => 9, 'createdAt' => 10, 'updatedAt' => 11, 'ticketsRemaining' => 12, 'averageRating' => 13, ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_ID => 0, EventTableMap::COL_CHARITYID => 1, EventTableMap::COL_TITLE => 2, EventTableMap::COL_DATE => 3, EventTableMap::COL_LOCATION => 4, EventTableMap::COL_IMAGE_URL => 5, EventTableMap::COL_BODY => 6, EventTableMap::COL_BODYHTML => 7, EventTableMap::COL_TICKETS => 8, EventTableMap::COL_VIDEO_URL => 9, EventTableMap::COL_CREATED_AT => 10, EventTableMap::COL_UPDATED_AT => 11, EventTableMap::COL_TICKETS_REMAINING => 12, EventTableMap::COL_AVERAGE_RATING => 13, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'charityID' => 1, 'title' => 2, 'date' => 3, 'location' => 4, 'image_url' => 5, 'body' => 6, 'bodyHTML' => 7, 'tickets' => 8, 'video_url' => 9, 'created_at' => 10, 'updated_at' => 11, 'tickets_remaining' => 12, 'average_rating' => 13, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -191,14 +196,15 @@ class EventTableMap extends TableMap
         $this->addColumn('title', 'Title', 'VARCHAR', true, 50, null);
         $this->addColumn('date', 'Date', 'TIMESTAMP', true, null, null);
         $this->addColumn('location', 'Location', 'VARCHAR', true, 50, null);
-        $this->addColumn('image_url', 'ImageUrl', 'VARCHAR', false, 128, '/include/img/events/default.png');
+        $this->addColumn('image_url', 'ImageUrl', 'VARCHAR', false, 128, '/images/events/default.png');
         $this->addColumn('body', 'Body', 'LONGVARCHAR', false, null, null);
         $this->addColumn('bodyHTML', 'BodyHTML', 'LONGVARCHAR', false, null, null);
         $this->addColumn('tickets', 'Tickets', 'INTEGER', false, null, 0);
-        $this->addColumn('video_url', 'VideoUrl', 'VARCHAR', false, 128, null);
+        $this->addColumn('video_url', 'VideoUrl', 'VARCHAR', false, 128, 'https://www.youtube.com/embed/d5gRPCJPIak');
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('tickets_remaining', 'TicketsRemaining', 'INTEGER', false, null, null);
+        $this->addColumn('average_rating', 'AverageRating', 'INTEGER', false, null, null);
     } // initialize()
 
     /**
@@ -227,6 +233,13 @@ class EventTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', null, 'WaitingLists', false);
+        $this->addRelation('EventRating', '\\NorthEastEvents\\Models\\EventRating', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':eventID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, 'EventRatings', false);
         $this->addRelation('Thread', '\\NorthEastEvents\\Models\\Thread', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -248,6 +261,7 @@ class EventTableMap extends TableMap
         return array(
             'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', ),
             'aggregate_column' => array('name' => 'tickets_remaining', 'expression' => 'COUNT(userID)', 'condition' => '', 'foreign_table' => 'event_users', 'foreign_schema' => '', ),
+            '2' => array('name' => 'average_rating', 'expression' => 'AVG(rating)', 'condition' => '', 'foreign_table' => 'event_rating', 'foreign_schema' => '', ),
         );
     } // getBehaviors()
     /**
@@ -259,6 +273,7 @@ class EventTableMap extends TableMap
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         EventUsersTableMap::clearInstancePool();
         WaitingListTableMap::clearInstancePool();
+        EventRatingTableMap::clearInstancePool();
         ThreadTableMap::clearInstancePool();
     }
 
@@ -416,6 +431,7 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn(EventTableMap::COL_CREATED_AT);
             $criteria->addSelectColumn(EventTableMap::COL_UPDATED_AT);
             $criteria->addSelectColumn(EventTableMap::COL_TICKETS_REMAINING);
+            $criteria->addSelectColumn(EventTableMap::COL_AVERAGE_RATING);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.charityID');
@@ -430,6 +446,7 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
             $criteria->addSelectColumn($alias . '.tickets_remaining');
+            $criteria->addSelectColumn($alias . '.average_rating');
         }
     }
 

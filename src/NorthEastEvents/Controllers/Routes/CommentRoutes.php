@@ -15,13 +15,13 @@ class CommentRoutes extends Routes {
 
         $app->group('/comment',function(){
             // Create comment on event thread
-            $this->post('', '\NorthEastEvents\Controllers\CommentController:APICreateComment')
+            $this->post('/event/{eventID:[0-9]+}/thread/{threadID:[0-9]+}', '\NorthEastEvents\Controllers\CommentController:CreateComment')
                 ->setName("ThreadCommentCreate");
 
             // Specific comment operations
             $this->group('/{commentID:[0-9]+}',function(){
                 // Get/delete/put/patch specific comment
-                $this->map(["GET", "DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\Controllers\CommentController:APICommentHandler')
+                $this->map(["DELETE", "PUT", "PATCH"], '', '\NorthEastEvents\Controllers\CommentController:APICommentHandler')
                     ->setName("APIThreadCommentOperations");
             });
         });

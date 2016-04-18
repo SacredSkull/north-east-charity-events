@@ -9,6 +9,8 @@ use NorthEastEvents\Models\Charity as ChildCharity;
 use NorthEastEvents\Models\CharityQuery as ChildCharityQuery;
 use NorthEastEvents\Models\Event as ChildEvent;
 use NorthEastEvents\Models\EventQuery as ChildEventQuery;
+use NorthEastEvents\Models\EventRating as ChildEventRating;
+use NorthEastEvents\Models\EventRatingQuery as ChildEventRatingQuery;
 use NorthEastEvents\Models\EventUsers as ChildEventUsers;
 use NorthEastEvents\Models\EventUsersQuery as ChildEventUsersQuery;
 use NorthEastEvents\Models\Thread as ChildThread;
@@ -17,6 +19,7 @@ use NorthEastEvents\Models\User as ChildUser;
 use NorthEastEvents\Models\UserQuery as ChildUserQuery;
 use NorthEastEvents\Models\WaitingList as ChildWaitingList;
 use NorthEastEvents\Models\WaitingListQuery as ChildWaitingListQuery;
+use NorthEastEvents\Models\Map\EventRatingTableMap;
 use NorthEastEvents\Models\Map\EventTableMap;
 use NorthEastEvents\Models\Map\EventUsersTableMap;
 use NorthEastEvents\Models\Map\ThreadTableMap;
@@ -114,7 +117,7 @@ abstract class Event implements ActiveRecordInterface
     /**
      * The value for the image_url field.
      *
-     * Note: this column has a database default value of: '/include/img/events/default.png'
+     * Note: this column has a database default value of: '/images/events/default.png'
      * @var        string
      */
     protected $image_url;
@@ -144,6 +147,7 @@ abstract class Event implements ActiveRecordInterface
     /**
      * The value for the video_url field.
      *
+     * Note: this column has a database default value of: 'https://www.youtube.com/embed/d5gRPCJPIak'
      * @var        string
      */
     protected $video_url;
@@ -170,6 +174,13 @@ abstract class Event implements ActiveRecordInterface
     protected $tickets_remaining;
 
     /**
+     * The value for the average_rating field.
+     *
+     * @var        int
+     */
+    protected $average_rating;
+
+    /**
      * @var        ChildCharity
      */
     protected $aCharity;
@@ -185,6 +196,12 @@ abstract class Event implements ActiveRecordInterface
      */
     protected $collWaitingLists;
     protected $collWaitingListsPartial;
+
+    /**
+     * @var        ObjectCollection|ChildEventRating[] Collection to store aggregation of ChildEventRating objects.
+     */
+    protected $collEventRatings;
+    protected $collEventRatingsPartial;
 
     /**
      * @var        ObjectCollection|ChildThread[] Collection to store aggregation of ChildThread objects.
@@ -230,6 +247,12 @@ abstract class Event implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildEventRating[]
+     */
+    protected $eventRatingsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildThread[]
      */
     protected $threadsScheduledForDeletion = null;
@@ -242,8 +265,9 @@ abstract class Event implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->image_url = '/include/img/events/default.png';
+        $this->image_url = '/images/events/default.png';
         $this->tickets = 0;
+        $this->video_url = 'https://www.youtube.com/embed/d5gRPCJPIak';
     }
 
     /**
@@ -634,6 +658,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [average_rating] column value.
+     *
+     * @return int
+     */
+    public function getAverageRating()
+    {
+        return $this->average_rating;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -898,6 +932,26 @@ abstract class Event implements ActiveRecordInterface
     } // setTicketsRemaining()
 
     /**
+     * Set the value of [average_rating] column.
+     *
+     * @param int $v new value
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function setAverageRating($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->average_rating !== $v) {
+            $this->average_rating = $v;
+            $this->modifiedColumns[EventTableMap::COL_AVERAGE_RATING] = true;
+        }
+
+        return $this;
+    } // setAverageRating()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -907,11 +961,15 @@ abstract class Event implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->image_url !== '/include/img/events/default.png') {
+            if ($this->image_url !== '/images/events/default.png') {
                 return false;
             }
 
             if ($this->tickets !== 0) {
+                return false;
+            }
+
+            if ($this->video_url !== 'https://www.youtube.com/embed/d5gRPCJPIak') {
                 return false;
             }
 
@@ -988,6 +1046,9 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : EventTableMap::translateFieldName('TicketsRemaining', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tickets_remaining = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : EventTableMap::translateFieldName('AverageRating', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->average_rating = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -996,7 +1057,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 13; // 13 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\NorthEastEvents\\Models\\Event'), 0, $e);
@@ -1064,6 +1125,8 @@ abstract class Event implements ActiveRecordInterface
             $this->collEventUserss = null;
 
             $this->collWaitingLists = null;
+
+            $this->collEventRatings = null;
 
             $this->collThreads = null;
 
@@ -1265,6 +1328,23 @@ abstract class Event implements ActiveRecordInterface
                 }
             }
 
+            if ($this->eventRatingsScheduledForDeletion !== null) {
+                if (!$this->eventRatingsScheduledForDeletion->isEmpty()) {
+                    \NorthEastEvents\Models\EventRatingQuery::create()
+                        ->filterByPrimaryKeys($this->eventRatingsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->eventRatingsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collEventRatings !== null) {
+                foreach ($this->collEventRatings as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->threadsScheduledForDeletion !== null) {
                 if (!$this->threadsScheduledForDeletion->isEmpty()) {
                     \NorthEastEvents\Models\ThreadQuery::create()
@@ -1347,6 +1427,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_TICKETS_REMAINING)) {
             $modifiedColumns[':p' . $index++]  = 'tickets_remaining';
         }
+        if ($this->isColumnModified(EventTableMap::COL_AVERAGE_RATING)) {
+            $modifiedColumns[':p' . $index++]  = 'average_rating';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1396,6 +1479,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'tickets_remaining':
                         $stmt->bindValue($identifier, $this->tickets_remaining, PDO::PARAM_INT);
+                        break;
+                    case 'average_rating':
+                        $stmt->bindValue($identifier, $this->average_rating, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1498,6 +1584,9 @@ abstract class Event implements ActiveRecordInterface
             case 12:
                 return $this->getTicketsRemaining();
                 break;
+            case 13:
+                return $this->getAverageRating();
+                break;
             default:
                 return null;
                 break;
@@ -1541,6 +1630,7 @@ abstract class Event implements ActiveRecordInterface
             $keys[10] => $this->getCreatedAt(),
             $keys[11] => $this->getUpdatedAt(),
             $keys[12] => $this->getTicketsRemaining(),
+            $keys[13] => $this->getAverageRating(),
         );
         if ($result[$keys[3]] instanceof \DateTime) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1604,6 +1694,21 @@ abstract class Event implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collWaitingLists->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collEventRatings) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'eventRatings';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'event_ratings';
+                        break;
+                    default:
+                        $key = 'EventRatings';
+                }
+
+                $result[$key] = $this->collEventRatings->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collThreads) {
 
@@ -1693,6 +1798,9 @@ abstract class Event implements ActiveRecordInterface
             case 12:
                 $this->setTicketsRemaining($value);
                 break;
+            case 13:
+                $this->setAverageRating($value);
+                break;
         } // switch()
 
         return $this;
@@ -1757,6 +1865,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[12], $arr)) {
             $this->setTicketsRemaining($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setAverageRating($arr[$keys[13]]);
         }
     }
 
@@ -1837,6 +1948,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_TICKETS_REMAINING)) {
             $criteria->add(EventTableMap::COL_TICKETS_REMAINING, $this->tickets_remaining);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_AVERAGE_RATING)) {
+            $criteria->add(EventTableMap::COL_AVERAGE_RATING, $this->average_rating);
         }
 
         return $criteria;
@@ -1936,6 +2050,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         $copyObj->setTicketsRemaining($this->getTicketsRemaining());
+        $copyObj->setAverageRating($this->getAverageRating());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1951,6 +2066,12 @@ abstract class Event implements ActiveRecordInterface
             foreach ($this->getWaitingLists() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addWaitingList($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getEventRatings() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addEventRating($relObj->copy($deepCopy));
                 }
             }
 
@@ -2057,6 +2178,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ('WaitingList' == $relationName) {
             return $this->initWaitingLists();
+        }
+        if ('EventRating' == $relationName) {
+            return $this->initEventRatings();
         }
         if ('Thread' == $relationName) {
             return $this->initThreads();
@@ -2567,6 +2691,259 @@ abstract class Event implements ActiveRecordInterface
         $query->joinWith('User', $joinBehavior);
 
         return $this->getWaitingLists($query, $con);
+    }
+
+    /**
+     * Clears out the collEventRatings collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addEventRatings()
+     */
+    public function clearEventRatings()
+    {
+        $this->collEventRatings = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collEventRatings collection loaded partially.
+     */
+    public function resetPartialEventRatings($v = true)
+    {
+        $this->collEventRatingsPartial = $v;
+    }
+
+    /**
+     * Initializes the collEventRatings collection.
+     *
+     * By default this just sets the collEventRatings collection to an empty array (like clearcollEventRatings());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initEventRatings($overrideExisting = true)
+    {
+        if (null !== $this->collEventRatings && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = EventRatingTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collEventRatings = new $collectionClassName;
+        $this->collEventRatings->setModel('\NorthEastEvents\Models\EventRating');
+    }
+
+    /**
+     * Gets an array of ChildEventRating objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildEvent is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildEventRating[] List of ChildEventRating objects
+     * @throws PropelException
+     */
+    public function getEventRatings(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collEventRatingsPartial && !$this->isNew();
+        if (null === $this->collEventRatings || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collEventRatings) {
+                // return empty collection
+                $this->initEventRatings();
+            } else {
+                $collEventRatings = ChildEventRatingQuery::create(null, $criteria)
+                    ->filterByEvent($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collEventRatingsPartial && count($collEventRatings)) {
+                        $this->initEventRatings(false);
+
+                        foreach ($collEventRatings as $obj) {
+                            if (false == $this->collEventRatings->contains($obj)) {
+                                $this->collEventRatings->append($obj);
+                            }
+                        }
+
+                        $this->collEventRatingsPartial = true;
+                    }
+
+                    return $collEventRatings;
+                }
+
+                if ($partial && $this->collEventRatings) {
+                    foreach ($this->collEventRatings as $obj) {
+                        if ($obj->isNew()) {
+                            $collEventRatings[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collEventRatings = $collEventRatings;
+                $this->collEventRatingsPartial = false;
+            }
+        }
+
+        return $this->collEventRatings;
+    }
+
+    /**
+     * Sets a collection of ChildEventRating objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $eventRatings A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildEvent The current object (for fluent API support)
+     */
+    public function setEventRatings(Collection $eventRatings, ConnectionInterface $con = null)
+    {
+        /** @var ChildEventRating[] $eventRatingsToDelete */
+        $eventRatingsToDelete = $this->getEventRatings(new Criteria(), $con)->diff($eventRatings);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->eventRatingsScheduledForDeletion = clone $eventRatingsToDelete;
+
+        foreach ($eventRatingsToDelete as $eventRatingRemoved) {
+            $eventRatingRemoved->setEvent(null);
+        }
+
+        $this->collEventRatings = null;
+        foreach ($eventRatings as $eventRating) {
+            $this->addEventRating($eventRating);
+        }
+
+        $this->collEventRatings = $eventRatings;
+        $this->collEventRatingsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related EventRating objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related EventRating objects.
+     * @throws PropelException
+     */
+    public function countEventRatings(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collEventRatingsPartial && !$this->isNew();
+        if (null === $this->collEventRatings || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collEventRatings) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getEventRatings());
+            }
+
+            $query = ChildEventRatingQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByEvent($this)
+                ->count($con);
+        }
+
+        return count($this->collEventRatings);
+    }
+
+    /**
+     * Method called to associate a ChildEventRating object to this object
+     * through the ChildEventRating foreign key attribute.
+     *
+     * @param  ChildEventRating $l ChildEventRating
+     * @return $this|\NorthEastEvents\Models\Event The current object (for fluent API support)
+     */
+    public function addEventRating(ChildEventRating $l)
+    {
+        if ($this->collEventRatings === null) {
+            $this->initEventRatings();
+            $this->collEventRatingsPartial = true;
+        }
+
+        if (!$this->collEventRatings->contains($l)) {
+            $this->doAddEventRating($l);
+
+            if ($this->eventRatingsScheduledForDeletion and $this->eventRatingsScheduledForDeletion->contains($l)) {
+                $this->eventRatingsScheduledForDeletion->remove($this->eventRatingsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildEventRating $eventRating The ChildEventRating object to add.
+     */
+    protected function doAddEventRating(ChildEventRating $eventRating)
+    {
+        $this->collEventRatings[]= $eventRating;
+        $eventRating->setEvent($this);
+    }
+
+    /**
+     * @param  ChildEventRating $eventRating The ChildEventRating object to remove.
+     * @return $this|ChildEvent The current object (for fluent API support)
+     */
+    public function removeEventRating(ChildEventRating $eventRating)
+    {
+        if ($this->getEventRatings()->contains($eventRating)) {
+            $pos = $this->collEventRatings->search($eventRating);
+            $this->collEventRatings->remove($pos);
+            if (null === $this->eventRatingsScheduledForDeletion) {
+                $this->eventRatingsScheduledForDeletion = clone $this->collEventRatings;
+                $this->eventRatingsScheduledForDeletion->clear();
+            }
+            $this->eventRatingsScheduledForDeletion[]= clone $eventRating;
+            $eventRating->setEvent(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Event is new, it will return
+     * an empty collection; or if this Event has previously
+     * been saved, it will retrieve related EventRatings from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Event.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildEventRating[] List of ChildEventRating objects
+     */
+    public function getEventRatingsJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildEventRatingQuery::create(null, $criteria);
+        $query->joinWith('User', $joinBehavior);
+
+        return $this->getEventRatings($query, $con);
     }
 
     /**
@@ -3085,6 +3462,7 @@ abstract class Event implements ActiveRecordInterface
         $this->created_at = null;
         $this->updated_at = null;
         $this->tickets_remaining = null;
+        $this->average_rating = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();
@@ -3114,6 +3492,11 @@ abstract class Event implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collEventRatings) {
+                foreach ($this->collEventRatings as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collThreads) {
                 foreach ($this->collThreads as $o) {
                     $o->clearAllReferences($deep);
@@ -3128,6 +3511,7 @@ abstract class Event implements ActiveRecordInterface
 
         $this->collEventUserss = null;
         $this->collWaitingLists = null;
+        $this->collEventRatings = null;
         $this->collThreads = null;
         $this->collUsers = null;
         $this->aCharity = null;
@@ -3181,6 +3565,33 @@ abstract class Event implements ActiveRecordInterface
     public function updateTicketsRemaining(ConnectionInterface $con)
     {
         $this->setTicketsRemaining($this->computeTicketsRemaining($con));
+        $this->save($con);
+    }
+
+    // 2 behavior
+
+    /**
+     * Computes the value of the aggregate column average_rating *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeAverageRating(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT AVG(rating) FROM event_rating WHERE event_rating.EVENTID = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column average_rating *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateAverageRating(ConnectionInterface $con)
+    {
+        $this->setAverageRating($this->computeAverageRating($con));
         $this->save($con);
     }
 

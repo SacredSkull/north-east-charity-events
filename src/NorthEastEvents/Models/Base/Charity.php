@@ -90,7 +90,7 @@ abstract class Charity implements ActiveRecordInterface
     /**
      * The value for the logo field.
      *
-     * Note: this column has a database default value of: '/images/default.jpg'
+     * Note: this column has a database default value of: '/images/charity/default.jpg'
      * @var        string
      */
     protected $logo;
@@ -137,7 +137,7 @@ abstract class Charity implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->logo = '/images/default.jpg';
+        $this->logo = '/images/charity/default.jpg';
     }
 
     /**
@@ -577,7 +577,7 @@ abstract class Charity implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->logo !== '/images/default.jpg') {
+            if ($this->logo !== '/images/charity/default.jpg') {
                 return false;
             }
 

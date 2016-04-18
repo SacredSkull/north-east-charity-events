@@ -11,25 +11,24 @@
                     <div class="form-group">
                         <label for="inputName">Charity Name</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="name" id="inputName" placeholder="Enter Charity Name" required>
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputBio">Charity Biography</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="Bio" id="inputBio" placeholder="Enter Charity Biography" required>
+                            <input value="{{ previous_details.name }}" type="text" class="form-control" name="name" id="inputName" placeholder="Enter Charity Name" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputLogo">Charity Logo</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="Logo" id="inputLogo" placeholder="Enter Event Image" required>
+                            <input value="{{ previous_details.logo }}" type="text" class="form-control" name="logo" id="inputLogo" placeholder="Enter Event Image" required>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="inputBio">Charity Biography</label>
+                        <div class="input-group">
+                            <textarea class="form-control" name="bio" id="inputBio" placeholder="Enter Charity Biography" required>{{ previous_details.bio }}</textarea>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+                        </div>
+                    </div>
                     <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
                 </div>
             </form>

@@ -33,6 +33,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildEventQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  * @method     ChildEventQuery orderByTicketsRemaining($order = Criteria::ASC) Order by the tickets_remaining column
+ * @method     ChildEventQuery orderByAverageRating($order = Criteria::ASC) Order by the average_rating column
  *
  * @method     ChildEventQuery groupById() Group by the id column
  * @method     ChildEventQuery groupByCharityID() Group by the charityID column
@@ -47,6 +48,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildEventQuery groupByUpdatedAt() Group by the updated_at column
  * @method     ChildEventQuery groupByTicketsRemaining() Group by the tickets_remaining column
+ * @method     ChildEventQuery groupByAverageRating() Group by the average_rating column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -86,6 +88,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery rightJoinWithWaitingList() Adds a RIGHT JOIN clause and with to the query using the WaitingList relation
  * @method     ChildEventQuery innerJoinWithWaitingList() Adds a INNER JOIN clause and with to the query using the WaitingList relation
  *
+ * @method     ChildEventQuery leftJoinEventRating($relationAlias = null) Adds a LEFT JOIN clause to the query using the EventRating relation
+ * @method     ChildEventQuery rightJoinEventRating($relationAlias = null) Adds a RIGHT JOIN clause to the query using the EventRating relation
+ * @method     ChildEventQuery innerJoinEventRating($relationAlias = null) Adds a INNER JOIN clause to the query using the EventRating relation
+ *
+ * @method     ChildEventQuery joinWithEventRating($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the EventRating relation
+ *
+ * @method     ChildEventQuery leftJoinWithEventRating() Adds a LEFT JOIN clause and with to the query using the EventRating relation
+ * @method     ChildEventQuery rightJoinWithEventRating() Adds a RIGHT JOIN clause and with to the query using the EventRating relation
+ * @method     ChildEventQuery innerJoinWithEventRating() Adds a INNER JOIN clause and with to the query using the EventRating relation
+ *
  * @method     ChildEventQuery leftJoinThread($relationAlias = null) Adds a LEFT JOIN clause to the query using the Thread relation
  * @method     ChildEventQuery rightJoinThread($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Thread relation
  * @method     ChildEventQuery innerJoinThread($relationAlias = null) Adds a INNER JOIN clause to the query using the Thread relation
@@ -96,7 +108,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEventQuery rightJoinWithThread() Adds a RIGHT JOIN clause and with to the query using the Thread relation
  * @method     ChildEventQuery innerJoinWithThread() Adds a INNER JOIN clause and with to the query using the Thread relation
  *
- * @method     \NorthEastEvents\Models\CharityQuery|\NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\WaitingListQuery|\NorthEastEvents\Models\ThreadQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \NorthEastEvents\Models\CharityQuery|\NorthEastEvents\Models\EventUsersQuery|\NorthEastEvents\Models\WaitingListQuery|\NorthEastEvents\Models\EventRatingQuery|\NorthEastEvents\Models\ThreadQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildEvent findOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query
  * @method     ChildEvent findOneOrCreate(ConnectionInterface $con = null) Return the first ChildEvent matching the query, or a new ChildEvent object populated from the query conditions when no match is found
@@ -113,7 +125,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent findOneByVideoUrl(string $video_url) Return the first ChildEvent filtered by the video_url column
  * @method     ChildEvent findOneByCreatedAt(string $created_at) Return the first ChildEvent filtered by the created_at column
  * @method     ChildEvent findOneByUpdatedAt(string $updated_at) Return the first ChildEvent filtered by the updated_at column
- * @method     ChildEvent findOneByTicketsRemaining(int $tickets_remaining) Return the first ChildEvent filtered by the tickets_remaining column *
+ * @method     ChildEvent findOneByTicketsRemaining(int $tickets_remaining) Return the first ChildEvent filtered by the tickets_remaining column
+ * @method     ChildEvent findOneByAverageRating(int $average_rating) Return the first ChildEvent filtered by the average_rating column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -131,6 +144,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent requireOneByCreatedAt(string $created_at) Return the first ChildEvent filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByUpdatedAt(string $updated_at) Return the first ChildEvent filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByTicketsRemaining(int $tickets_remaining) Return the first ChildEvent filtered by the tickets_remaining column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByAverageRating(int $average_rating) Return the first ChildEvent filtered by the average_rating column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findById(int $id) Return ChildEvent objects filtered by the id column
@@ -146,6 +160,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildEvent[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildEvent objects filtered by the created_at column
  * @method     ChildEvent[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildEvent objects filtered by the updated_at column
  * @method     ChildEvent[]|ObjectCollection findByTicketsRemaining(int $tickets_remaining) Return ChildEvent objects filtered by the tickets_remaining column
+ * @method     ChildEvent[]|ObjectCollection findByAverageRating(int $average_rating) Return ChildEvent objects filtered by the average_rating column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -244,7 +259,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, charityID, title, date, location, image_url, body, bodyHTML, tickets, video_url, created_at, updated_at, tickets_remaining FROM event WHERE id = :p0';
+        $sql = 'SELECT id, charityID, title, date, location, image_url, body, bodyHTML, tickets, video_url, created_at, updated_at, tickets_remaining, average_rating FROM event WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -804,6 +819,47 @@ abstract class EventQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the average_rating column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByAverageRating(1234); // WHERE average_rating = 1234
+     * $query->filterByAverageRating(array(12, 34)); // WHERE average_rating IN (12, 34)
+     * $query->filterByAverageRating(array('min' => 12)); // WHERE average_rating > 12
+     * </code>
+     *
+     * @param     mixed $averageRating The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByAverageRating($averageRating = null, $comparison = null)
+    {
+        if (is_array($averageRating)) {
+            $useMinMax = false;
+            if (isset($averageRating['min'])) {
+                $this->addUsingAlias(EventTableMap::COL_AVERAGE_RATING, $averageRating['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($averageRating['max'])) {
+                $this->addUsingAlias(EventTableMap::COL_AVERAGE_RATING, $averageRating['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_AVERAGE_RATING, $averageRating, $comparison);
+    }
+
+    /**
      * Filter the query by a related \NorthEastEvents\Models\Charity object
      *
      * @param \NorthEastEvents\Models\Charity|ObjectCollection $charity The related object(s) to use as filter
@@ -1024,6 +1080,79 @@ abstract class EventQuery extends ModelCriteria
         return $this
             ->joinWaitingList($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'WaitingList', '\NorthEastEvents\Models\WaitingListQuery');
+    }
+
+    /**
+     * Filter the query by a related \NorthEastEvents\Models\EventRating object
+     *
+     * @param \NorthEastEvents\Models\EventRating|ObjectCollection $eventRating the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByEventRating($eventRating, $comparison = null)
+    {
+        if ($eventRating instanceof \NorthEastEvents\Models\EventRating) {
+            return $this
+                ->addUsingAlias(EventTableMap::COL_ID, $eventRating->getEventID(), $comparison);
+        } elseif ($eventRating instanceof ObjectCollection) {
+            return $this
+                ->useEventRatingQuery()
+                ->filterByPrimaryKeys($eventRating->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByEventRating() only accepts arguments of type \NorthEastEvents\Models\EventRating or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the EventRating relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function joinEventRating($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('EventRating');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'EventRating');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the EventRating relation EventRating object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \NorthEastEvents\Models\EventRatingQuery A secondary query class using the current class as primary query
+     */
+    public function useEventRatingQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinEventRating($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'EventRating', '\NorthEastEvents\Models\EventRatingQuery');
     }
 
     /**

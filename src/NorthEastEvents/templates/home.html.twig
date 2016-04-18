@@ -1,19 +1,27 @@
 {% extends "skeleton.html.twig" %}
-{% block body %}<div class="row event-row" id="row1">
+{% block body %}
+    <h1>Hot Events</h1>
+    <h3>Get a ticket while you can!</h3>
+    <br>
+    <hr>
+    <br>
+    <div class="row event-row" id="row1">
     {% for event in events %}
-        <div class="col-md-4">
-                    
-                    
-                    <a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}" class="btn btn-primary pull-left" role="button">{{ event.getTitle }}</a>
-            <img class="event-image" src="{{ event.getImageUrl }}">
-                    
-                    <a href="{% if current_user %}{{ path_for('EventOperations', { 'eventID': event.getId }) }}{% else %}#{% endif %}" class="btn btn-info pull-right" role="button"{% if not current_user %}data-toggle="modal" data-target="#login-modal"{% endif %}>Only {{ event.getTicketsRemaining }} tickets left!</a>
-                    
-           
-        </div>
-        {% if loop.index is divisible by(3) %}
+        {% if event.hasTickets %}
+            <div class="col-md-4">
+                <a href="{{ path_for('EventOperations', { 'eventID': event.getId }) }}"
+                   class="btn btn-primary pull-left"
+                   role="button">{{ event.getTitle }}</a>
+                <img class="event-image" src="{{ event.getImageUrl }}">
+
+                <a href="{% if current_user %}{{ path_for('EventOperations', { 'eventID': event.getId }) }}{% else %}#{% endif %}"
+                   class="btn btn-info pull-right" role="button" {% if not current_user %}data-toggle="modal"
+                   data-target="#login-modal"{% endif %}>Only {{ event.getTicketsRemaining }} tickets left!</a>
             </div>
-            <div class="row event-row" id="row{{ (loop.index / 3) + 1 }}">
+            {% if loop.index is divisible by(3) %}
+                </div>
+                <div class="row event-row" id="row{{ (loop.index / 3) + 1 }}">
+            {% endif %}
         {% endif %}
     {% endfor %}
     </div>

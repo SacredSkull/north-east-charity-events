@@ -42,7 +42,8 @@ class TestController extends Controller {
         $populator = new ORM\Propel2\Populator($faker);
         $populator->addEntity(User::class, 50, array(
             'AvatarUrl' => function () use ($faker) {
-                return $faker->imageUrl(180, 180);
+                $img = $faker->image('/var/www/src/NorthEastEvents/public/images/avatar', 180, 180);
+                return "/images/avatars/" . basename($img);
             },
             'Bio' => function () use ($faker) {
                 return $faker->realText(500);
@@ -54,7 +55,7 @@ class TestController extends Controller {
             },
         ));
 
-        $populator->addEntity(Charity::class, 50, array(
+        $populator->addEntity(Charity::class, 25, array(
             'Logo' => function () use ($faker) {
                 return $faker->imageUrl(200, 100);
             },
@@ -71,7 +72,7 @@ class TestController extends Controller {
         $usersEventsIDs = $populator->execute();
         $populator = new ORM\Propel2\Populator($faker);
 
-        $populator->addEntity(Event::class, 15, array(
+        $populator->addEntity(Event::class, 20, array(
             'Title' => function () use ($faker) {
                 return $faker->catchPhrase;
             },
@@ -82,7 +83,8 @@ class TestController extends Controller {
                 return $faker->dateTimeBetween('-2 days', '+3 days');
             },
             'ImageUrl' => function () use ($faker) {
-                return $faker->imageUrl(350, 240);
+                $img = $faker->image('/var/www/src/NorthEastEvents/public/images/events', 350, 240);
+                return "/images/avatars/" . basename($img);
             },
             'Body' => function () use ($faker) {
                 return $faker->realText(1600);
@@ -90,6 +92,9 @@ class TestController extends Controller {
             'CharityID' => function () use ($faker, $usersEventsIDs) {
                 $id = $faker->randomElement($usersEventsIDs[Charity::class]);
                 return $id;
+            },
+            'VideoUrl'  => function () use ($faker) {
+                return "https://www.youtube.com/embed/d5gRPCJPIak";
             },
             'BodyHTML' => null,
             'Tickets' => function () use ($faker) {
@@ -139,11 +144,11 @@ class TestController extends Controller {
             },
             'Rating' => function () use ($faker, $usersEventsIDs) {
                 $rating = $faker->randomElement([
-                    Map\EventRatingTableMap::COL_RATING_1,
-                    Map\EventRatingTableMap::COL_RATING_2,
-                    Map\EventRatingTableMap::COL_RATING_3,
-                    Map\EventRatingTableMap::COL_RATING_4,
-                    Map\EventRatingTableMap::COL_RATING_5,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
                 ]);
                 return $rating;
             },

@@ -222,7 +222,7 @@ class UserTableMap extends TableMap
         $this->addColumn('city', 'City', 'VARCHAR', true, 40, null);
         $this->addColumn('first_name', 'FirstName', 'VARCHAR', false, 20, null);
         $this->addColumn('last_name', 'LastName', 'VARCHAR', false, 20, null);
-        $this->addColumn('avatar_url', 'AvatarUrl', 'VARCHAR', false, 128, '/image/avatars/default.png');
+        $this->addColumn('avatar_url', 'AvatarUrl', 'VARCHAR', false, 128, '/images/avatars/default.png');
         $this->addPrimaryKey('permission', 'Permission', 'ENUM', true, null, 'normal');
         $this->getColumn('permission')->setValueSet(array (
   0 => 'normal',
@@ -251,6 +251,13 @@ class UserTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', null, 'WaitingLists', false);
+        $this->addRelation('EventRating', '\\NorthEastEvents\\Models\\EventRating', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':userID',
+    1 => ':id',
+  ),
+), 'CASCADE', null, 'EventRatings', false);
         $this->addRelation('Thread', '\\NorthEastEvents\\Models\\Thread', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -342,6 +349,7 @@ class UserTableMap extends TableMap
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         EventUsersTableMap::clearInstancePool();
         WaitingListTableMap::clearInstancePool();
+        EventRatingTableMap::clearInstancePool();
         ThreadTableMap::clearInstancePool();
         CommentTableMap::clearInstancePool();
     }

@@ -5,8 +5,12 @@ namespace NorthEastEvents\Models\Base;
 use \DateTime;
 use \Exception;
 use \PDO;
+use NorthEastEvents\Models\Event as ChildEvent;
+use NorthEastEvents\Models\EventQuery as ChildEventQuery;
 use NorthEastEvents\Models\EventRating as ChildEventRating;
 use NorthEastEvents\Models\EventRatingQuery as ChildEventRatingQuery;
+use NorthEastEvents\Models\User as ChildUser;
+use NorthEastEvents\Models\UserQuery as ChildUserQuery;
 use NorthEastEvents\Models\Map\EventRatingTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -99,12 +103,28 @@ abstract class EventRating implements ActiveRecordInterface
     protected $updated_at;
 
     /**
+     * @var        ChildEvent
+     */
+    protected $aEvent;
+
+    /**
+     * @var        ChildUser
+     */
+    protected $aUser;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    // aggregate_column_relation_2 behavior
+    /**
+     * @var ChildEvent
+     */
+    protected $oldEventAverageRating;
 
     /**
      * Applies default values to this object.
@@ -367,20 +387,11 @@ abstract class EventRating implements ActiveRecordInterface
     /**
      * Get the [rating] column value.
      *
-     * @return string
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return int
      */
     public function getRating()
     {
-        if (null === $this->rating) {
-            return null;
-        }
-        $valueSet = EventRatingTableMap::getValueSet(EventRatingTableMap::COL_RATING);
-        if (!isset($valueSet[$this->rating])) {
-            throw new PropelException('Unknown stored enum key: ' . $this->rating);
-        }
-
-        return $valueSet[$this->rating];
+        return $this->rating;
     }
 
     /**
@@ -440,6 +451,10 @@ abstract class EventRating implements ActiveRecordInterface
             $this->modifiedColumns[EventRatingTableMap::COL_EVENTID] = true;
         }
 
+        if ($this->aEvent !== null && $this->aEvent->getId() !== $v) {
+            $this->aEvent = null;
+        }
+
         return $this;
     } // setEventID()
 
@@ -460,24 +475,23 @@ abstract class EventRating implements ActiveRecordInterface
             $this->modifiedColumns[EventRatingTableMap::COL_USERID] = true;
         }
 
+        if ($this->aUser !== null && $this->aUser->getId() !== $v) {
+            $this->aUser = null;
+        }
+
         return $this;
     } // setUserID()
 
     /**
      * Set the value of [rating] column.
      *
-     * @param  string $v new value
+     * @param int $v new value
      * @return $this|\NorthEastEvents\Models\EventRating The current object (for fluent API support)
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function setRating($v)
     {
         if ($v !== null) {
-            $valueSet = EventRatingTableMap::getValueSet(EventRatingTableMap::COL_RATING);
-            if (!in_array($v, $valueSet)) {
-                throw new PropelException(sprintf('Value "%s" is not accepted in this enumerated column', $v));
-            }
-            $v = array_search($v, $valueSet);
+            $v = (int) $v;
         }
 
         if ($this->rating !== $v) {
@@ -618,6 +632,12 @@ abstract class EventRating implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aEvent !== null && $this->eventid !== $this->aEvent->getId()) {
+            $this->aEvent = null;
+        }
+        if ($this->aUser !== null && $this->userid !== $this->aUser->getId()) {
+            $this->aUser = null;
+        }
     } // ensureConsistency
 
     /**
@@ -657,6 +677,8 @@ abstract class EventRating implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aEvent = null;
+            $this->aUser = null;
         } // if (deep)
     }
 
@@ -742,6 +764,8 @@ abstract class EventRating implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
+                // aggregate_column_relation_2 behavior
+                $this->updateRelatedEventAverageRating($con);
                 EventRatingTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
@@ -767,6 +791,25 @@ abstract class EventRating implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
+
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aEvent !== null) {
+                if ($this->aEvent->isModified() || $this->aEvent->isNew()) {
+                    $affectedRows += $this->aEvent->save($con);
+                }
+                $this->setEvent($this->aEvent);
+            }
+
+            if ($this->aUser !== null) {
+                if ($this->aUser->isModified() || $this->aUser->isNew()) {
+                    $affectedRows += $this->aUser->save($con);
+                }
+                $this->setUser($this->aUser);
+            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -929,10 +972,11 @@ abstract class EventRating implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['EventRating'][$this->hashCode()])) {
@@ -960,6 +1004,38 @@ abstract class EventRating implements ActiveRecordInterface
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aEvent) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'event';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'event';
+                        break;
+                    default:
+                        $key = 'Event';
+                }
+
+                $result[$key] = $this->aEvent->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUser) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'user';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user';
+                        break;
+                    default:
+                        $key = 'User';
+                }
+
+                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+        }
 
         return $result;
     }
@@ -1000,10 +1076,6 @@ abstract class EventRating implements ActiveRecordInterface
                 $this->setUserID($value);
                 break;
             case 2:
-                $valueSet = EventRatingTableMap::getValueSet(EventRatingTableMap::COL_RATING);
-                if (isset($valueSet[$value])) {
-                    $value = $valueSet[$value];
-                }
                 $this->setRating($value);
                 break;
             case 3:
@@ -1143,8 +1215,22 @@ abstract class EventRating implements ActiveRecordInterface
         $validPk = null !== $this->getEventID() &&
             null !== $this->getUserID();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
+
+        //relation event_rating_fk_e5b372 to table event
+        if ($this->aEvent && $hash = spl_object_hash($this->aEvent)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
+
+        //relation event_rating_fk_f4311f to table user
+        if ($this->aUser && $hash = spl_object_hash($this->aUser)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1236,12 +1322,126 @@ abstract class EventRating implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildEvent object.
+     *
+     * @param  ChildEvent $v
+     * @return $this|\NorthEastEvents\Models\EventRating The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setEvent(ChildEvent $v = null)
+    {
+        // aggregate_column_relation behavior
+        if (null !== $this->aEvent && $v !== $this->aEvent) {
+            $this->oldEventAverageRating = $this->aEvent;
+        }
+        if ($v === null) {
+            $this->setEventID(NULL);
+        } else {
+            $this->setEventID($v->getId());
+        }
+
+        $this->aEvent = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildEvent object, it will not be re-added.
+        if ($v !== null) {
+            $v->addEventRating($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildEvent object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildEvent The associated ChildEvent object.
+     * @throws PropelException
+     */
+    public function getEvent(ConnectionInterface $con = null)
+    {
+        if ($this->aEvent === null && ($this->eventid !== null)) {
+            $this->aEvent = ChildEventQuery::create()->findPk($this->eventid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aEvent->addEventRatings($this);
+             */
+        }
+
+        return $this->aEvent;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUser object.
+     *
+     * @param  ChildUser $v
+     * @return $this|\NorthEastEvents\Models\EventRating The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUser(ChildUser $v = null)
+    {
+        if ($v === null) {
+            $this->setUserID(NULL);
+        } else {
+            $this->setUserID($v->getId());
+        }
+
+        $this->aUser = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUser object, it will not be re-added.
+        if ($v !== null) {
+            $v->addEventRating($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUser object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUser The associated ChildUser object.
+     * @throws PropelException
+     */
+    public function getUser(ConnectionInterface $con = null)
+    {
+        if ($this->aUser === null && ($this->userid !== null)) {
+            $this->aUser = ChildUserQuery::create()
+                ->filterByEventRating($this) // here
+                ->findOne($con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUser->addEventRatings($this);
+             */
+        }
+
+        return $this->aUser;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aEvent) {
+            $this->aEvent->removeEventRating($this);
+        }
+        if (null !== $this->aUser) {
+            $this->aUser->removeEventRating($this);
+        }
         $this->eventid = null;
         $this->userid = null;
         $this->rating = null;
@@ -1268,6 +1468,8 @@ abstract class EventRating implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
+        $this->aEvent = null;
+        $this->aUser = null;
     }
 
     /**
@@ -1292,6 +1494,24 @@ abstract class EventRating implements ActiveRecordInterface
         $this->modifiedColumns[EventRatingTableMap::COL_UPDATED_AT] = true;
 
         return $this;
+    }
+
+    // aggregate_column_relation_2 behavior
+
+    /**
+     * Update the aggregate column in the related Event object
+     *
+     * @param ConnectionInterface $con A connection object
+     */
+    protected function updateRelatedEventAverageRating(ConnectionInterface $con)
+    {
+        if ($event = $this->getEvent()) {
+            $event->updateAverageRating($con);
+        }
+        if ($this->oldEventAverageRating) {
+            $this->oldEventAverageRating->updateAverageRating($con);
+            $this->oldEventAverageRating = null;
+        }
     }
 
     /**
