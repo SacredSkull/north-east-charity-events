@@ -1,9 +1,11 @@
+Note: The following is here for time's sake; some of the stuff listed doesn't exist, such as the Jenkins server (which I now consider to be a horribly bloated CI - though, name one that isn't?).
+
 # North east charity events
 This project makes use of several libraries/frameworks:
 
 PHP:
 - Slim, framework
-- Propel, ORM (optional)
+- Propel, ORM
 - Monolog, logging
 - Twig, template
 
@@ -11,12 +13,12 @@ Javascript:
 - jQuery
 
 HTML/CSS:
-- Twitter's Bootstrap *or* Yahoo's Pure
+- Twitter's Bootstrap
 
 ## Starting development
 Rather than having to set up a local server, I have included a [Docker](http://docker.com) setup which will immediately give you a working server system (that's the theory, anyway). The alternative is setting up your server stack (such as XAMPP or WAMP, for Windows), which would take some time to look into, if you haven't before.
 ### IMPORTANT
-You must clone/store this **IN YOUR USERS FOLDER** - e.g. *C:/Users/lazylewis/* - **otherwise the server WILL NOT WORK**.
+You must clone/store this **IN YOUR USERS FOLDER** - e.g. *C:/Users/yourusername/* - **otherwise the server WILL NOT WORK**.
 
 ### Starting
 To start the server, run **start.bat**. You will be given an IP address like (probably exactly like) `192.168.99.100:8080` - this is how you access the server (http://192.168.99.100:8080/). If you want to make it more convenient, add `<your_given_IP_address_WITHOUT_:8080> docker.dev` to your `hosts` file (google it) - and you can access it via http://docker.dev:8080/
@@ -62,7 +64,6 @@ You're probably going to exist mostly in the *src/templates/\** and *src/include
 - To view the site you go to http://localhost:8080  (for testing)
 - You may be told to occasionally run *upgrade.bat*.
 - If you have trouble, run *reset.bat*.
-- After you commit, <del>Jenkins</del> Phil will load your new changes and give them a spin to see if they work - results on Slack!
 
 ## Stuff you need to know
 ### Frontend
